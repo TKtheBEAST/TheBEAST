@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Einstellungen"></activity>
+        <activity android:name=".freunde"></activity>
+        <activity android:name=".live" />
+        <activity android:name=".Einstellungen" />
         <activity android:name=".Kalender" />
         <activity android:name=".MainActivity">
             <intent-filter>

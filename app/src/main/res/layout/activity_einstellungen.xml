@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/liveButton"
         app:layout_constraintStart_toEndOf="@+id/kalenderButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toStartOf="@+id/homButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/einstellungenButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/kalender3" />
 
@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/kalenderButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/einstellungen3" />
 
@@ -95,7 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/freundeButton"
         app:layout_constraintStart_toEndOf="@+id/homButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/live3" />
 
@@ -112,7 +112,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/liveButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/freunde3" />
 
@@ -130,10 +130,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/einstellungenTextView">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/TrainingseinheitlaengeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -149,7 +149,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/deuerDerTrainingseinheitBeschreibung"
+            android:id="@+id/dauerDerTrainingseinheitBeschreibungTextView"
             android:layout_width="272dp"
             android:layout_height="59dp"
             android:layout_marginStart="70dp"
@@ -167,7 +167,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/Trainingslaenge30minButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -175,7 +175,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/Trainingslaenge1hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -183,7 +183,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/Trainingslaenge1.5hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -191,7 +191,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/Trainingslaenge2hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -201,7 +201,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/einstellungenTextView"
         android:layout_width="183dp"
         android:layout_height="41dp"
         android:layout_marginStart="25dp"
@@ -249,7 +249,7 @@
         app:layout_constraintVertical_bias="0.027">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/deinProfilTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -265,7 +265,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/SpitznameTextview"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -277,11 +277,11 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/spitznameEingabeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="TKtheBEAST"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -292,7 +292,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/EmailTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -304,11 +304,11 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/emailEingabeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="theBeast@gmail.com"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -348,13 +348,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView13">
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/abmeldenButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Abmelden" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/kontoLoeschenButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Konto Löschen" />

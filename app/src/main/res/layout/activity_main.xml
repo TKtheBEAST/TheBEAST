@@ -8,43 +8,6 @@
     app:layoutDescription="@xml/activity_main_scene"
     tools:context=".MainActivity" >
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="120dp"
-        android:layout_height="124dp"
-        android:layout_marginStart="146dp"
-        android:layout_marginLeft="146dp"
-        android:layout_marginTop="376dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginRight="146dp"
-        android:background="#313131"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/play4" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="115dp"
-        android:layout_marginLeft="115dp"
-        android:layout_marginEnd="115dp"
-        android:layout_marginRight="115dp"
-        android:layout_marginBottom="80dp"
-        android:fontFamily="sans-serif"
-        android:text="BEAST MODE"
-        android:textColor="#FF0000"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/homButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
     <Button
         android:id="@+id/homButton"
         android:layout_width="116dp"
@@ -78,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/liveButton"
         app:layout_constraintStart_toEndOf="@+id/kalenderButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
@@ -96,7 +59,7 @@
         app:layout_constraintEnd_toStartOf="@+id/homButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/einstellungenButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/kalender3" />
 
@@ -115,7 +78,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/kalenderButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/einstellungen3" />
 
@@ -134,7 +97,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/freundeButton"
         app:layout_constraintStart_toEndOf="@+id/homButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/live3" />
 
@@ -151,138 +114,198 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/liveButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/freunde3" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="297dp"
-        android:layout_height="40dp"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="408dp"
+        android:layout_height="520dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginBottom="119dp"
         android:gravity="center"
-        android:text="Wähle dein Workout"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/homButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.763" />
+        app:layout_constraintTop_toBottomOf="@+id/motivationTextView"
+        app:layout_constraintVertical_bias="0.137">
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="319dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="166dp"
-        android:layout_marginBottom="40dp"
-        android:background="@android:color/transparent"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="297dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="Wähle dein Workout"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.763" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="319dp"
+            android:layout_height="69dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/playButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.009">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <ImageButton
+                    android:id="@+id/oberkoerperButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:baselineAligned="false"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/oberkoerper" />
+
+                <ImageButton
+                    android:id="@+id/pushDayButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/pushday"
+                    tools:layout_editor_absoluteX="66dp" />
+
+                <Button
+                    android:id="@+id/hiitButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:text="Hiit"
+                    android:textSize="12sp"
+                    app:backgroundTint="#FFFFFF" />
+
+                <ImageButton
+                    android:id="@+id/pullDayButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/pullday" />
+
+                <ImageButton
+                    android:id="@+id/joggenButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/joggen"
+                    tools:layout_editor_absoluteX="258dp" />
+
+                <ImageButton
+                    android:id="@+id/beinButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/bein"
+                    tools:layout_editor_absoluteX="4dp"
+                    tools:layout_editor_absoluteY="82dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="180dp"
+            android:layout_height="123dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/playButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
             <ImageButton
-                android:id="@+id/imageButton9"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:baselineAligned="false"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/oberkoerper" />
+                android:id="@+id/sampleButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/pushday" />
+        </ListView>
 
-            <ImageButton
-                android:id="@+id/imageButton11"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/pushday"
-                tools:layout_editor_absoluteX="66dp" />
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="120dp"
+            android:layout_height="124dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="#313131"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/beastModeTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/play4" />
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:text="Hiit"
-                android:textSize="12sp"
-                app:backgroundTint="#FFFFFF" />
+        <TextView
+            android:id="@+id/beastModeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:text="BEAST MODE"
+            android:textColor="#FF0000"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/homButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
-            <ImageButton
-                android:id="@+id/imageButton10"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/pullday" />
-
-            <ImageButton
-                android:id="@+id/imageButton8"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/joggen"
-                tools:layout_editor_absoluteX="258dp" />
-
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/bein"
-                tools:layout_editor_absoluteX="4dp"
-                tools:layout_editor_absoluteY="82dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="180dp"
-        android:layout_height="123dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/motivationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="77dp"
         android:text="Motivationssprüche"
         android:textColor="#FFFFFF"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
