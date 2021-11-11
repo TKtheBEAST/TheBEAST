@@ -120,18 +120,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="408dp"
-        android:layout_height="520dp"
-        android:layout_marginTop="91dp"
-        android:layout_marginBottom="119dp"
+        android:layout_width="387dp"
+        android:layout_height="454dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="64dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/homButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/motivationTextView"
-        app:layout_constraintVertical_bias="0.137">
+        app:layout_constraintTop_toBottomOf="@+id/motivationTextView">
 
         <TextView
             android:id="@+id/textView2"
@@ -143,7 +141,6 @@
             android:text="Wähle dein Workout"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -253,14 +250,7 @@
             app:layout_constraintBottom_toTopOf="@+id/playButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
-
-            <ImageButton
-                android:id="@+id/sampleButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/pushday" />
-        </ListView>
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
         <ImageButton
             android:id="@+id/playButton"
