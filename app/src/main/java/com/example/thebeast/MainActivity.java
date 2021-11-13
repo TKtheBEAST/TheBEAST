@@ -1,6 +1,7 @@
 package com.example.thebeast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void wechselZuFreundeAct(View view){
-        Intent intent = new Intent(getApplicationContext(),Freunde.class);
+        Intent intent = new Intent(getApplicationContext(),TestFragment.class);
         startActivity(intent);
     }
 
