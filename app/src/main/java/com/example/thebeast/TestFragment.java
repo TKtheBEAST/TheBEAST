@@ -11,21 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class TestFragment extends AppCompatActivity {
 
-
-    /**
-     * The number of pages (wizard steps)
-     */
-    private static final int NUM_PAGES = 5;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager2 viewPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private FragmentStateAdapter pagerAdapter;
 
     @Override
@@ -35,7 +21,7 @@ public class TestFragment extends AppCompatActivity {
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(this);
+        pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(2,false);
 
@@ -53,43 +39,5 @@ public class TestFragment extends AppCompatActivity {
         }
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        public ScreenSlidePagerAdapter(FragmentActivity fa) {
-
-            super(fa);
-        }
-
-        @Override
-        public Fragment createFragment(int position) {
-            if (position == 2) {
-                return new HomeFragment();
-            }
-            if (position == 1){
-                return new KalenderFragment();
-            }
-            if (position == 0){
-                return new EinstellungenFragment();
-            }
-            if (position == 3){
-                return new LiveFragment();
-            }
-            if (position == 4) {
-                return new FreundeFragment();
-            }
-            return new HomeFragment();
-        }
-
-
-
-        @Override
-        public int getItemCount() {
-            return NUM_PAGES;
-        }
-
-    }
 }
