@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Kalender extends AppCompatActivity {
+public class Live extends AppCompatActivity {
 
     Button homeButton;
     Button kalenderButton;
@@ -20,7 +20,7 @@ public class Kalender extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kalender);
+        setContentView(R.layout.activity_live);
     }
 
     public void wechselZuMainAct(View view){
@@ -33,8 +33,8 @@ public class Kalender extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void wechselZuLiveAct(View view){
-        Intent intent = new Intent(getApplicationContext(),Live.class);
+    public void wechselZuKalenderAct(View view){
+        Intent intent = new Intent(getApplicationContext(),Kalender.class);
         startActivity(intent);
     }
 

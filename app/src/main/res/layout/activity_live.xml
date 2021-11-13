@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".live">
+    tools:context=".Live">
 
 
     <Button
@@ -24,13 +24,14 @@
         android:insetBottom="0dp"
         android:maxLines="2"
         android:minLines="2"
-        android:rotation="-60"
-        android:scaleX="0.75"
+        android:onClick="wechselZuMainAct"
         android:padding="0dp"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
+        android:rotation="-60"
+        android:scaleX="0.75"
         android:text="THE BEAST"
         android:textAllCaps="true"
         android:textSize="28dp"
@@ -54,6 +55,7 @@
         android:layout_marginRight="-5dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
+        android:onClick="wechselZuKalenderAct"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/homButton"
         app:layout_constraintHorizontal_bias="1.0"
@@ -73,6 +75,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
+        android:onClick="wechselZuEinstellungenAct"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/kalenderButton"
@@ -110,6 +113,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
+        android:onClick="wechselZuFreundeAct"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/liveButton"
