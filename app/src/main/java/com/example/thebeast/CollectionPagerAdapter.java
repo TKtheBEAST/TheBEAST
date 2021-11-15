@@ -15,21 +15,24 @@ public class CollectionPagerAdapter  extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        if (position == 2) {
-            return new HomeFragment();
+
+        switch (position){
+            case 2:
+                return new HomeFragment();
+
+            case 1:
+                return new KalenderFragment();
+
+            case 0:
+                return new EinstellungenFragment();
+
+            case 3:
+                return new LiveFragment();
+
+            case 4:
+                return new FreundeFragment();
         }
-        if (position == 1) {
-            return new KalenderFragment();
-        }
-        if (position == 0) {
-            return new EinstellungenFragment();
-        }
-        if (position == 3) {
-            return new LiveFragment();
-        }
-        if (position == 4) {
-            return new FreundeFragment();
-        }
+
         return new HomeFragment();
     }
 
