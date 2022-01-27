@@ -194,7 +194,7 @@
                     tools:layout_editor_absoluteX="66dp" />
 
                 <Button
-                    android:id="@+id/hiitButton"
+                    android:id="@+id/hiitButton2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"

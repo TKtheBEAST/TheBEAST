@@ -12,12 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -37,6 +35,7 @@ public class HomeFragment extends Fragment {
     ImageButton pulldayButton;
     ImageButton pushdayButton;
     ImageButton beineButton;
+    ImageButton hiitButton;
 
     Button workoutsEntfernenButton;
 
@@ -46,6 +45,7 @@ public class HomeFragment extends Fragment {
     int pulldayImageView;
     int pushdayImageView;
     int beinImageView;
+    int hiitImageView;
 
     //TextView anlegen
     TextView deinGewaehltesTraining;
@@ -71,6 +71,8 @@ public class HomeFragment extends Fragment {
         pulldayButton=view.findViewById(R.id.pullDayButton);
         pushdayButton=view.findViewById(R.id.pushDayButton);
         beineButton=view.findViewById(R.id.beinButton);
+        hiitButton=view.findViewById(R.id.hiitButton);
+
 
         workoutsEntfernenButton=view.findViewById(R.id.workoutsEntfernen);
 
@@ -84,6 +86,7 @@ public class HomeFragment extends Fragment {
         pushdayImageView=R.drawable.pushday;
         pulldayImageView=R.drawable.pullday;
         beinImageView=R.drawable.bein;
+        hiitImageView=R.drawable.hiit;
         
         //Button onClickListener setzen
         joggenButton.setOnClickListener(new View.OnClickListener(){
@@ -229,6 +232,36 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        hiitButton.setOnClickListener(new View.OnClickListener(){
+
+            boolean trainingBereitsGewaehlt=false;
+
+            public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
+                if (gewaehlteTrainingsName.size() > 0){
+                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
+                        if(gewaehlteTrainingsName.get(i).equals("Hiit")){
+                            trainingBereitsGewaehlt = true;
+                        }
+                    }
+                }
+                if(trainingBereitsGewaehlt==false) {
+                    gewaehlteTrainingsList.add(hiitImageView);
+                    gewaehlteTrainingsName.add("Hiit");
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                }else{
+                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
         workoutsEntfernenButton.setOnClickListener(new View.OnClickListener(){
 
