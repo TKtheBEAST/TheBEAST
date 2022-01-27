@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="387dp"
-        android:layout_height="454dp"
+        android:layout_width="396dp"
+        android:layout_height="559dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="64dp"
         android:gravity="center"
@@ -129,17 +129,17 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="180dp"
-            android:layout_height="123dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/playButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gewaehltesTrainingRecyclerview"
+            android:layout_width="264dp"
+            android:layout_height="119dp"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="50sp"
+            android:clipToPadding="false"
+            android:foregroundGravity="center_vertical|center|center_horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <ImageButton
             android:id="@+id/playButton"
