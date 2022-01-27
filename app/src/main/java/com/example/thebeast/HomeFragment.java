@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Joggen")){
@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Oberkörper Training")){
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Push Day")){
@@ -179,7 +179,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Pull Day")){
@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(0.5f);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Beintraining")){
