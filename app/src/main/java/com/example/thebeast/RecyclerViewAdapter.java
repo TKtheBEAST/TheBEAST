@@ -9,14 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
 
-    List<Integer> gewaehlteTrainingsList;
+    ArrayList<Integer> gewaehlteTrainingsList;
+    ArrayList<String> gewaehlteTrainingsName;
 
-    public RecyclerViewAdapter(List<Integer> arr){
-        this.gewaehlteTrainingsList=arr;
+    public RecyclerViewAdapter(ArrayList<Integer> bilder, ArrayList<String> namen){
+        this.gewaehlteTrainingsList=bilder;
+        this.gewaehlteTrainingsName=namen;
     }
 
     @NonNull
@@ -31,7 +34,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-
+        holder.imageView.setImageResource(gewaehlteTrainingsList.get(position));
+        holder.textView.setText(gewaehlteTrainingsName.get(position));
 
     }
 
