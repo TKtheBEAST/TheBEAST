@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,12 +38,18 @@ public class HomeFragment extends Fragment {
     ImageButton pushdayButton;
     ImageButton beineButton;
 
-    //ImageViews initialisieren;
+    Button workoutsEntfernen;
+
+    //ImageViews anlegen;
     int joggenImageView;
     int oberkoerperImageView;
     int pulldayImageView;
     int pushdayImageView;
     int beinImageView;
+
+    //TextView anlegen
+    TextView deinGewaehltesTraining;
+    TextView trennstrichHome;
 
 
 
@@ -52,12 +60,23 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //initialisieren des RecyclerViews
+        gewaehltesTrainingRecyclerView=view.findViewById(R.id.gewaehltesTrainingRecyclerview);
+        layoutManager = new GridLayoutManager(view.getContext(), 2);
+        gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
+
         //Button zuweisen
         joggenButton=view.findViewById(R.id.joggenButton);
         oberkoerperButton=view.findViewById(R.id.oberkoerperButton);
         pulldayButton=view.findViewById(R.id.pullDayButton);
         pushdayButton=view.findViewById(R.id.pushDayButton);
         beineButton=view.findViewById(R.id.beinButton);
+
+        workoutsEntfernen=view.findViewById(R.id.workoutsEntfernen);
+
+        //Textview initialisieren
+        deinGewaehltesTraining = view.findViewById(R.id.deinGewaehltesTraining);
+        trennstrichHome = view.findViewById(R.id.trennstrichHome);
 
         //ImageView zuweisen
         joggenImageView=R.drawable.joggen;
@@ -67,12 +86,13 @@ public class HomeFragment extends Fragment {
         beinImageView=R.drawable.bein;
         
         //Button onClickListener setzen
-        
         joggenButton.setOnClickListener(new View.OnClickListener(){
 
             boolean trainingBereitsGewaehlt=false;
-
             public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernen.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Joggen")){
@@ -84,11 +104,123 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(joggenImageView);
                     gewaehlteTrainingsName.add("Joggen");
 
-                    gewaehltesTrainingRecyclerView=view.findViewById(R.id.gewaehltesTrainingRecyclerview);
-                    layoutManager = new GridLayoutManager(view.getContext(), 2);
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                }else{
+                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+                }
 
+            }
+        });
+
+        oberkoerperButton.setOnClickListener(new View.OnClickListener(){
+
+            boolean trainingBereitsGewaehlt=false;
+
+            public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernen.setAlpha(1);
+                if (gewaehlteTrainingsName.size() > 0){
+                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
+                        if(gewaehlteTrainingsName.get(i).equals("Oberkörper Training")){
+                            trainingBereitsGewaehlt = true;
+                        }
+                    }
+                }
+                if(trainingBereitsGewaehlt==false) {
+                    gewaehlteTrainingsList.add(oberkoerperImageView);
+                    gewaehlteTrainingsName.add("Oberkörper Training");
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                }else{
+                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        pushdayButton.setOnClickListener(new View.OnClickListener(){
+
+            boolean trainingBereitsGewaehlt=false;
+
+            public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernen.setAlpha(1);
+                if (gewaehlteTrainingsName.size() > 0){
+                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
+                        if(gewaehlteTrainingsName.get(i).equals("Push Day")){
+                            trainingBereitsGewaehlt = true;
+                        }
+                    }
+                }
+                if(trainingBereitsGewaehlt==false) {
+                    gewaehlteTrainingsList.add(pushdayImageView);
+                    gewaehlteTrainingsName.add("Push Day");
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                }else{
+                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        pulldayButton.setOnClickListener(new View.OnClickListener(){
+
+            boolean trainingBereitsGewaehlt=false;
+
+            public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernen.setAlpha(1);
+                if (gewaehlteTrainingsName.size() > 0){
+                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
+                        if(gewaehlteTrainingsName.get(i).equals("Pull Day")){
+                            trainingBereitsGewaehlt = true;
+                        }
+                    }
+                }
+                if(trainingBereitsGewaehlt==false) {
+                    gewaehlteTrainingsList.add(pulldayImageView);
+                    gewaehlteTrainingsName.add("Pull Day");
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                }else{
+                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        beineButton.setOnClickListener(new View.OnClickListener(){
+
+            boolean trainingBereitsGewaehlt=false;
+
+            public void onClick(View v){
+                deinGewaehltesTraining.setAlpha(1);
+                trennstrichHome.setAlpha(1);
+                workoutsEntfernen.setAlpha(1);
+                if (gewaehlteTrainingsName.size() > 0){
+                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
+                        if(gewaehlteTrainingsName.get(i).equals("Beintraining")){
+                            trainingBereitsGewaehlt = true;
+                        }
+                    }
+                }
+                if(trainingBereitsGewaehlt==false) {
+                    gewaehlteTrainingsList.add(beinImageView);
+                    gewaehlteTrainingsName.add("Beintraining");
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
                 }else{

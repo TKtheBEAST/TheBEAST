@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="396dp"
-        android:layout_height="559dp"
+        android:layout_width="399dp"
+        android:layout_height="586dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="64dp"
         android:gravity="center"
@@ -29,11 +29,8 @@
             android:gravity="center"
             android:text="Wähle dein Workout"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.763" />
+            android:textSize="24sp" />
+
 
         <HorizontalScrollView
             android:id="@+id/trainingHorizontalScrollView"
@@ -42,12 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@+id/playButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.009">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -129,22 +121,55 @@
             </LinearLayout>
         </HorizontalScrollView>
 
+        <TextView
+            android:id="@+id/trennstrichHome"
+            android:layout_width="320dp"
+            android:layout_height="3dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="46dp"
+            android:layout_marginRight="45dp"
+            android:alpha="0"
+            android:background="#FFFFFF"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+        <TextView
+            android:id="@+id/deinGewaehltesTraining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:alpha="0"
+            android:text="Dein gewähltes Workout"
+            android:textSize="18sp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gewaehltesTrainingRecyclerview"
-            android:layout_width="264dp"
+            android:layout_width="178dp"
             android:layout_height="119dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
-            android:layout_marginTop="50sp"
-            android:layout_marginBottom="50sp"
+            android:layout_marginTop="20sp"
             android:clipToPadding="false"
             android:foregroundGravity="center_vertical|center|center_horizontal">
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <Button
+            android:id="@+id/workoutsEntfernen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30sp"
+            android:alpha="0"
+            android:text="Workouts entfernen" />
+
         <ImageButton
             android:id="@+id/playButton"
-            android:layout_width="120dp"
-            android:layout_height="124dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
