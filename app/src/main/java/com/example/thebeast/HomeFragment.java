@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     ImageButton pushdayButton;
     ImageButton beineButton;
 
-    Button workoutsEntfernen;
+    Button workoutsEntfernenButton;
 
     //ImageViews anlegen;
     int joggenImageView;
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
         pushdayButton=view.findViewById(R.id.pushDayButton);
         beineButton=view.findViewById(R.id.beinButton);
 
-        workoutsEntfernen=view.findViewById(R.id.workoutsEntfernen);
+        workoutsEntfernenButton=view.findViewById(R.id.workoutsEntfernen);
 
         //Textview initialisieren
         deinGewaehltesTraining = view.findViewById(R.id.deinGewaehltesTraining);
@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernen.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Joggen")){
@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernen.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Oberkörper Training")){
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernen.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Push Day")){
@@ -179,7 +179,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernen.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Pull Day")){
@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v){
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
-                workoutsEntfernen.setAlpha(1);
+                workoutsEntfernenButton.setAlpha(1);
                 if (gewaehlteTrainingsName.size() > 0){
                     for(int i=0; i<gewaehlteTrainingsName.size();i++){
                         if(gewaehlteTrainingsName.get(i).equals("Beintraining")){
@@ -230,6 +230,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        workoutsEntfernenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                gewaehlteTrainingsList.clear();
+                gewaehlteTrainingsName.clear();
+
+                deinGewaehltesTraining.setAlpha(0);
+                trennstrichHome.setAlpha(0);
+                workoutsEntfernenButton.setAlpha(0);
+
+                recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+                gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+            }
+        });
 
         return view;
     }
