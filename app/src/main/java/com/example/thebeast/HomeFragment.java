@@ -1,5 +1,6 @@
 package com.example.thebeast;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,35 +22,29 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
 
-    HorizontalScrollView trainingScrollview;
+    private HorizontalScrollView trainingScrollview;
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
 
     private RecyclerView gewaehltesTrainingRecyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerViewAdapter recyclerViewAdapter;
-    ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
-    ArrayList<String> gewaehlteTrainingsName = new ArrayList();
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
+    private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
 
     //Button initialisieren
-    ImageButton joggenButton;
-    ImageButton oberkoerperButton;
-    ImageButton pulldayButton;
-    ImageButton pushdayButton;
-    ImageButton beineButton;
-    ImageButton hiitButton;
+    private ImageButton joggenButton,oberkoerperButton,pulldayButton,pushdayButton,beineButton,hiitButton;
 
-    Button workoutsEntfernenButton;
+    private Button workoutsEntfernenButton;
 
     //ImageViews anlegen;
-    int joggenImageView;
-    int oberkoerperImageView;
-    int pulldayImageView;
-    int pushdayImageView;
-    int beinImageView;
-    int hiitImageView;
+    private int joggenImageView,oberkoerperImageView,pulldayImageView,pushdayImageView,beinImageView,hiitImageView;
+
 
     //TextView anlegen
-    TextView deinGewaehltesTraining;
-    TextView trennstrichHome;
+    private TextView deinGewaehltesTraining;
+    private TextView trennstrichHome;
 
 
 
@@ -281,5 +276,10 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void startWorkoutDialog(){
+        dialogBuilder = new AlertDialog.Builder(this.getActivity());
+        final View startWorkoutView = getLayoutInflater().inflate(R.layout.start_workout_popup,null);
     }
 }
