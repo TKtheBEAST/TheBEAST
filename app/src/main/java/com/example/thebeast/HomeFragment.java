@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,13 +17,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 
 public class HomeFragment extends Fragment {
 
 
     private HorizontalScrollView trainingScrollview;
+
+    private HomeFragmentViewModel homeFragmentViewModel;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
@@ -31,8 +32,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView startWorkoutRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
-    private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
+
 
     //Button initialisieren
     private ImageButton joggenButton,oberkoerperButton,pulldayButton,pushdayButton,beineButton,hiitButton,playButton;
@@ -56,9 +56,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //initialisieren ViewModel
+        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+
         //initialisieren des RecyclerViews
         gewaehltesTrainingRecyclerView=view.findViewById(R.id.gewaehltesTrainingRecyclerview);
-
 
         //Button zuweisen
         joggenButton=view.findViewById(R.id.joggenButton);
@@ -87,25 +89,28 @@ public class HomeFragment extends Fragment {
         //Button onClickListener setzen
         joggenButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-            public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
+            public void onClick(View v) {
+                trainingHinzufuegen(view.getRootView(), joggenImageView, "Joggen");
+            }
+
+        });
+              /*  deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
                 workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Joggen")){
+                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
+                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsName().size();i++){
+                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Joggen")){
                             trainingBereitsGewaehlt = true;
                         }
                     }
                 }
                 if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(joggenImageView);
-                    gewaehlteTrainingsName.add("Joggen");
+                    homeFragmentViewModel.addTraining(joggenImageView);
+                    homeFragmentViewModel.addTrainingsName("Joggen");
 
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
                     gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
                 }else{
@@ -123,20 +128,20 @@ public class HomeFragment extends Fragment {
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
                 workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Oberkörper Training")){
+                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
+                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsList().size();i++){
+                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Oberkörper Training")){
                             trainingBereitsGewaehlt = true;
                         }
                     }
                 }
                 if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(oberkoerperImageView);
-                    gewaehlteTrainingsName.add("Oberkörper Training");
+                    homeFragmentViewModel.addTraining(oberkoerperImageView);
+                    homeFragmentViewModel.addTrainingsName("Oberkörper Training");
 
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
                     gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
                 }else{
@@ -154,20 +159,20 @@ public class HomeFragment extends Fragment {
                 deinGewaehltesTraining.setAlpha(1);
                 trennstrichHome.setAlpha(1);
                 workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Push Day")){
+                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
+                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsList().size();i++){
+                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Push Day")){
                             trainingBereitsGewaehlt = true;
                         }
                     }
                 }
                 if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(pushdayImageView);
-                    gewaehlteTrainingsName.add("Push Day");
+                    homeFragmentViewModel.addTraining(pushdayImageView);
+                    homeFragmentViewModel.addTrainingsName("Push Day");
 
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
                     gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
                 }else{
@@ -268,21 +273,21 @@ public class HomeFragment extends Fragment {
                 }
 
             }
-        });
+        }); */
 
 
         workoutsEntfernenButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                gewaehlteTrainingsList.clear();
-                gewaehlteTrainingsName.clear();
+                homeFragmentViewModel.getGewaehlteTrainingsName().clear();
+                homeFragmentViewModel.getGewaehlteTrainingsList().clear();
 
                 deinGewaehltesTraining.setAlpha(0);
                 trennstrichHome.setAlpha(0);
                 workoutsEntfernenButton.setAlpha(0);
 
-                recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+                recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList() , homeFragmentViewModel.getGewaehlteTrainingsName());
                 gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                 gewaehltesTrainingRecyclerView.setHasFixedSize(true);
             }
@@ -306,10 +311,10 @@ public class HomeFragment extends Fragment {
         final View startWorkoutView = getLayoutInflater().inflate(R.layout.start_workout_popup,null);
 
         startWorkoutRecyclerView = startWorkoutView.findViewById(R.id.startWorkoutRecyclerView);
-        layoutManager = new GridLayoutManager(startWorkoutView.getContext(), gewaehlteTrainingsList.size());
+        layoutManager = new GridLayoutManager(startWorkoutView.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
         startWorkoutRecyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+        recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
         startWorkoutRecyclerView.setAdapter(recyclerViewAdapter);
         startWorkoutRecyclerView.setHasFixedSize(true);
 
@@ -317,4 +322,36 @@ public class HomeFragment extends Fragment {
         dialog = dialogBuilder.create();
         dialog.show();
     }
+
+    public void trainingHinzufuegen(View v, int training, String name) {
+
+        deinGewaehltesTraining.setAlpha(1);
+        trennstrichHome.setAlpha(1);
+        workoutsEntfernenButton.setAlpha(0.5f);
+
+        boolean trainingBereitsGewaehlt = false;
+
+        if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0) {
+            for (int i = 0; i < homeFragmentViewModel.getGewaehlteTrainingsName().size(); i++) {
+                if (homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals(name)) {
+                    trainingBereitsGewaehlt = true;
+                }
+            }
+        }
+
+        if (trainingBereitsGewaehlt == false) {
+            homeFragmentViewModel.addTraining(training);
+            homeFragmentViewModel.addTrainingsName(name);
+
+            layoutManager = new GridLayoutManager(v.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
+            gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
+            recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(), homeFragmentViewModel.getGewaehlteTrainingsName());
+            gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+            gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+        } else {
+            Toast.makeText(v.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }
