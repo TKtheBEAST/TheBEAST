@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
     private AlertDialog dialog;
 
     private RecyclerView gewaehltesTrainingRecyclerView;
+    private RecyclerView startWorkoutRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
@@ -57,8 +58,7 @@ public class HomeFragment extends Fragment {
 
         //initialisieren des RecyclerViews
         gewaehltesTrainingRecyclerView=view.findViewById(R.id.gewaehltesTrainingRecyclerview);
-        layoutManager = new GridLayoutManager(view.getContext(), 2);
-        gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
+
 
         //Button zuweisen
         joggenButton=view.findViewById(R.id.joggenButton);
@@ -103,6 +103,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(joggenImageView);
                     gewaehlteTrainingsName.add("Joggen");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -132,6 +134,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(oberkoerperImageView);
                     gewaehlteTrainingsName.add("Oberkörper Training");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -161,6 +165,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(pushdayImageView);
                     gewaehlteTrainingsName.add("Push Day");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -190,6 +196,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(pulldayImageView);
                     gewaehlteTrainingsName.add("Pull Day");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -219,6 +227,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(beinImageView);
                     gewaehlteTrainingsName.add("Beintraining");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -248,6 +258,8 @@ public class HomeFragment extends Fragment {
                     gewaehlteTrainingsList.add(hiitImageView);
                     gewaehlteTrainingsName.add("Hiit");
 
+                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
+                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
                     recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
                     gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
                     gewaehltesTrainingRecyclerView.setHasFixedSize(true);
@@ -292,6 +304,14 @@ public class HomeFragment extends Fragment {
    public void startWorkoutDialog(){
         dialogBuilder = new AlertDialog.Builder(getActivity());
         final View startWorkoutView = getLayoutInflater().inflate(R.layout.start_workout_popup,null);
+
+        startWorkoutRecyclerView = startWorkoutView.findViewById(R.id.startWorkoutRecyclerView);
+        layoutManager = new GridLayoutManager(startWorkoutView.getContext(), gewaehlteTrainingsList.size());
+        startWorkoutRecyclerView.setLayoutManager(layoutManager);
+
+        recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
+        startWorkoutRecyclerView.setAdapter(recyclerViewAdapter);
+        startWorkoutRecyclerView.setHasFixedSize(true);
 
         dialogBuilder.setView(startWorkoutView);
         dialog = dialogBuilder.create();

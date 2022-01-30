@@ -148,7 +148,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gewaehltesTrainingRecyclerview"
-            android:layout_width="178dp"
+            android:layout_width="wrap_content"
             android:layout_height="119dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_marginTop="20sp"
