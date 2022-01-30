@@ -94,186 +94,41 @@ public class HomeFragment extends Fragment {
             }
 
         });
-              /*  deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
-                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsName().size();i++){
-                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Joggen")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    homeFragmentViewModel.addTraining(joggenImageView);
-                    homeFragmentViewModel.addTrainingsName("Joggen");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
 
         oberkoerperButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-
-            public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
-                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsList().size();i++){
-                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Oberkörper Training")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    homeFragmentViewModel.addTraining(oberkoerperImageView);
-                    homeFragmentViewModel.addTrainingsName("Oberkörper Training");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
+            public void onClick(View v) {
+                trainingHinzufuegen(view.getRootView(), oberkoerperImageView, "Oberkörper Training");
             }
         });
 
         pushdayButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-
             public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0){
-                    for(int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsList().size();i++){
-                        if(homeFragmentViewModel.getGewaehlteTrainingsName().get(i).equals("Push Day")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    homeFragmentViewModel.addTraining(pushdayImageView);
-                    homeFragmentViewModel.addTrainingsName("Push Day");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
+                trainingHinzufuegen(view.getRootView(), pushdayImageView, "Push Day");
             }
         });
 
         pulldayButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-
             public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Pull Day")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(pulldayImageView);
-                    gewaehlteTrainingsName.add("Pull Day");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
+                trainingHinzufuegen(view.getRootView(), pulldayImageView, "Pull Day");
             }
         });
 
         beineButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-
             public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Beintraining")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(beinImageView);
-                    gewaehlteTrainingsName.add("Beintraining");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
+                trainingHinzufuegen(view.getRootView(), beinImageView, "Beintraining");
             }
         });
 
         hiitButton.setOnClickListener(new View.OnClickListener(){
 
-            boolean trainingBereitsGewaehlt=false;
-
             public void onClick(View v){
-                deinGewaehltesTraining.setAlpha(1);
-                trennstrichHome.setAlpha(1);
-                workoutsEntfernenButton.setAlpha(0.5f);
-                if (gewaehlteTrainingsName.size() > 0){
-                    for(int i=0; i<gewaehlteTrainingsName.size();i++){
-                        if(gewaehlteTrainingsName.get(i).equals("Hiit")){
-                            trainingBereitsGewaehlt = true;
-                        }
-                    }
-                }
-                if(trainingBereitsGewaehlt==false) {
-                    gewaehlteTrainingsList.add(hiitImageView);
-                    gewaehlteTrainingsName.add("Hiit");
-
-                    layoutManager = new GridLayoutManager(view.getContext(), gewaehlteTrainingsList.size());
-                    gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-                    recyclerViewAdapter = new RecyclerViewAdapter(gewaehlteTrainingsList,gewaehlteTrainingsName);
-                    gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                    gewaehltesTrainingRecyclerView.setHasFixedSize(true);
-                }else{
-                    Toast.makeText(view.getContext(), "Training bereits gewählt", Toast.LENGTH_LONG).show();
-                }
-
+                trainingHinzufuegen(view.getRootView(), hiitImageView, "Hiit");
             }
-        }); */
+        });
 
 
         workoutsEntfernenButton.setOnClickListener(new View.OnClickListener(){
