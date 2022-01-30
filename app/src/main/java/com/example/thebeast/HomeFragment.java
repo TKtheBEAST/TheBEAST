@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
 
     //Button initialisieren
-    private ImageButton joggenButton,oberkoerperButton,pulldayButton,pushdayButton,beineButton,hiitButton;
+    private ImageButton joggenButton,oberkoerperButton,pulldayButton,pushdayButton,beineButton,hiitButton,playButton;
 
     private Button workoutsEntfernenButton;
 
@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
         pushdayButton=view.findViewById(R.id.pushDayButton);
         beineButton=view.findViewById(R.id.beinButton);
         hiitButton=view.findViewById(R.id.hiitButton);
+        playButton=view.findViewById(R.id.playButton);
 
 
         workoutsEntfernenButton=view.findViewById(R.id.workoutsEntfernen);
@@ -275,11 +276,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        playButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                startWorkoutDialog();
+
+
+            }
+        });
+
         return view;
     }
 
-    public void startWorkoutDialog(){
-        dialogBuilder = new AlertDialog.Builder(this.getActivity());
+   public void startWorkoutDialog(){
+        dialogBuilder = new AlertDialog.Builder(getActivity());
         final View startWorkoutView = getLayoutInflater().inflate(R.layout.start_workout_popup,null);
+
+        dialogBuilder.setView(startWorkoutView);
+        dialog = dialogBuilder.create();
+        dialog.show();
     }
 }
