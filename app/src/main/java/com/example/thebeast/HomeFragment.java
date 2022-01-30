@@ -21,8 +21,6 @@ import android.widget.Toast;
 public class HomeFragment extends Fragment {
 
 
-    private HorizontalScrollView trainingScrollview;
-
     private HomeFragmentViewModel homeFragmentViewModel;
 
     private AlertDialog.Builder dialogBuilder;
@@ -172,6 +170,8 @@ public class HomeFragment extends Fragment {
         recyclerViewAdapter = new RecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
         startWorkoutRecyclerView.setAdapter(recyclerViewAdapter);
         startWorkoutRecyclerView.setHasFixedSize(true);
+
+
 
         dialogBuilder.setView(startWorkoutView);
         dialog = dialogBuilder.create();
