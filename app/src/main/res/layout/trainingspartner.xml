@@ -40,8 +40,9 @@
             android:id="@+id/spruchTraininsPartner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Standort:"
-            android:textSize="18sp" />
+            android:text='"Ihr findet mich im Machinenraum"'
+            android:textSize="18sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
