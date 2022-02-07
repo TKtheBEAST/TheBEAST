@@ -13,7 +13,11 @@ public class User {
 
     private String email;
 
-    private int wokoutlaenge;
+    private int workoutlaenge;
+
+    private String spruch;
+
+
 
 
 }
