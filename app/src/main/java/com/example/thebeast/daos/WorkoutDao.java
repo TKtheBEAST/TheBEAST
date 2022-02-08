@@ -25,5 +25,5 @@ public interface WorkoutDao {
     void deleteWorkout (Workout workout);
 
     @Query("SELECT * FROM workout_table")
-    LiveData<List<User>> getAllUsers();
+    LiveData<List<Workout>> getAllWorkouts();
 }
