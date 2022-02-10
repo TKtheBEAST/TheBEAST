@@ -1,4 +1,4 @@
-package com.example.thebeast;
+package com.example.thebeast.viewmodel;
 
 import android.Manifest;
 import android.app.Activity;
