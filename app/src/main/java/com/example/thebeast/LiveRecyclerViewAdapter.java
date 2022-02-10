@@ -12,14 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thebeast.entitys.Workout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
-    private ArrayList<Workout> workouts = new ArrayList<>();
-
-    public LiveRecyclerViewAdapter(ArrayList<Integer> avatarBilder, ArrayList<String> beastNamen, ArrayList<String> workouts, ArrayList<String> standort){
-
-    }
+    private List<Workout> workouts = new ArrayList<>();
 
     @NonNull
     @Override
@@ -35,29 +32,43 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { ;
         Workout currentWorkout = workouts.get(position);
         holder.avatar.setImageResource(currentWorkout.getAvatar());
+        holder.beastName.setText(currentWorkout.getBeastName());
+        holder.workoutsTextView.setText(currentWorkout.getUebungen());
+
+        /*for(int i=0;i<currentWorkout.getUebungen().size();i++){
+            holder.workouts.append(currentWorkout.getUebungen().get(i));
+            if(currentWorkout.getUebungen().size() > i+1){
+                holder.workouts.append(", ");
+            }
+        }*/
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return workouts.size();
     }
 
 
+    public void setWorkouts(List<Workout> workouts){
+        this.workouts = workouts;
+        notifyDataSetChanged();
+
+    }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView avatar;
         TextView beastName;
-        TextView workouts;
+        TextView workoutsTextView;
         TextView standort;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             avatar = itemView.findViewById(R.id.avatarimageView);
             beastName = itemView.findViewById(R.id.beastNameTextView);
-            workouts = itemView.findViewById(R.id.workoutTextView);
+            workoutsTextView = itemView.findViewById(R.id.workoutTextView);
             standort = itemView.findViewById(R.id.standortTextView);
 
         }

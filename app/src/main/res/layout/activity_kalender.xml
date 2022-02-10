@@ -134,10 +134,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/einstellungenTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
 
     <TextView
-        android:id="@+id/einstellungenTextView"
+        android:id="@+id/liveTextView"
         android:layout_width="185dp"
         android:layout_height="96dp"
         android:layout_marginStart="25dp"

@@ -7,7 +7,7 @@
     tools:context=".Freunde">
 
     <TextView
-        android:id="@+id/einstellungenTextView"
+        android:id="@+id/liveTextView"
         android:layout_width="188dp"
         android:layout_height="65dp"
         android:layout_marginStart="25dp"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/einstellungenTextView"
+        app:layout_constraintStart_toEndOf="@+id/liveTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/adduser" />
 
@@ -40,6 +40,6 @@
         android:layout_marginTop="31dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/einstellungenTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

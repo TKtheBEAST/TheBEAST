@@ -122,7 +122,7 @@
             app:srcCompat="@drawable/freunde3" />
 
         <TextView
-            android:id="@+id/einstellungenTextView"
+            android:id="@+id/liveTextView"
             android:layout_width="185dp"
             android:layout_height="96dp"
             android:layout_marginStart="25dp"

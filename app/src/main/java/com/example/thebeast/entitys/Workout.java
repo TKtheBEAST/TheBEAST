@@ -5,33 +5,38 @@ import android.widget.ImageView;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity (tableName = "workout_table")
 public class Workout {
 
     @PrimaryKey(autoGenerate = true)
-    private String id;
+    private int id;
 
-    private ImageView avatar;
+    private int avatar;
     private String beastName;
-    private List<String> uebungen;
+    private String uebungen;
     private int workoutlaenge;
     //standort;
 
 
-    public Workout(ImageView avatar, String beastName, List<String> uebungen, int workoutlaenge) {
+    public Workout(int avatar, String beastName, String uebungen, int workoutlaenge) {
         this.avatar = avatar;
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
     }
 
-    public String getId() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public ImageView getAvatar() {
+    public int getAvatar() {
         return avatar;
     }
 
@@ -39,7 +44,7 @@ public class Workout {
         return beastName;
     }
 
-    public List<String> getUebungen() {
+    public String getUebungen() {
         return uebungen;
     }
 

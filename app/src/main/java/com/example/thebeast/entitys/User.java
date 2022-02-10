@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    private String id;
+    private int id;
 
     private String beastName;
 
@@ -17,7 +17,34 @@ public class User {
 
     private String spruch;
 
+    public User(String beastName, String email, int workoutlaenge, String spruch) {
+        this.beastName = beastName;
+        this.email = email;
+        this.workoutlaenge = workoutlaenge;
+        this.spruch = spruch;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getBeastName() {
+        return beastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getWorkoutlaenge() {
+        return workoutlaenge;
+    }
+
+    public String getSpruch() {
+        return spruch;
+    }
 }

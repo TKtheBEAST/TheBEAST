@@ -8,7 +8,7 @@
     tools:context=".Live">
 
     <TextView
-        android:id="@+id/einstellungenTextView"
+        android:id="@+id/liveTextView"
         android:layout_width="185dp"
         android:layout_height="37dp"
         android:layout_marginStart="25dp"
@@ -22,14 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/liveWorkoutsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="630dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/einstellungenTextView"
-        tools:listitem="@layout/liveobjekt"/>
+        app:layout_constraintTop_toBottomOf="@+id/liveTextView"
+        tools:listitem="@layout/liveobjekt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
