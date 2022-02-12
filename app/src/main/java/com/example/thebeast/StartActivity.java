@@ -17,6 +17,7 @@ public class StartActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
