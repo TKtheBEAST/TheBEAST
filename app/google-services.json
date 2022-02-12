@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "963540174553",
+    "project_id": "thebeast-339821",
+    "storage_bucket": "thebeast-339821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963540174553:android:1901e3c31e27844c8660c8",
+        "android_client_info": {
+          "package_name": "com.example.thebeast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963540174553-621o84ck6ofigd3c8rvt754vdqofr1j9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnLlJPMs-hC8oU9h8Rsm2P0BQYW5sVobQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963540174553-621o84ck6ofigd3c8rvt754vdqofr1j9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
