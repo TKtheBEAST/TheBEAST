@@ -14,16 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
+import com.example.thebeast.viewmodel.LiveFragmentViewModel;
+
+import java.util.ArrayList;
 
 
 public class HomeFragment extends Fragment {
 
 
     private HomeFragmentViewModel homeFragmentViewModel;
+    private LiveFragmentViewModel liveFragmentViewModel;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
@@ -57,7 +63,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //initialisieren ViewModel
-        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        homeFragmentViewModel = new ViewModelProvider(getActivity()).get(HomeFragmentViewModel.class);
 
         //initialisieren des RecyclerViews
         gewaehltesTrainingRecyclerView=view.findViewById(R.id.gewaehltesTrainingRecyclerview);
@@ -176,11 +182,49 @@ public class HomeFragment extends Fragment {
         startWorkoutRecyclerView.setAdapter(recyclerViewAdapter);
         startWorkoutRecyclerView.setHasFixedSize(true);
 
+        Button letsGoButton = startWorkoutView.findViewById(R.id.letsGoButton);
+        Button abbrechenButton = startWorkoutView.findViewById(R.id.abbrechenButton);
 
+        letsGoButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
+                String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
+                ArrayList<String> workoutsList;
+
+                workoutsList = homeFragmentViewModel.getGewaehlteTrainingsName();
+                String uebungen = "";
+                for (int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsName().size(); i++){
+                    uebungen = uebungen + workoutsList.get(i);
+                    if(workoutsList.size() > i+1){
+                        uebungen = uebungen + ", ";
+                    }
+                }
+
+                int workoutlaenge = HomeFragmentViewModel.getCurrentUser().getWorkoutlaenge();
+                Workout workout = new Workout(avatar, beastName,uebungen,workoutlaenge);
+
+                homeFragmentViewModel.insertWorkout(workout);
+
+                dialog.dismiss();
+            }
+        });
+
+        abbrechenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
         dialogBuilder.setView(startWorkoutView);
         dialog = dialogBuilder.create();
         dialog.show();
+
+
     }
 
     public void trainingHinzufuegen(View v, int training, String name) {

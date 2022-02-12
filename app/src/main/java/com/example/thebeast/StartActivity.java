@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 
-public class TestFragment extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;

@@ -17,11 +17,14 @@ public class User {
 
     private String spruch;
 
-    public User(String beastName, String email, int workoutlaenge, String spruch) {
+    private int avatar;
+
+    public User(String beastName, String email, int workoutlaenge, String spruch, int avatar) {
         this.beastName = beastName;
         this.email = email;
         this.workoutlaenge = workoutlaenge;
         this.spruch = spruch;
+        this.avatar = avatar;
     }
 
     public void setId(int id) {
@@ -46,5 +49,9 @@ public class User {
 
     public String getSpruch() {
         return spruch;
+    }
+
+    public int getAvatar() {
+        return avatar;
     }
 }

@@ -42,23 +42,23 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/letsGoButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Let's go!"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintEnd_toStartOf="@+id/abbrechenButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/abbrechenButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Abbrechen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintStart_toEndOf="@+id/letsGoButton"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

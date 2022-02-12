@@ -28,4 +28,9 @@ public interface UserDao {
     @Query("SELECT * FROM user_table")
     LiveData<List<User>> getAllUsers();
 
+    @Query("Select * from user_table where id=:id")
+    User getCurrentUser(int id);
+
+
+
 }

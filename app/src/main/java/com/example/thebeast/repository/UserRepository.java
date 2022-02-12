@@ -14,6 +14,7 @@ import java.util.List;
 public class UserRepository {
 
     private UserDao userDao;
+    private User currentUser;
     private LiveData<List<User>> allUsers;
 
 
@@ -43,6 +44,8 @@ public class UserRepository {
     public LiveData<List<User>> getAllUsers(){
         return allUsers;
     }
+
+    public User getCurrentUser(int id){return currentUser;}
 
 
 
