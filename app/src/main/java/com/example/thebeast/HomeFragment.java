@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -189,7 +191,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-
                 int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
                 String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
                 ArrayList<String> workoutsList;

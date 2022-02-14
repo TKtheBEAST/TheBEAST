@@ -1,45 +1,51 @@
 package com.example.thebeast.viewmodel;
 
-import android.app.Application;
-import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.thebeast.entitys.Workout;
-import com.example.thebeast.repository.WorkoutRepository;
+import com.example.thebeast.businessobjects.WorkoutModel;
+import com.example.thebeast.repositorys.impl.WorkoutRepositoryImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class LiveFragmentViewModel extends AndroidViewModel {
+public class LiveFragmentViewModel extends ViewModel implements WorkoutRepositoryImpl.OnFirestoreTaskComplete {
 
 
-    private WorkoutRepository workoutRepository;
-    private LiveData<List<Workout>> allWorkoutsList;
+    private MutableLiveData<List<WorkoutModel>> workoutListModelData = new MutableLiveData<>();
 
-    public LiveFragmentViewModel(@NonNull Application application) {
-        super(application);
-        workoutRepository = new WorkoutRepository(application);
-        allWorkoutsList = workoutRepository.getAllWorkouts();
+    public LiveData<List<WorkoutModel>> getWorkoutListModelData() {
+        return workoutListModelData;
+    }
+
+    private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl(this);
+
+
+    public LiveFragmentViewModel() {
+      workoutRepositoryImpl.getAllWorkouts();
 
     }
 
-    public void insertWorkout (Workout workout){
-        workoutRepository.insert(workout);
+    public void insertWorkout (WorkoutModel workout){
+        workoutRepositoryImpl.insert(workout);
     }
 
-    public void updateWorkout (Workout workout){
-        workoutRepository.update(workout);
+    public void updateWorkout (WorkoutModel workout){
+        workoutRepositoryImpl.update(workout);
     }
 
-    public void deleteWorkout (Workout workout){
-        workoutRepository.delete(workout);
+    public void deleteWorkout (WorkoutModel workout){
+        workoutRepositoryImpl.delete(workout);
     }
 
-    public LiveData<List<Workout>> getAllWorkouts(){
-        return allWorkoutsList;
+
+    @Override
+    public void workoutListDataAdded(List<WorkoutModel> workoutModelList) {
+        workoutListModelData.setValue(workoutModelList);
+    }
+
+    @Override
+    public void onError(Exception e) {
+
     }
 }

@@ -1,24 +1,19 @@
 package com.example.thebeast;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.thebeast.R;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.thebeast.entitys.Workout;
-import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,7 +33,7 @@ public class LiveFragment extends Fragment {
         LiveRecyclerViewAdapter adapter = new LiveRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
-        liveFragmentViewModel = new ViewModelProvider(this).get(LiveFragmentViewModel.class);
+        liveFragmentViewModel = new ViewModelProvider(getActivity()).get(LiveFragmentViewModel.class);
         liveFragmentViewModel.getAllWorkouts().observe(getViewLifecycleOwner(), new Observer<List<Workout>>() {
             @Override
             public void onChanged(List<Workout> workouts) {
