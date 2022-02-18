@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -191,7 +190,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
+           /*     int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
                 String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
                 ArrayList<String> workoutsList;
 
@@ -209,7 +208,7 @@ public class HomeFragment extends Fragment {
 
                 homeFragmentViewModel.insertWorkout(workout);
 
-                dialog.dismiss();
+                dialog.dismiss();*/
             }
         });
 

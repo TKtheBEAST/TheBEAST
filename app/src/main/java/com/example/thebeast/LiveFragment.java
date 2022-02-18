@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
 
@@ -34,11 +35,12 @@ public class LiveFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         liveFragmentViewModel = new ViewModelProvider(getActivity()).get(LiveFragmentViewModel.class);
-        liveFragmentViewModel.getAllWorkouts().observe(getViewLifecycleOwner(), new Observer<List<Workout>>() {
+        liveFragmentViewModel.getWorkoutListModelData().observe(getViewLifecycleOwner(), new Observer<List<WorkoutModel>>() {
             @Override
-            public void onChanged(List<Workout> workouts) {
-                adapter.setWorkouts(workouts);
+            public void onChanged(List<WorkoutModel> workoutModel) {
+                adapter.setWorkouts(workoutModel);
             }
+
         });
 
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.entitys.Workout;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
-    private List<Workout> workouts = new ArrayList<>();
+    private List<WorkoutModel> workouts = new ArrayList<>();
 
     @NonNull
     @Override
@@ -30,7 +31,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { ;
-        Workout currentWorkout = workouts.get(position);
+        WorkoutModel currentWorkout = workouts.get(position);
         holder.avatar.setImageResource(currentWorkout.getAvatar());
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());
@@ -50,7 +51,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     }
 
 
-    public void setWorkouts(List<Workout> workouts){
+    public void setWorkouts(List<WorkoutModel> workouts){
         this.workouts = workouts;
         notifyDataSetChanged();
 
