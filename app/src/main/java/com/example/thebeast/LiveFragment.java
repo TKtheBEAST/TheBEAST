@@ -1,6 +1,7 @@
 package com.example.thebeast;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
-import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class LiveFragment extends Fragment {
@@ -39,9 +41,12 @@ public class LiveFragment extends Fragment {
             @Override
             public void onChanged(List<WorkoutModel> workoutModel) {
                 adapter.setWorkouts(workoutModel);
+                Log.i(TAG, "Anzahl workouts " + workoutModel.size());
+
             }
 
         });
+
 
 
         return view;

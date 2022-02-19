@@ -1,6 +1,7 @@
 package com.example.thebeast.repositorys.impl;
 
 import android.app.Application;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -52,8 +53,11 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     onFirestoreTaskComplete.workoutListDataAdded(task.getResult().toObjects(WorkoutModel.class));
+                    Log.i(TAG,"Alle workouts geladen");
                 } else {
                     onFirestoreTaskComplete.onError(task.getException());
+                    Log.i(TAG,"Workouts konnten nicht geladen werden");
+
                 }
             }
         });

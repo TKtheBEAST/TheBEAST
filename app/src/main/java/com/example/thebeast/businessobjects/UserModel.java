@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentId;
 public class UserModel {
 
     @DocumentId
-    private int user_id;
+    private String user_id;
 
     private String beastName;
 
@@ -19,6 +19,8 @@ public class UserModel {
 
     private int avatar;
 
+    public UserModel(){}
+
     public UserModel(String beastName, String email, int workoutlaenge, String spruch, int avatar) {
         this.beastName = beastName;
         this.email = email;
@@ -27,11 +29,11 @@ public class UserModel {
         this.avatar = avatar;
     }
 
-    public void setId(int user_id) {
+    public void setId(String user_id) {
         this.user_id = user_id;
     }
 
-    public int getId() {
+    public String getId() {
         return user_id;
     }
 

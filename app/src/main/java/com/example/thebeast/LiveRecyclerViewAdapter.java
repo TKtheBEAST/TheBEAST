@@ -1,5 +1,6 @@
 package com.example.thebeast;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.example.thebeast.entitys.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
@@ -32,6 +35,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { ;
         WorkoutModel currentWorkout = workouts.get(position);
+        Log.i(TAG,"recycler view wird erstellt");
         holder.avatar.setImageResource(currentWorkout.getAvatar());
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());

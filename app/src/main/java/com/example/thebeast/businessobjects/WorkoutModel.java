@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentId;
 public class WorkoutModel {
 
     @DocumentId
-    private int id;
+    private String id;
 
     private int avatar;
     private String beastName;
@@ -14,18 +14,19 @@ public class WorkoutModel {
     //standort;
 
 
-    public WorkoutModel(int avatar, String beastName, String uebungen, int workoutlaenge) {
-        this.avatar = avatar;
+    public WorkoutModel(){}
+
+    public WorkoutModel(String beastName, String uebungen, int workoutlaenge) {
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
