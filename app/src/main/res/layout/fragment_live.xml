@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Live">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/liveTextView"
@@ -21,15 +20,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="44dp"
+        android:background="#434343"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/liveWorkoutsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="630dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="450dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/liveTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/liveobjekt" />
 
 

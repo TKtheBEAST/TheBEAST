@@ -41,6 +41,7 @@ public class LiveFragment extends Fragment {
             @Override
             public void onChanged(List<WorkoutModel> workoutModel) {
                 adapter.setWorkouts(workoutModel);
+                adapter.notifyDataSetChanged();
                 Log.i(TAG, "Anzahl workouts " + workoutModel.size());
 
             }
