@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.entitys.Workout;
 
@@ -35,17 +36,16 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { ;
         WorkoutModel currentWorkout = workouts.get(position);
-        Log.i(TAG,"recycler view wird erstellt");
-        holder.avatar.setImageResource(currentWorkout.getAvatar());
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());
+        String imageUrl = workouts.get(position).getAvatar();
 
-        /*for(int i=0;i<currentWorkout.getUebungen().size();i++){
-            holder.workouts.append(currentWorkout.getUebungen().get(i));
-            if(currentWorkout.getUebungen().size() > i+1){
-                holder.workouts.append(", ");
-            }
-        }*/
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(holder.avatar);
+
 
     }
 
@@ -64,14 +64,14 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView avatar;
-        TextView beastName;
-        TextView workoutsTextView;
-        TextView standort;
+        private ImageView avatar;
+        private TextView beastName;
+        private TextView workoutsTextView;
+        private TextView standort;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            avatar = itemView.findViewById(R.id.avatarimageView);
+            avatar = itemView.findViewById(R.id.avatarimageViewLive);
             beastName = itemView.findViewById(R.id.beastNameTextView);
             workoutsTextView = itemView.findViewById(R.id.workoutTextView);
             standort = itemView.findViewById(R.id.standortTextView);

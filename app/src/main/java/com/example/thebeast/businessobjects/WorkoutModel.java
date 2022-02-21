@@ -7,7 +7,7 @@ public class WorkoutModel {
     @DocumentId
     private String id;
 
-    private int avatar;
+    private String avatar;
     private String beastName;
     private String uebungen;
     private int workoutlaenge;
@@ -22,6 +22,7 @@ public class WorkoutModel {
         this.workoutlaenge = workoutlaenge;
     }
 
+
     public void setId(String id) {
         this.id = id;
     }
@@ -30,7 +31,7 @@ public class WorkoutModel {
         return id;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 

@@ -1,6 +1,7 @@
 package com.example.thebeast;
 
 import android.app.AlertDialog;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
@@ -24,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment {
@@ -190,25 +195,31 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-           /*     int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
-                String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
+
+                String beastName = "testBeast";
+
+                //int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
+                //String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
                 ArrayList<String> workoutsList;
 
                 workoutsList = homeFragmentViewModel.getGewaehlteTrainingsName();
                 String uebungen = "";
                 for (int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsName().size(); i++){
                     uebungen = uebungen + workoutsList.get(i);
-                    if(workoutsList.size() > i+1){
+                    if(workoutsList.size() > i){
                         uebungen = uebungen + ", ";
                     }
                 }
+                Log.i(TAG, "lily" + uebungen);
+                //Testlaenge
+                int workoutlaenge = 2;
 
-                int workoutlaenge = HomeFragmentViewModel.getCurrentUser().getWorkoutlaenge();
-                Workout workout = new Workout(avatar, beastName,uebungen,workoutlaenge);
+                WorkoutModel workout = new WorkoutModel(beastName,uebungen,workoutlaenge);
 
+                Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                 homeFragmentViewModel.insertWorkout(workout);
 
-                dialog.dismiss();*/
+                dialog.dismiss();
             }
         });
 
