@@ -1,7 +1,6 @@
 package com.example.thebeast;
 
 import android.app.AlertDialog;
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,16 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
-import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
-import com.example.thebeast.viewmodel.LiveFragmentViewModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.util.ArrayList;
 
@@ -35,7 +30,6 @@ public class HomeFragment extends Fragment {
 
 
     private HomeFragmentViewModel homeFragmentViewModel;
-    private LiveFragmentViewModel liveFragmentViewModel;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
@@ -206,16 +200,15 @@ public class HomeFragment extends Fragment {
                 String uebungen = "";
                 for (int i=0; i<homeFragmentViewModel.getGewaehlteTrainingsName().size(); i++){
                     uebungen = uebungen + workoutsList.get(i);
-                    if(workoutsList.size() > i){
-                        uebungen = uebungen + ", ";
+                    if(workoutsList.size() > i+1){
+                       uebungen = uebungen + ", ";
                     }
                 }
-                Log.i(TAG, "lily" + uebungen);
+
                 //Testlaenge
                 int workoutlaenge = 2;
 
                 WorkoutModel workout = new WorkoutModel(beastName,uebungen,workoutlaenge);
-
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                 homeFragmentViewModel.insertWorkout(workout);
 

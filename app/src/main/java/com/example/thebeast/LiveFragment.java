@@ -37,16 +37,8 @@ public class LiveFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         liveFragmentViewModel = new ViewModelProvider(getActivity()).get(LiveFragmentViewModel.class);
-        liveFragmentViewModel.getWorkoutListModelData().observe(getViewLifecycleOwner(), new Observer<List<WorkoutModel>>() {
-            @Override
-            public void onChanged(List<WorkoutModel> workoutModel) {
-                adapter.setWorkouts(workoutModel);
-                adapter.notifyDataSetChanged();
-                Log.i(TAG, "Anzahl workouts " + workoutModel.size());
-
-            }
-
-        });
+        List<WorkoutModel> workouts = liveFragmentViewModel.getAllWorkouts();
+        adapter.setWorkouts(workouts);
 
 
 

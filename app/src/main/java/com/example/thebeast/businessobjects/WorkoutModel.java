@@ -14,6 +14,7 @@ public class WorkoutModel {
     //standort;
 
 
+
     public WorkoutModel(){}
 
     public WorkoutModel(String beastName, String uebungen, int workoutlaenge) {
@@ -33,6 +34,11 @@ public class WorkoutModel {
 
     public String getAvatar() {
         return avatar;
+    }
+
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getBeastName() {

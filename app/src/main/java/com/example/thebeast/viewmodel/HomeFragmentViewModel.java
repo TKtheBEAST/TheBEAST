@@ -1,6 +1,7 @@
 package com.example.thebeast.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,14 +17,12 @@ import java.util.ArrayList;
 
 public class HomeFragmentViewModel extends ViewModel {
 
+    private static final String TAG = "HomeFragmentViewModel";
     private ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
     private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
 
-    private WorkoutRepositoryImpl workoutRepositoryImpl;
-    private UserRepositoryImpl userRepositoryImpl;
 
-    private static User currentUser;
-
+    private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl();
 
     public ArrayList<Integer> getGewaehlteTrainingsList() {
         return gewaehlteTrainingsList;
@@ -44,10 +43,13 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     public void insertWorkout (WorkoutModel workout){
-        workoutRepositoryImpl.insert(workout);
+        try {
+            Log.i(TAG,"lily"+workout.getBeastName());
+            workoutRepositoryImpl.insert(workout);
+        }catch (NullPointerException e){
+            System.err.println(TAG+" Nullpointer Exception");
+        }
     }
-
-    public static User getCurrentUser(){return currentUser;}
 
 
 }

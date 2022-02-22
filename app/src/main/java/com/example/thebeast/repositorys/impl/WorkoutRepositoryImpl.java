@@ -1,19 +1,12 @@
 package com.example.thebeast.repositorys.impl;
 
-import android.app.Application;
-import android.nfc.Tag;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.businessobjects.WorkoutModel;
-import com.example.thebeast.daos.WorkoutDao;
-import com.example.thebeast.entitys.Workout;
 import com.example.thebeast.repositorys.WorkoutRepository;
-import com.example.thebeast.roomdatabase.TheBeastDataBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -30,24 +24,24 @@ import java.util.Map;
 public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     private static final String TAG = "WorkoutRepositoryImpl";
-    private OnFirestoreTaskComplete onFirestoreTaskComplete;
+    private List<WorkoutModel> allWorkoutModels;
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference workoutRef = firebaseFirestore.collection("Workouts");
 
-    public WorkoutRepositoryImpl(OnFirestoreTaskComplete onFirestoreTaskComplete) {
-        this.onFirestoreTaskComplete = onFirestoreTaskComplete;
-    }
+
 
     public void insert(WorkoutModel workout) {
 
+        Log.i(TAG,"lily"+workout.getBeastName());
+
         //add new Workout with a generated id
         Map<String, Object> data = new HashMap();
-        data.put("beasName",workout.getBeastName());
+        data.put("beastName",workout.getBeastName());
         data.put("uebungen",workout.getUebungen());
         data.put("workoutlaenge",workout.getWorkoutlaenge());
 
-        workoutRef
+        firebaseFirestore.collection("Workouts")
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>(){
 
@@ -72,26 +66,28 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     }
 
-    public void getAllWorkouts() {
+    public List<WorkoutModel> getAllWorkouts() {
         workoutRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    onFirestoreTaskComplete.workoutListDataAdded(task.getResult().toObjects(WorkoutModel.class));
+                    task.getResult().toObjects(WorkoutModel.class);
+                    for(QueryDocumentSnapshot document: task.getResult()){
+                        WorkoutModel newworkout = document.toObject(WorkoutModel.class);
+                        allWorkoutModels.add(newworkout);
+                    }
                     Log.i(TAG,"Alle workouts geladen");
                 } else {
-                    onFirestoreTaskComplete.onError(task.getException());
                     Log.i(TAG,"Workouts konnten nicht geladen werden");
 
                 }
             }
+
         });
+
+        return allWorkoutModels;
     }
 
-    public interface OnFirestoreTaskComplete {
-        void workoutListDataAdded(List<WorkoutModel> workoutModelList);
-        void onError(Exception e);
-    }
 
 }

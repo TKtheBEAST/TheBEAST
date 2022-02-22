@@ -51,13 +51,16 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     @Override
     public int getItemCount() {
-        return workouts.size();
+        if(workouts.size() == 0){
+            return 0;
+        }else {
+            return workouts.size();
+        }
     }
 
 
     public void setWorkouts(List<WorkoutModel> workouts){
         this.workouts = workouts;
-        notifyDataSetChanged();
 
     }
 
