@@ -28,8 +28,7 @@ public class LiveFragmentViewModel extends ViewModel {
         workoutRepositoryImpl.delete(workout);
     }
 
-    public List<WorkoutModel> getAllWorkouts(){
-
+    public LiveData<List<WorkoutModel>> getAllWorkouts(){
         return workoutRepositoryImpl.getAllWorkouts();
     }
 

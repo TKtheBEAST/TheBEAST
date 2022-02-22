@@ -51,7 +51,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     @Override
     public int getItemCount() {
-        if(workouts.size() == 0){
+        if(workouts == null){
             return 0;
         }else {
             return workouts.size();
