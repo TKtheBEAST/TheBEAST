@@ -125,4 +125,8 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     }
 
 
+    public void OnFirestoreTaskComplete(){
+    }
+
+
 }

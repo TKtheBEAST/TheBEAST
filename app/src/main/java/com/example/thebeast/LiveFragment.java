@@ -24,6 +24,8 @@ import static android.content.ContentValues.TAG;
 public class LiveFragment extends Fragment {
 
     private LiveFragmentViewModel liveFragmentViewModel;
+    RecyclerView recyclerView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,9 +48,12 @@ public class LiveFragment extends Fragment {
             }
         });
 
-
-
         return view;
+    }
+
+    public void onStart() {
+        super.onStart();
+
     }
 
 }
