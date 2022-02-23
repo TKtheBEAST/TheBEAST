@@ -67,30 +67,6 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     }
 
-    public void loadAllWorkouts() {
-        List<WorkoutModel> allWorkoutModelsSample = new ArrayList<>();
-
-        workoutRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    task.getResult().toObjects(WorkoutModel.class);
-                    for(QueryDocumentSnapshot document: task.getResult()){
-                        WorkoutModel newworkout = document.toObject(WorkoutModel.class);
-                        allWorkoutModelsSample.add(newworkout);
-                    }
-                    Log.i(TAG,"Alle workouts geladen");
-                } else {
-                    Log.i(TAG,"Workouts konnten nicht geladen werden");
-
-                }
-            }
-
-        });
-        allWorkoutModels.setValue(allWorkoutModelsSample);
-
-    }
 
     public LiveData<List<WorkoutModel>> getAllWorkouts(){
         if (allWorkoutModels == null){
@@ -124,8 +100,9 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         }
     }
 
-
-    public void OnFirestoreTaskComplete(){
+    public interface OnFirstoreTaskComplete {
+        void workoutModelsListAdded (LiveData<List<WorkoutModel>> workoutModels);
+        void onError (Exception e);
     }
 
 
