@@ -1,89 +1,129 @@
 package com.example.thebeast;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.view.View;
-
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class StartActivity extends AppCompatActivity {
 
-    private ViewPager2 viewPager;
-    private FragmentStateAdapter pagerAdapter;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
+                    onSignInResult(result);
+                }
+            }
+    );
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_fragment);
-
-        // Instantiate a ViewPager2 and a PagerAdapter.
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(2,false);
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
+        setContentView(R.layout.activity_start);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (viewPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
+
+    public void createSignInIntent() {
+        // [START auth_fui_create_intent]
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build());
+
+        // Create and launch sign-in intent
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
+        // [END auth_fui_create_intent]
+    }
+
+
+
+    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
+        if (result.getResultCode() == RESULT_OK) {
+            // Successfully signed in
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            // ...
         } else {
-            // Otherwise, select the previous step.
-            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
         }
     }
 
-    public void wechselZuKalenderFragment(View view){
-
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1,false);
+    public void signOut() {
+        // [START auth_fui_signout]
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+        // [END auth_fui_signout]
     }
 
-    public void wechselZuEinstellungenFragment(View view){
-
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(0,false);
+    public void delete() {
+        // [START auth_fui_delete]
+        AuthUI.getInstance()
+                .delete(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+        // [END auth_fui_delete]
     }
 
-    public void wechselZuLiveFragment(View view){
+    public void themeAndLogo() {
+        List<AuthUI.IdpConfig> providers = Collections.emptyList();
 
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(3,false);
+        // [START auth_fui_theme_logo]
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+              //  .setLogo(R.drawable.my_great_logo)      // Set logo drawable
+              //  .setTheme(R.style.MySuperAppTheme)      // Set theme
+                .build();
+        signInLauncher.launch(signInIntent);
+        // [END auth_fui_theme_logo]
     }
 
-    public void wechselZuFreundeFragment(View view){
+    public void privacyAndTerms() {
+        List<AuthUI.IdpConfig> providers = Collections.emptyList();
 
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(4,false);
+        // [START auth_fui_pp_tos]
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setTosAndPrivacyPolicyUrls(
+                        "https://example.com/terms.html",
+                        "https://example.com/privacy.html")
+                .build();
+        signInLauncher.launch(signInIntent);
+        // [END auth_fui_pp_tos]
     }
-
-    public void wechselZuHomeFragment(View view){
-
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new CollectionPagerAdapter(this);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(2,false);
-    }
-
 }
