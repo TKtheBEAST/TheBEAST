@@ -9,12 +9,20 @@ import com.example.thebeast.repositorys.impl.WorkoutRepositoryImpl;
 
 import java.util.List;
 
-public class LiveFragmentViewModel extends ViewModel {
+public class LiveFragmentViewModel extends ViewModel implements WorkoutRepositoryImpl.OnFirstoreTaskComplete {
 
 
 
-    private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl();
+    private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl(this);
+    private MutableLiveData<List<WorkoutModel>> workouts = new MutableLiveData<>();
 
+    public LiveData<List<WorkoutModel>> getWorkouts() {
+        return workouts;
+    }
+
+    public LiveFragmentViewModel(){
+        workoutRepositoryImpl.getAllWorkouts();
+    }
 
     public void insertWorkout (WorkoutModel workout){
         workoutRepositoryImpl.insert(workout);
@@ -28,9 +36,14 @@ public class LiveFragmentViewModel extends ViewModel {
         workoutRepositoryImpl.delete(workout);
     }
 
-    public LiveData<List<WorkoutModel>> getAllWorkouts(){
-        return workoutRepositoryImpl.getAllWorkouts();
+
+    @Override
+    public void workoutModelsListAdded(List<WorkoutModel> workoutModels) {
+        workouts.setValue(workoutModels);
     }
 
+    @Override
+    public void onError(Exception e) {
 
+    }
 }

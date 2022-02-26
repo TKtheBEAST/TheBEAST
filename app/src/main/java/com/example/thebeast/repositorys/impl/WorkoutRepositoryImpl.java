@@ -30,7 +30,15 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference workoutRef = firebaseFirestore.collection("Workouts");
 
-    private MutableLiveData<List<WorkoutModel>> allWorkoutModels;
+    private OnFirstoreTaskComplete onFirstoreTaskComplete;
+
+
+    public WorkoutRepositoryImpl(OnFirstoreTaskComplete onFirstoreTaskComplete){
+        this.onFirstoreTaskComplete = onFirstoreTaskComplete;
+    }
+
+    public WorkoutRepositoryImpl(){}
+
 
     public void insert(WorkoutModel workout) {
 
@@ -68,40 +76,25 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     }
 
 
-    public LiveData<List<WorkoutModel>> getAllWorkouts(){
-        if (allWorkoutModels == null){
-            allWorkoutModels = new MutableLiveData<>();
+    public void getAllWorkouts(){
 
+        workoutRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-            workoutRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    List<WorkoutModel> allWorkoutModelsSample = new ArrayList<>();
-
-                    if (task.isSuccessful()) {
-                        for(QueryDocumentSnapshot document: task.getResult()){
-                            WorkoutModel newworkout = document.toObject(WorkoutModel.class);
-                            allWorkoutModelsSample.add(newworkout);
-                        }
-                        allWorkoutModels.setValue(allWorkoutModelsSample);
-                        Log.i(TAG,"Alle workouts geladen");
-                    } else {
-                        Log.i(TAG,"Workouts konnten nicht geladen werden");
-
-                    }
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    onFirstoreTaskComplete.workoutModelsListAdded(task.getResult().toObjects(WorkoutModel.class));
+                    Log.i(TAG,"Alle workouts geladen");
+                } else {
+                    onFirstoreTaskComplete.onError(task.getException());
+                    Log.i(TAG,"Workouts konnten nicht geladen werden");
                 }
-
-            });
-            return allWorkoutModels;
-
-        }else {
-            return allWorkoutModels;
-        }
+             }
+        });
     }
 
     public interface OnFirstoreTaskComplete {
-        void workoutModelsListAdded (LiveData<List<WorkoutModel>> workoutModels);
+        void workoutModelsListAdded (List<WorkoutModel> workoutModels);
         void onError (Exception e);
     }
 

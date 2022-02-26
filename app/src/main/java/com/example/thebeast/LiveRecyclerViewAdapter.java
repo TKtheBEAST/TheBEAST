@@ -1,6 +1,5 @@
 package com.example.thebeast;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thebeast.businessobjects.WorkoutModel;
-import com.example.thebeast.entitys.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 

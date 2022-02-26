@@ -1,10 +1,6 @@
 package com.example.thebeast.repositorys;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.thebeast.businessobjects.WorkoutModel;
-
-import java.util.List;
 
 public interface WorkoutRepository {
 
@@ -14,5 +10,5 @@ public interface WorkoutRepository {
 
     void delete(WorkoutModel workout);
 
-    LiveData<List<WorkoutModel>> getAllWorkouts();
+    void getAllWorkouts();
 }
