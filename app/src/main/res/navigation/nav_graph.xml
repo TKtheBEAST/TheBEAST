@@ -3,38 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreen">
-
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.thebeast.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrierenFragment"
+            app:destination="@id/registrierenFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_passwortVergessenFragment"
+            app:destination="@id/passwortVergessenFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrierenFragment"
+        android:name="com.example.thebeast.RegistrierenFragment"
+        android:label="fragment_registrieren"
+        tools:layout="@layout/fragment_registrieren" >
+        <action
+            android:id="@+id/action_registrierenFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwortVergessenFragment"
+        android:name="com.example.thebeast.PasswortVergessenFragment"
+        android:label="fragment_passwort_vergessen"
+        tools:layout="@layout/fragment_passwort_vergessen" >
+        <action
+            android:id="@+id/action_passwortVergessenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.thebeast.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <activity
-        android:id="@+id/testFragment"
+        android:id="@+id/mainActivity"
         android:name="com.example.thebeast.MainActivity"
-        android:label="TestFragment" >
-        <action
-            android:id="@+id/action_testFragment_to_login"
-            app:destination="@id/login" />
-    </activity>
-    <fragment
-        android:id="@+id/splashScreen"
-        android:label="SplashScreen" >
-        <action
-            android:id="@+id/action_splashScreen_to_testFragment"
-            app:destination="@id/testFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/login"
-        android:label="login" >
-        <action
-            android:id="@+id/action_login_to_registrieren"
-            app:destination="@id/registrieren" />
-        <action
-            android:id="@+id/action_login_to_testFragment"
-            app:destination="@id/testFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registrieren"
-        android:label="registrieren" >
-        <action
-            android:id="@+id/action_registrieren_to_testFragment"
-            app:destination="@id/testFragment" />
-    </fragment>
+        android:label="MainActivity" />
 </navigation>
