@@ -1,5 +1,6 @@
 package com.example.thebeast;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -117,12 +119,19 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                 if(task.isSuccessful()){
                     loginProgressBar.setVisibility(GONE);
-                    Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                    if(user.isEmailVerified()){
+                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                    }else{
+                        user.sendEmailVerification();
+                        Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
+                    }
                 }else{
                     loginProgressBar.setVisibility(GONE);
-                    Toast.makeText(getView().getContext(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG);
+                    Toast.makeText(getActivity(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG).show();
                 }
             }
         });

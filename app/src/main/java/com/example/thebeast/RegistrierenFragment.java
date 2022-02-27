@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -161,21 +162,24 @@ public class RegistrierenFragment extends Fragment {
                                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                         if(task.isSuccessful()){
-                                            Toast.makeText(getView().getContext(), beastName+" wurde erfolgreich hinzugefügt!", Toast.LENGTH_LONG);
+                                            user.sendEmailVerification();
+                                            Toast.makeText(getView().getContext(), beastName+" wurde erfolgreich hinzugefügt!" +
+                                                    " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
                                             Log.d(TAG,"User wurde hinzugefügt ");
                                             registrierenProgressBar.setVisibility(GONE);
                                             Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
 
                                         }else{
-                                            Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG);
+                                            Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
                                             Log.d(TAG,"User konnte nicht hinzugefuegt werden Firestore");
                                             registrierenProgressBar.setVisibility(GONE);
                                         }
                                     }
                                 });
                     }else{
-                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG);
+                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
                         Log.d(TAG,"User konnte nicht hinzugefuegt werden Firebase Auth");
                         registrierenProgressBar.setVisibility(GONE);
                     }

@@ -73,11 +73,11 @@ public class PasswortVergessenFragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     pwVprogressBar.setVisibility(GONE);
-                    Toast.makeText(getView().getContext(), "Öffne deine Mails um das Passowrt zurückzusetzen", Toast.LENGTH_LONG);
+                    Toast.makeText(getView().getContext(), "Öffne deine Mails um das Passowrt zurückzusetzen", Toast.LENGTH_LONG).show();
                     Navigation.findNavController(getView()).navigate(R.id.action_passwortVergessenFragment_to_loginFragment);
                 }else{
                     pwVprogressBar.setVisibility(GONE);
-                    Toast.makeText(getView().getContext(), "Versuche es noch einmal", Toast.LENGTH_LONG);
+                    Toast.makeText(getView().getContext(), "Versuche es noch einmal", Toast.LENGTH_LONG).show();
                 }
             }
         });

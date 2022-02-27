@@ -260,7 +260,7 @@ public class HomeFragment extends Fragment {
             gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
             gewaehltesTrainingRecyclerView.setHasFixedSize(true);
         } else {
-            Toast.makeText(v.getContext(), "Training bereits gewählt!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getView().getContext(), "Training bereits gewählt!", Toast.LENGTH_LONG).show();
         }
     }
 
