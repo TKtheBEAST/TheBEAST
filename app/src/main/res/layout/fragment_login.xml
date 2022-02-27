@@ -16,6 +16,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="32dp"
             android:ems="10"
+            android:hint="E-Mail"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/passwortLogET"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,6 +29,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="35dp"
             android:ems="10"
+            android:hint="Passwort"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/loginButtonLog"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +74,7 @@
             android:layout_width="159dp"
             android:layout_height="93dp"
             android:layout_marginTop="120dp"
+            android:layout_marginBottom="64dp"
             android:fontFamily="@font/black_ops_one"
             android:gravity="center"
             android:maxLines="2"
@@ -82,7 +85,7 @@
             app:layout_constraintBottom_toTopOf="@+id/emailPwvET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/loginProgressBar"
