@@ -39,12 +39,12 @@
             android:layout_marginBottom="10dp"
             android:text="Registrieren"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/registrierenLogTV"
+            app:layout_constraintBottom_toTopOf="@+id/loginRegTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/registrierenLogTV"
+            android:id="@+id/loginRegTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"

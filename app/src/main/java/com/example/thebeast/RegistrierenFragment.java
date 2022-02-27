@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thebeast.businessobjects.UserModel;
@@ -48,12 +49,8 @@ public class RegistrierenFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private Button registrierenButton;
-    private EditText beastNameEditText;
-    private EditText beastSpruchEditText;
-    private EditText emailEditText;
-    private EditText passwort1EditText;
-    private EditText passwort2EditText;
-
+    private EditText beastNameEditText,beastSpruchEditText,emailEditText,passwort1EditText,passwort2EditText;
+    private TextView loginTV;
     private ProgressBar registrierenProgressBar;
 
 
@@ -73,6 +70,7 @@ public class RegistrierenFragment extends Fragment {
         passwort1EditText = view.findViewById(R.id.password1RegET);
         passwort2EditText = view.findViewById(R.id.password2RegET);
         registrierenProgressBar = view.findViewById(R.id.registrierenProgressBar);
+        loginTV = view.findViewById(R.id.loginRegTV);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -83,6 +81,12 @@ public class RegistrierenFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 registrieren();
+            }
+        });
+        loginTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_registrierenFragment_to_loginFragment);
             }
         });
         return view;

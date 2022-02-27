@@ -2,25 +2,37 @@ package com.example.thebeast;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 
 public class LoginFragment extends Fragment {
 
     private Button loginButton;
-    private EditText emailEditText;
-    private EditText passwortEditText;
+    private EditText emailEditText, passwortEditText;
+    private TextView pwVergessenTextView, registrierenTextView;
+    private ProgressBar loginProgressBar;
 
-    private TextView pwVergessenTextView;
-    private TextView registrierenTextView;
+    private FirebaseAuth mAuth;
 
     public LoginFragment() {}
 
@@ -35,8 +47,10 @@ public class LoginFragment extends Fragment {
         emailEditText = view.findViewById(R.id.emailLogET);
         passwortEditText = view.findViewById(R.id.passwortLogET);
         pwVergessenTextView = view.findViewById(R.id.pwVergessenTV);
-        registrierenTextView = view.findViewById(R.id.registrierenLogTV);
+        registrierenTextView = view.findViewById(R.id.loginRegTV);
+        loginProgressBar = view.findViewById(R.id.loginProgressBar);
 
+        mAuth = FirebaseAuth.getInstance();
 
         registrierenTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,11 +59,68 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        pwVergessenTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_passwortVergessenFragment);
+            }
+        });
 
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+            }
+        });
 
 
 
         return view;
+    }
+
+    private void userLogin() {
+        String email = emailEditText.getText().toString().trim();
+        String passwort = passwortEditText.getText().toString().trim();
+
+
+        if(email.isEmpty()){
+            emailEditText.setError("Bitte gebe deine Email an");
+            emailEditText.requestFocus();
+            return;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            emailEditText.setError("Bitte gebe eine richtige Email an");
+            emailEditText.requestFocus();
+            return;
+        }
+        if(passwort.isEmpty()){
+            passwortEditText.setError("Bitte gebe ein Passwort ein");
+            passwortEditText.requestFocus();
+            return;
+        }
+        if(passwort.length() < 6){
+            passwortEditText.setError("Das Passwort muss mindestens 6 zeichen enthalten");
+            passwortEditText.requestFocus();
+            return;
+        }
+
+        loginProgressBar.setVisibility(VISIBLE);
+
+        mAuth.signInWithEmailAndPassword(email,passwort).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    loginProgressBar.setVisibility(GONE);
+                    Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                }else{
+                    loginProgressBar.setVisibility(GONE);
+                    Toast.makeText(getView().getContext(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG);
+                }
+            }
+        });
+
     }
 
 }
