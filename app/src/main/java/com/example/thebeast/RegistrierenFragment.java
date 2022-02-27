@@ -2,63 +2,181 @@ package com.example.thebeast;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegistrierenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.thebeast.businessobjects.UserModel;
+import com.example.thebeast.viewmodel.RegistrierenFragmentViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
+
+
 public class RegistrierenFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RegistrierenFragmentViewModel registrierenFragmentViewModel;
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private CollectionReference userRef = firebaseFirestore.collection("User");
+    private final int standardWorkoutlaenge = 2;
 
-    public RegistrierenFragment() {
-        // Required empty public constructor
-    }
+    private NavController nav;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment registrieren.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RegistrierenFragment newInstance(String param1, String param2) {
-        RegistrierenFragment fragment = new RegistrierenFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FirebaseAuth mAuth;
+
+    private Button registrierenButton;
+    private EditText beastNameEditText;
+    private EditText beastSpruchEditText;
+    private EditText emailEditText;
+    private EditText passwort1EditText;
+    private EditText passwort2EditText;
+
+    private ProgressBar registrierenProgressBar;
+
+
+
+    public RegistrierenFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registrieren, container, false);
+        View view = inflater.inflate(R.layout.fragment_registrieren, container, false);
+
+
+        registrierenButton = view.findViewById(R.id.registrierenButton);
+        beastNameEditText = view.findViewById(R.id.beastnameRegET);
+        beastSpruchEditText = view.findViewById(R.id.beastSpruchRegET);
+        emailEditText = view.findViewById(R.id.emailRegET);
+        passwort1EditText = view.findViewById(R.id.password1RegET);
+        passwort2EditText = view.findViewById(R.id.password2RegET);
+        registrierenProgressBar = view.findViewById(R.id.registrierenProgressBar);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        registrierenButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                registrieren();
+            }
+        });
+        return view;
     }
+
+    public void registrieren (){
+        String beastName = beastNameEditText.getText().toString().trim();
+        String beastSpruch = beastSpruchEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String passwort1 = passwort1EditText.getText().toString().trim();
+        String passwort2 = passwort2EditText.getText().toString().trim();
+
+        if(beastName.isEmpty()){
+            beastNameEditText.setError("Bitte gebe einen Spitznamen ein");
+            beastNameEditText.requestFocus();
+            return;
+        }
+        if(beastSpruch.isEmpty()){
+            beastSpruchEditText.setError("Sag den anderen was du für ein Beast bist");
+            beastSpruchEditText.requestFocus();
+            return;
+        }
+        if(email.isEmpty()){
+            emailEditText.setError("Bitte gebe deine Email an");
+            emailEditText.requestFocus();
+            return;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            emailEditText.setError("Bitte gebe eine richtige Email an");
+            emailEditText.requestFocus();
+            return;
+        }
+        if(passwort1.isEmpty()){
+            passwort1EditText.setError("Bitte gebe ein Passwort ein");
+            passwort2EditText.requestFocus();
+            return;
+        }
+        if(passwort1.length() < 6){
+            passwort1EditText.setError("Das Passwort muss mindestens 6 zeichen enthalten");
+            passwort1EditText.requestFocus();
+            return;
+        }
+        if(!passwort2.equals(passwort1)){
+            passwort2EditText.setError("Die Passwörter stimmen nicht überein");
+            passwort2EditText.requestFocus();
+            return;
+        }
+
+        registrierenProgressBar.setVisibility(View.VISIBLE);
+
+        //über Viemodel und Repository??
+        //registrierenFragmentViewModel.createUserWithEmailAndPassword(beastName, beastSpruch, email, passwort2);
+
+        mAuth.createUserWithEmailAndPassword(email, passwort2)
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, 0);
+                        Map<String,Object> data = new HashMap<>();
+                        data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        data.put("beastName", user.getBeastName());
+                        data.put("beastSpruch", user.getSpruch());
+                        data.put("beastEmail", user.getEmail());
+                        data.put("workoutlaenge", user.getWorkoutlaenge());
+
+
+
+                        userRef.add(data)
+                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(getView().getContext(), beastName+" wurde erfolgreich hinzugefügt!", Toast.LENGTH_LONG);
+                                            Log.d(TAG,"User wurde hinzugefügt ");
+                                            registrierenProgressBar.setVisibility(GONE);
+                                            Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+
+                                        }else{
+                                            Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG);
+                                            Log.d(TAG,"User konnte nicht hinzugefuegt werden Firestore");
+                                            registrierenProgressBar.setVisibility(GONE);
+                                        }
+                                    }
+                                });
+                    }else{
+                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG);
+                        Log.d(TAG,"User konnte nicht hinzugefuegt werden Firebase Auth");
+                        registrierenProgressBar.setVisibility(GONE);
+                    }
+
+                }
+            });
+
+    }
+
 }

@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddressLog"
+            android:id="@+id/emailLogET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginBottom="16dp"
@@ -44,7 +44,7 @@
             android:layout_height="54dp"
             android:layout_marginBottom="18dp"
             android:text="@string/passwort_zurueck_setzen"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddressLog"
+            app:layout_constraintBottom_toTopOf="@+id/emailLogET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

@@ -21,11 +21,11 @@ public class UserModel {
 
     public UserModel(){}
 
-    public UserModel(String beastName, String email, int workoutlaenge, String spruch, int avatar) {
+    public UserModel(String beastName, String beastSpruch, String email, int workoutlaenge, int avatar) {
         this.beastName = beastName;
         this.email = email;
         this.workoutlaenge = workoutlaenge;
-        this.spruch = spruch;
+        this.spruch = beastSpruch;
         this.avatar = avatar;
     }
 

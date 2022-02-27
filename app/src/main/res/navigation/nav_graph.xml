@@ -25,8 +25,8 @@
         android:label="fragment_registrieren"
         tools:layout="@layout/fragment_registrieren" >
         <action
-            android:id="@+id/action_registrierenFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            android:id="@+id/action_registrierenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwortVergessenFragment"

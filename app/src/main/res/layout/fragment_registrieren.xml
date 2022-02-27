@@ -11,43 +11,43 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/editTextTextEmailAddressReg"
+            android:id="@+id/emailRegET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:ems="10"
             android:layout_marginBottom="15dp"
             android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPasswordReg"
+            app:layout_constraintBottom_toTopOf="@+id/password1RegET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPasswordReg"
+            android:id="@+id/password1RegET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:ems="10"
             android:layout_marginBottom="15dp"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+            app:layout_constraintBottom_toTopOf="@+id/password2RegET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/RegistrierenButton"
+            android:id="@+id/registrierenButton"
             android:layout_width="257dp"
             android:layout_height="54dp"
             android:layout_marginBottom="10dp"
             android:text="Registrieren"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/registrierenTv"
+            app:layout_constraintBottom_toTopOf="@+id/registrierenLogTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/registrierenTv"
+            android:id="@+id/registrierenLogTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="148dp"
+            android:layout_marginBottom="64dp"
             android:text="Login"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,6 @@
             android:id="@+id/textView5"
             android:layout_width="170dp"
             android:layout_height="87dp"
-            android:layout_marginBottom="48dp"
             android:fontFamily="@font/black_ops_one"
             android:gravity="center"
             android:maxLines="2"
@@ -66,57 +65,71 @@
             android:text="THE BEAST"
             android:textColor="#FF0000"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintBottom_toTopOf="@+id/avatarRegIV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.639" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/beastnameRegET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="92dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Beastname"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toTopOf="@+id/beastSpruchRegET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.548"
-            app:layout_constraintStart_toEndOf="@+id/imageView2" />
+            app:layout_constraintStart_toEndOf="@+id/avatarRegIV" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/beastSpruchRegET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:ems="10"
             android:layout_marginBottom="15dp"
             android:inputType="textPersonName"
             android:text="Beastspruch"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddressReg"
+            app:layout_constraintBottom_toTopOf="@+id/emailRegET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/avatarRegIV"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toTopOf="@+id/beastSpruchRegET"
             app:layout_constraintStart_toStartOf="parent"
             tools:src="@tools:sample/avatars" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/password2RegET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginBottom="25dp"
             android:ems="10"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/RegistrierenButton"
+            app:layout_constraintBottom_toTopOf="@+id/registrierenButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/registrierenProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:progressTint="@color/beast_rot"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

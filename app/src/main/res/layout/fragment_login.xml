@@ -11,41 +11,41 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/editTextTextEmailAddressLog"
+            android:id="@+id/emailLogET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginBottom="32dp"
             android:ems="10"
             android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPasswordLog"
+            app:layout_constraintBottom_toTopOf="@+id/passwortLogET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPasswordLog"
+            android:id="@+id/passwortLogET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginBottom="35dp"
             android:ems="10"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+            app:layout_constraintBottom_toTopOf="@+id/loginButtonLog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/LoginButton"
+            android:id="@+id/loginButtonLog"
             android:layout_width="257dp"
             android:layout_height="54dp"
             android:layout_marginBottom="32dp"
             android:text="Login"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/registrierenTv"
+            app:layout_constraintBottom_toTopOf="@+id/registrierenLogTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/registrierenTv"
+            android:id="@+id/registrierenLogTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -53,10 +53,10 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
+            app:layout_constraintTop_toBottomOf="@+id/loginButtonLog" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/pwVergessenTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
@@ -65,7 +65,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registrierenTv" />
+            app:layout_constraintTop_toBottomOf="@+id/registrierenLogTV" />
 
         <TextView
             android:id="@+id/textView5"
@@ -79,7 +79,7 @@
             android:text="THE BEAST"
             android:textColor="#FF0000"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddressLog"
+            app:layout_constraintBottom_toTopOf="@+id/emailLogET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
