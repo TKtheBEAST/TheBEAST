@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import static android.view.View.GONE;
@@ -130,8 +132,22 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
                     }
                 }else{
-                    loginProgressBar.setVisibility(GONE);
-                    Toast.makeText(getActivity(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG).show();
+                    try {
+                        throw task.getException();
+                    } catch(FirebaseAuthInvalidUserException e){
+                        loginProgressBar.setVisibility(GONE);
+                        emailEditText.setError("User existiert nicht oder ist nicht vweiter valide. " +
+                                "Bitte noche einmal registrieren.");
+                        emailEditText.requestFocus();
+                    } catch (FirebaseAuthInvalidCredentialsException e){
+                        loginProgressBar.setVisibility(GONE);
+                        emailEditText.setError("Überprüfe deine Benutzerdaten.");
+                        emailEditText.requestFocus();
+                    } catch (Exception e){
+                        loginProgressBar.setVisibility(GONE);
+                        Toast.makeText(getActivity(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });

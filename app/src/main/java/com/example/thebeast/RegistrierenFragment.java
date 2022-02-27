@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -159,29 +161,41 @@ public class RegistrierenFragment extends Fragment {
 
 
                         userRef.add(data)
-                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                        if(task.isSuccessful()){
-                                            user.sendEmailVerification();
-                                            Toast.makeText(getView().getContext(), beastName+" wurde erfolgreich hinzugefügt!" +
-                                                    " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
-                                            Log.d(TAG,"User wurde hinzugefügt ");
-                                            registrierenProgressBar.setVisibility(GONE);
-                                            Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    if(task.isSuccessful()){
+                                        user.sendEmailVerification();
+                                        Toast.makeText(getView().getContext(), beastName+" wurde erfolgreich hinzugefügt!" +
+                                                " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
+                                        Log.d(TAG,"User wurde hinzugefügt ");
+                                        registrierenProgressBar.setVisibility(GONE);
+                                        Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
 
-                                        }else{
-                                            Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
-                                            Log.d(TAG,"User konnte nicht hinzugefuegt werden Firestore");
-                                            registrierenProgressBar.setVisibility(GONE);
-                                        }
+                                    }else{
+                                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                                        Log.d(TAG,"User konnte nicht hinzugefuegt werden Firestore");
+                                        registrierenProgressBar.setVisibility(GONE);
                                     }
-                                });
+                                }
+                            });
                     }else{
-                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
-                        Log.d(TAG,"User konnte nicht hinzugefuegt werden Firebase Auth");
-                        registrierenProgressBar.setVisibility(GONE);
+                        try{
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidCredentialsException e){
+                            registrierenProgressBar.setVisibility(GONE);
+                            emailEditText.setError("Deine Email ist nicht valide oder ist bereits vergeben.");
+                            emailEditText.requestFocus();
+                        } catch (FirebaseAuthUserCollisionException e){
+                            registrierenProgressBar.setVisibility(GONE);
+                            emailEditText.setError("Es gibt breits einen User mit dieser E-Mail. Wähle eine andere.");
+                            emailEditText.requestFocus();
+                        } catch (Exception e){
+                            Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                            Log.d(TAG,"User konnte nicht hinzugefuegt werden Firestore");
+                            registrierenProgressBar.setVisibility(GONE);
+                        }
                     }
 
                 }
