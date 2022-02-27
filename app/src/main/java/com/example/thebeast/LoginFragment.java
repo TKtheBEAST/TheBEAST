@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         loginButton = view.findViewById(R.id.loginButtonLog);
-        emailEditText = view.findViewById(R.id.emailLogET);
+        emailEditText = view.findViewById(R.id.emailPwvET);
         passwortEditText = view.findViewById(R.id.passwortLogET);
         pwVergessenTextView = view.findViewById(R.id.pwVergessenTV);
         registrierenTextView = view.findViewById(R.id.loginRegTV);
@@ -66,11 +66,17 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userLogin();
+            }
+        });
+
+        pwVergessenTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_passwortVergessenFragment);
             }
         });
 

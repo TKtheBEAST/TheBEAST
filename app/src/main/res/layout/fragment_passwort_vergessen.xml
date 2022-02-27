@@ -27,14 +27,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/emailLogET"
+            android:id="@+id/emailPwvET"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginBottom="16dp"
             android:ems="10"
             android:gravity="center|center_horizontal"
             android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/zuruecksetzenPwvButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -44,12 +44,12 @@
             android:layout_height="54dp"
             android:layout_marginBottom="18dp"
             android:text="@string/passwort_zurueck_setzen"
-            app:layout_constraintBottom_toTopOf="@+id/emailLogET"
+            app:layout_constraintBottom_toTopOf="@+id/emailPwvET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/zuruecksetzenPwvButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="450dp"
@@ -58,6 +58,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/pwVprogressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

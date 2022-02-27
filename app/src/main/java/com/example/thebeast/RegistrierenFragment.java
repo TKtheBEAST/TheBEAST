@@ -89,6 +89,8 @@ public class RegistrierenFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_registrierenFragment_to_loginFragment);
             }
         });
+
+
         return view;
     }
 
