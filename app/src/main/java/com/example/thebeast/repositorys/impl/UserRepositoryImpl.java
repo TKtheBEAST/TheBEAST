@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.thebeast.CurrentUser;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.daos.UserDao;
 import com.example.thebeast.entitys.User;
@@ -20,9 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +52,8 @@ public class UserRepositoryImpl implements UserRepository {
                         Map<String,Object> data = new HashMap<>();
                         data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
                         data.put("beastName", user.getBeastName());
-                        data.put("beastSpruch", user.getSpruch());
-                        data.put("beastEmail", user.getEmail());
+                        data.put("beastSpruch", user.getBeastSpruch());
+                        data.put("beastEmail", user.getBeastEmail());
                         data.put("workoutlaenge", user.getWorkoutlaenge());
 
 
@@ -98,6 +101,22 @@ public class UserRepositoryImpl implements UserRepository {
             }
         });
         return allUsers;
+    }
+
+    public void setCurrentUser(String email){
+
+        userRef.whereEqualTo("beastEmail",email).get()
+                .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>(){
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<UserModel> user = new ArrayList();
+                        user = task.getResult().toObjects(UserModel.class);
+                        UserModel currentUser = new UserModel();
+                        currentUser = user.get(0);
+                        CurrentUser.setCurrentUser(currentUser);
+                    }
+                });
     }
 
     public UserModel getCurrentUser(int id){return currentUser;}

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Patterns;
@@ -17,6 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thebeast.businessobjects.UserModel;
+import com.example.thebeast.repositorys.impl.UserRepositoryImpl;
+import com.example.thebeast.viewmodel.HomeFragmentViewModel;
+import com.example.thebeast.viewmodel.LoginFragmentViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,6 +40,8 @@ public class LoginFragment extends Fragment {
     private EditText emailEditText, passwortEditText;
     private TextView pwVergessenTextView, registrierenTextView;
     private ProgressBar loginProgressBar;
+    private LoginFragmentViewModel loginFragmentViewModel;
+
 
     private FirebaseAuth mAuth;
 
@@ -53,6 +60,9 @@ public class LoginFragment extends Fragment {
         pwVergessenTextView = view.findViewById(R.id.pwVergessenTV);
         registrierenTextView = view.findViewById(R.id.loginRegTV);
         loginProgressBar = view.findViewById(R.id.loginProgressBar);
+
+        //initialisieren ViewModel
+        loginFragmentViewModel = new ViewModelProvider(getActivity()).get(LoginFragmentViewModel.class);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -154,4 +164,18 @@ public class LoginFragment extends Fragment {
 
     }
 
+    //überprüfen ob User schon eingelogged ist.
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mAuth.getCurrentUser() != null) {
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+            getUserInformation();
+        }
+    }
+
+    public void getUserInformation(){
+        loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
+
+    }
 }

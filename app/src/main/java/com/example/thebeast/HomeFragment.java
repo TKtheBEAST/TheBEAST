@@ -22,6 +22,7 @@ import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 
 
 import java.util.ArrayList;
+import java.util.Currency;
 
 import static android.content.ContentValues.TAG;
 
@@ -190,7 +191,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String beastName = "testBeast";
+                String beastName = CurrentUser.getCurrentUser().getBeastName();
 
                 //int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
                 //String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
@@ -206,7 +207,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 //Testlaenge
-                int workoutlaenge = 2;
+                int workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
 
                 WorkoutModel workout = new WorkoutModel(beastName,uebungen,workoutlaenge);
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());

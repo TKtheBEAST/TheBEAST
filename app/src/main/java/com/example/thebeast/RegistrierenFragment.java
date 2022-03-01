@@ -154,8 +154,8 @@ public class RegistrierenFragment extends Fragment {
                         Map<String,Object> data = new HashMap<>();
                         data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
                         data.put("beastName", user.getBeastName());
-                        data.put("beastSpruch", user.getSpruch());
-                        data.put("beastEmail", user.getEmail());
+                        data.put("beastSpruch", user.getBeastSpruch());
+                        data.put("beastEmail", user.getBeastEmail());
                         data.put("workoutlaenge", user.getWorkoutlaenge());
 
 
