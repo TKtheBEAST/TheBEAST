@@ -137,6 +137,7 @@ public class LoginFragment extends Fragment {
                     loginProgressBar.setVisibility(GONE);
                     if(user.isEmailVerified()){
                         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                        loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
