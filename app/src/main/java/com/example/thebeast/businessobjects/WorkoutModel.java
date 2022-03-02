@@ -10,14 +10,14 @@ public class WorkoutModel {
     private String avatar;
     private String beastName;
     private String uebungen;
-    private int workoutlaenge;
+    private float workoutlaenge;
     //standort;
 
 
 
     public WorkoutModel(){}
 
-    public WorkoutModel(String beastName, String uebungen, int workoutlaenge) {
+    public WorkoutModel(String beastName, String uebungen, float workoutlaenge) {
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
@@ -49,7 +49,7 @@ public class WorkoutModel {
         return uebungen;
     }
 
-    public int getWorkoutlaenge() {
+    public float getWorkoutlaenge() {
         return workoutlaenge;
     }
 }

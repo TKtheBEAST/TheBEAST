@@ -79,7 +79,25 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
-    public void update(UserModel user){
+    @Override
+    public void update(UserModel user) {
+
+    }
+
+    public void updateWorkoutLaenge(float workoutLaenge){
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("workoutlaenge",workoutLaenge);
+
+        userRef.document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
+                        }
+                    }
+                });
 
     }
 

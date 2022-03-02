@@ -13,7 +13,7 @@ public class UserModel {
 
     private String beastEmail;
 
-    private int workoutlaenge;
+    private float workoutlaenge;
 
     private String beastSpruch;
 
@@ -21,7 +21,7 @@ public class UserModel {
 
     public UserModel(){}
 
-    public UserModel(String beastName, String beastSpruch, String beastEmail, int workoutlaenge, int avatar) {
+    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge, int avatar) {
         this.beastName = beastName;
         this.beastEmail = beastEmail;
         this.workoutlaenge = workoutlaenge;
@@ -53,11 +53,11 @@ public class UserModel {
         this.beastEmail = beastEmail;
     }
 
-    public int getWorkoutlaenge() {
+    public float getWorkoutlaenge() {
         return workoutlaenge;
     }
 
-    public void setWorkoutlaenge(int workoutlaenge) {
+    public void setWorkoutlaenge(float workoutlaenge) {
         this.workoutlaenge = workoutlaenge;
     }
 

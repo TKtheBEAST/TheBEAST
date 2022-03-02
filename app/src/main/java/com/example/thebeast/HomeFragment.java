@@ -207,7 +207,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 //Testlaenge
-                int workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
+                float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
 
                 WorkoutModel workout = new WorkoutModel(beastName,uebungen,workoutlaenge);
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());

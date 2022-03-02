@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,11 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static android.content.ContentValues.TAG;
 
-public class EinstellungenFragment extends Fragment implements View.OnClickListener {
+public class EinstellungenFragment extends Fragment {
 
     Button abmeldenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
     private float aktuelleWorkoutlaenge;
-
 
     EinstellungenFragmentViewModel einstellungenFragmentViewModel;
 
@@ -43,6 +44,60 @@ public class EinstellungenFragment extends Fragment implements View.OnClickListe
         eineHbutton = view.findViewById(R.id.trainingslaenge1hButton);
         eineHdreißigButton = view.findViewById(R.id.trainingslaenge1_5hButton);
         zweiHbutton = view.findViewById(R.id.trainingslaenge2hButton);
+
+        dreißigMinButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                if(aktuelleWorkoutlaenge == 0.5){
+                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
+                }else{
+                    einstellungenFragmentViewModel.updateWorkoutlaenge(0.5f);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        eineHbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(aktuelleWorkoutlaenge == 1){
+                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
+                }else {
+                    einstellungenFragmentViewModel.updateWorkoutlaenge(1f);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        eineHdreißigButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(aktuelleWorkoutlaenge == 1.5){
+                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
+                }else {
+                    einstellungenFragmentViewModel.updateWorkoutlaenge(1.5f);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        zweiHbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(aktuelleWorkoutlaenge == 2){
+                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
+                }else {
+                    einstellungenFragmentViewModel.updateWorkoutlaenge(2f);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         aktuelleWorkoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
         setFocusAktuelleLaenge(aktuelleWorkoutlaenge);
@@ -64,36 +119,6 @@ public class EinstellungenFragment extends Fragment implements View.OnClickListe
     }
 
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.trainingslaenge30minButton:
-                if(aktuelleWorkoutlaenge == 0.5){
-                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
-                }else{
-                    einstellungenFragmentViewModel.updateWorkoutlaenge(0.5f);
-                }
-            case R.id.trainingslaenge1hButton:
-                if(aktuelleWorkoutlaenge == 1){
-                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
-                }else {
-                    einstellungenFragmentViewModel.updateWorkoutlaenge(1f);
-                }
-            case R.id.trainingslaenge1_5hButton:
-                if(aktuelleWorkoutlaenge == 1.5){
-                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
-                }else {
-                    einstellungenFragmentViewModel.updateWorkoutlaenge(1.5f);
-                }
-            case R.id.trainingslaenge2hButton:
-                if(aktuelleWorkoutlaenge == 2){
-                    Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
-                }else {
-                    einstellungenFragmentViewModel.updateWorkoutlaenge(2f);
-                }
-        }
-    }
-
     public void setFocusAktuelleLaenge(float aktuelleWorkoutlaenge){
         if(aktuelleWorkoutlaenge == 0.5){
             dreißigMinButton.setBackgroundColor(Color.RED);
@@ -109,4 +134,14 @@ public class EinstellungenFragment extends Fragment implements View.OnClickListe
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        aktuelleWorkoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
+        dreißigMinButton.refreshDrawableState();
+        setFocusAktuelleLaenge(aktuelleWorkoutlaenge);
+    }
+    
+
 }
