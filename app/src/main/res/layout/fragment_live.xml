@@ -14,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="201dp"
         android:text="Live"
-        android:textColor="#FF0000"
+        android:textColor="@color/beast_rot"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

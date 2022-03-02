@@ -54,7 +54,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Trainingslaenge30minButton"
+                android:id="@+id/trainingslaenge30minButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,7 +62,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/Trainingslaenge1hButton"
+                android:id="@+id/trainingslaenge1hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,7 +70,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/Trainingslaenge1.5hButton"
+                android:id="@+id/trainingslaenge1.5hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -78,7 +78,7 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/Trainingslaenge2hButton"
+                android:id="@+id/trainingslaenge2hButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
