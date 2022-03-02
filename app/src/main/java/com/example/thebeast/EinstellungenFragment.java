@@ -1,36 +1,32 @@
 package com.example.thebeast;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.thebeast.R;
-import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.viewmodel.EinstellungenFragmentViewModel;
-import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import static android.content.ContentValues.TAG;
 
 public class EinstellungenFragment extends Fragment {
 
     Button abmeldenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
     private float aktuelleWorkoutlaenge;
+    private TextView beastName, beastEmail;
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
 
     EinstellungenFragmentViewModel einstellungenFragmentViewModel;
 
@@ -45,6 +41,19 @@ public class EinstellungenFragment extends Fragment {
         eineHdreißigButton = view.findViewById(R.id.trainingslaenge1_5hButton);
         zweiHbutton = view.findViewById(R.id.trainingslaenge2hButton);
 
+        beastName = view.findViewById(R.id.beastNameEinsTV);
+        beastEmail = view.findViewById(R.id.beastEmailEinstTV);
+
+        beastName.setText(CurrentUser.getCurrentUser().getBeastName());
+        beastEmail.setText(CurrentUser.getCurrentUser().getBeastEmail());
+
+        beastName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                beastNameAnpassenDialog();
+            }
+        });
+
         dreißigMinButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -53,8 +62,7 @@ public class EinstellungenFragment extends Fragment {
                     Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
                 }else{
                     einstellungenFragmentViewModel.updateWorkoutlaenge(0.5f);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(),MainActivity.class));
                 }
             }
         });
@@ -66,8 +74,7 @@ public class EinstellungenFragment extends Fragment {
                     Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
                 }else {
                     einstellungenFragmentViewModel.updateWorkoutlaenge(1f);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(),MainActivity.class));
                 }
             }
         });
@@ -79,8 +86,7 @@ public class EinstellungenFragment extends Fragment {
                     Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
                 }else {
                     einstellungenFragmentViewModel.updateWorkoutlaenge(1.5f);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(),MainActivity.class));
                 }
             }
         });
@@ -92,8 +98,7 @@ public class EinstellungenFragment extends Fragment {
                     Toast.makeText(getActivity(),"Diese Workoutlänge ist bereits hinterlegt",Toast.LENGTH_LONG).show();
                 }else {
                     einstellungenFragmentViewModel.updateWorkoutlaenge(2f);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(),MainActivity.class));
                 }
             }
         });
@@ -141,6 +146,43 @@ public class EinstellungenFragment extends Fragment {
         aktuelleWorkoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
         dreißigMinButton.refreshDrawableState();
         setFocusAktuelleLaenge(aktuelleWorkoutlaenge);
+    }
+
+    public void beastNameAnpassenDialog(){
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View beastNameAendernView = getLayoutInflater().inflate(R.layout.beastname_aendern_popup,null);
+
+
+        Button beastNameuebernehmenButton = beastNameAendernView.findViewById(R.id.uebernehmenBeastNaendernPopup);
+        Button abbrechenButton = beastNameAendernView.findViewById(R.id.abbrechenBeastNaendernPopup);
+        EditText beastNameTextView = beastNameAendernView.findViewById(R.id.beastNameaendernPopupET);
+
+        beastNameTextView.setHint(CurrentUser.getCurrentUser().getBeastName());
+
+        beastNameuebernehmenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                String neuerBeastName = beastNameTextView.getText().toString();
+                einstellungenFragmentViewModel.updateBeastName(neuerBeastName);
+                startActivity(new Intent(getActivity(),MainActivity.class));
+                dialog.dismiss();
+            }
+        });
+
+        abbrechenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(beastNameAendernView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+
     }
     
 

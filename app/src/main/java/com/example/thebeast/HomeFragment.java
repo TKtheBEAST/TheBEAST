@@ -22,7 +22,6 @@ import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 
 
 import java.util.ArrayList;
-import java.util.Currency;
 
 import static android.content.ContentValues.TAG;
 
@@ -184,7 +183,7 @@ public class HomeFragment extends Fragment {
         startWorkoutRecyclerView.setHasFixedSize(true);
 
         Button letsGoButton = startWorkoutView.findViewById(R.id.letsGoButton);
-        Button abbrechenButton = startWorkoutView.findViewById(R.id.abbrechenButton);
+        Button abbrechenButton = startWorkoutView.findViewById(R.id.abbrechenWorkoutPopup);
 
         letsGoButton.setOnClickListener(new View.OnClickListener(){
 

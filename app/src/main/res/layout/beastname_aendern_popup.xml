@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,47 +11,41 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/black_ops_one"
         android:gravity="center|center_horizontal"
-        android:text="Teile dein Workout"
-        android:textSize="24sp" />
+        android:text="Wie willst du genannt werden?"
+        android:textSize="18sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/startWorkoutRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="88dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp" />
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"/>
+    <EditText
+        android:id="@+id/beastNameaendernPopupET"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:foregroundGravity="center"
-        android:layout_marginBottom="15dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:foregroundGravity="center">
 
 
         <Button
-            android:id="@+id/letsGoButton"
+            android:id="@+id/uebernehmenBeastNaendernPopup"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Let's go!"
+            android:text="Übernehmen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/abbrechenBeastNaendernPopup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/abbrechenWorkoutPopup"
+            android:id="@+id/abbrechenBeastNaendernPopup"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Abbrechen"

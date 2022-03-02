@@ -11,7 +11,11 @@ public class EinstellungenFragmentViewModel extends ViewModel {
     public EinstellungenFragmentViewModel(){}
 
     public void updateWorkoutlaenge(float laenge){
-            userRepositoryImpl.updateWorkoutLaenge(laenge);
+        userRepositoryImpl.updateWorkoutLaenge(laenge);
+    }
+
+    public void updateBeastName(String neuerBeastName){
+        userRepositoryImpl.updateBeastName(neuerBeastName);
     }
 
 }

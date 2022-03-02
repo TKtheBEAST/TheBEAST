@@ -101,6 +101,23 @@ public class UserRepositoryImpl implements UserRepository {
 
     }
 
+    public void updateBeastName(String neuerBeastName){
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("beastName",neuerBeastName);
+
+        userRef.document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            CurrentUser.getCurrentUser().setBeastName(neuerBeastName);
+                        }
+                    }
+                });
+
+    }
+
     public void delete(UserModel user){
 
     }
