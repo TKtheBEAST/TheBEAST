@@ -4,6 +4,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.firebase.firestore.DocumentId;
 
+import java.util.List;
+
 public class UserModel {
 
     @DocumentId
@@ -17,6 +19,8 @@ public class UserModel {
 
     private String beastSpruch;
 
+    private List<UserModel> freundeCurrentUser;
+
     private int avatar;
 
     public UserModel(){}
@@ -27,6 +31,14 @@ public class UserModel {
         this.workoutlaenge = workoutlaenge;
         this.beastSpruch = beastSpruch;
         this.avatar = avatar;
+    }
+
+    public List<UserModel> getFreundeCurrentUser() {
+        return freundeCurrentUser;
+    }
+
+    public void setFreundeCurrentUser(List<UserModel> freundeCurrentUser) {
+        this.freundeCurrentUser = freundeCurrentUser;
     }
 
     public String getBeastId() {

@@ -3,9 +3,9 @@ package com.example.thebeast.repositorys.impl;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import com.example.thebeast.CurrentUser;
+import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.repositorys.WorkoutRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference workoutRef = firebaseFirestore.collection("Workouts");
+    private List<UserModel> freundeOfCurrentUser = new ArrayList<>();
 
     private OnFirstoreTaskComplete onFirstoreTaskComplete;
 
@@ -78,21 +78,28 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
 
     public void getAllWorkouts(){
+        List<WorkoutModel> workouts = new ArrayList<>();
+        for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+            workoutRef.whereEqualTo("workoutOwnerID", freund.getBeastId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-        workoutRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    onFirstoreTaskComplete.workoutModelsListAdded(task.getResult().toObjects(WorkoutModel.class));
-                    Log.i(TAG,"Alle workouts geladen");
-                } else {
-                    onFirstoreTaskComplete.onError(task.getException());
-                    Log.i(TAG,"Workouts konnten nicht geladen werden");
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        List<WorkoutModel> addWorkout = new ArrayList<>();
+                        addWorkout = task.getResult().toObjects(WorkoutModel.class);
+                        workouts.add(addWorkout.get(0));
+                        onFirstoreTaskComplete.workoutModelsListAdded(workouts);
+                    } else {
+                        onFirstoreTaskComplete.onError(task.getException());
+                        Log.i(TAG, "Workouts konnten nicht geladen werden");
+                    }
                 }
-             }
-        });
+            });
+        }
+        Log.i(TAG, "Alle workouts geladen");
+
     }
+
 
     public interface OnFirstoreTaskComplete {
         void workoutModelsListAdded (List<WorkoutModel> workoutModels);

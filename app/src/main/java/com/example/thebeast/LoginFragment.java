@@ -131,13 +131,13 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = mAuth.getCurrentUser();
 
                 if(task.isSuccessful()){
                     loginProgressBar.setVisibility(GONE);
                     if(user.isEmailVerified()){
                         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
-                        loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
+                        getUserInformation();
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
@@ -170,8 +170,15 @@ public class LoginFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null) {
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
-            getUserInformation();
+            if(mAuth.getCurrentUser().isEmailVerified()){
+                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                getUserInformation();
+            }else{
+                mAuth.getCurrentUser().sendEmailVerification();
+                Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
+            }
+        }else{
+            return;
         }
     }
 

@@ -143,19 +143,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                homeFragmentViewModel.getGewaehlteTrainingsName().clear();
-                homeFragmentViewModel.getGewaehlteTrainingsList().clear();
 
-                deinGewaehltesTraining.setAlpha(0);
-                trennstrichHome.setAlpha(0);
-                workoutsEntfernenButton.setAlpha(0);
-                workoutsEntfernenButton.setEnabled(false);
-                playButton.setAlpha(0f);
-                playButton.setEnabled(false);
-
-                recyclerViewAdapter = new gewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList() , homeFragmentViewModel.getGewaehlteTrainingsName());
-                gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
-                gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+                workoutsEntfernen();
             }
         });
 
@@ -213,6 +202,8 @@ public class HomeFragment extends Fragment {
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                 homeFragmentViewModel.insertWorkout(workout);
 
+                workoutsEntfernen();
+
                 dialog.dismiss();
             }
         });
@@ -265,5 +256,21 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    public void workoutsEntfernen(){
+
+        homeFragmentViewModel.getGewaehlteTrainingsName().clear();
+        homeFragmentViewModel.getGewaehlteTrainingsList().clear();
+
+        deinGewaehltesTraining.setAlpha(0);
+        trennstrichHome.setAlpha(0);
+        workoutsEntfernenButton.setAlpha(0);
+        workoutsEntfernenButton.setEnabled(false);
+        playButton.setAlpha(0f);
+        playButton.setEnabled(false);
+
+        recyclerViewAdapter = new gewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList() , homeFragmentViewModel.getGewaehlteTrainingsName());
+        gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
+        gewaehltesTrainingRecyclerView.setHasFixedSize(true);
+    }
 
 }

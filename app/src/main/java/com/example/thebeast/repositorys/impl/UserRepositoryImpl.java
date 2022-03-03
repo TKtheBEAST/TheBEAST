@@ -36,6 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final int standardWorkoutlaenge = 2;
     private List<UserModel> allUsers;
+    private List<UserModel> freundeOfCurrentUser = new ArrayList<>();
+
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -149,6 +151,24 @@ public class UserRepositoryImpl implements UserRepository {
                         UserModel currentUser = new UserModel();
                         currentUser = user.get(0);
                         CurrentUser.setCurrentUser(currentUser);
+                        getFreundeCurrentUser();
+                    }
+                });
+    }
+
+    public void getFreundeCurrentUser(){
+        firebaseFirestore.collection("User")
+                .document(CurrentUser.getCurrentUser().getBeastId())
+                .collection("Freunde von User").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
+                            CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
+                        }else{
+                            return;
+                        }
                     }
                 });
     }

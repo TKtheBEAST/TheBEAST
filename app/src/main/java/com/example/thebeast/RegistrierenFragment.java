@@ -152,7 +152,8 @@ public class RegistrierenFragment extends Fragment {
                     if(task.isSuccessful()){
                         UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, 0);
                         Map<String,Object> data = new HashMap<>();
-                        data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        data.put("beastID",uid);
                         data.put("beastName", user.getBeastName());
                         data.put("beastSpruch", user.getBeastSpruch());
                         data.put("beastEmail", user.getBeastEmail());
@@ -160,10 +161,10 @@ public class RegistrierenFragment extends Fragment {
 
 
 
-                        userRef.add(data)
-                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
+                        userRef.document(uid).set(data)
+                            .addOnCompleteListener(new OnCompleteListener<Void>(){
                                 @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                public void onComplete(@NonNull Task<Void> task) {
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     if(task.isSuccessful()){
                                         user.sendEmailVerification();
