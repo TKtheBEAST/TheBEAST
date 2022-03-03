@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EinstellungenFragment extends Fragment {
 
-    Button abmeldenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
+    Button abmeldenButton,kontoloeschenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
     private float aktuelleWorkoutlaenge;
     private TextView beastName, beastEmail;
 
@@ -36,6 +36,7 @@ public class EinstellungenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_einstellungen, container, false);
 
         abmeldenButton = view.findViewById(R.id.abmeldenButton);
+        kontoloeschenButton = view.findViewById(R.id.kontoLoeschenButton);
         dreißigMinButton = view.findViewById(R.id.trainingslaenge30minButton);
         eineHbutton = view.findViewById(R.id.trainingslaenge1hButton);
         eineHdreißigButton = view.findViewById(R.id.trainingslaenge1_5hButton);
@@ -113,6 +114,14 @@ public class EinstellungenFragment extends Fragment {
 
 
         abmeldenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(),StartActivity.class));
+            }
+        });
+
+        kontoloeschenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();

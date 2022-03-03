@@ -7,6 +7,7 @@ public class WorkoutModel {
     @DocumentId
     private String id;
 
+    private String workoutOwnerID;
     private String avatar;
     private String beastName;
     private String uebungen;
@@ -17,12 +18,20 @@ public class WorkoutModel {
 
     public WorkoutModel(){}
 
-    public WorkoutModel(String beastName, String uebungen, float workoutlaenge) {
+    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge) {
+        this.workoutOwnerID = workoutOwnerID;
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
     }
 
+    public String getWorkoutOwnerID() {
+        return workoutOwnerID;
+    }
+
+    public void setWorkoutOwnerID(String workoutOwnerID) {
+        this.workoutOwnerID = workoutOwnerID;
+    }
 
     public void setId(String id) {
         this.id = id;

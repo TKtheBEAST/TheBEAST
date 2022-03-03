@@ -35,7 +35,6 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String TAG = "UserRepositoryImpl";
 
     private final int standardWorkoutlaenge = 2;
-    private UserModel currentUser;
     private List<UserModel> allUsers;
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -45,34 +44,34 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password){
         firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, 0);
-                        Map<String,Object> data = new HashMap<>();
-                        data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        data.put("beastName", user.getBeastName());
-                        data.put("beastSpruch", user.getBeastSpruch());
-                        data.put("beastEmail", user.getBeastEmail());
-                        data.put("workoutlaenge", user.getWorkoutlaenge());
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, 0);
+                    Map<String,Object> data = new HashMap<>();
+                    data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    data.put("beastName", user.getBeastName());
+                    data.put("beastSpruch", user.getBeastSpruch());
+                    data.put("beastEmail", user.getBeastEmail());
+                    data.put("workoutlaenge", user.getWorkoutlaenge());
 
 
 
-                        userRef.add(data)
-                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        if(task.isSuccessful()){
-                                            Log.d(TAG,"User wurde hinzugefügt ");
-                                        }else{
-                                            Log.d(TAG,"User konnte nicht hinzugefuegt werden");
-                                        }
-
+                    userRef.add(data)
+                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    if(task.isSuccessful()){
+                                        Log.d(TAG,"User wurde hinzugefügt ");
+                                    }else{
+                                        Log.d(TAG,"User konnte nicht hinzugefuegt werden");
                                     }
 
-                        });
-                    }
-                });
+                                }
+
+                    });
+                }
+            });
     }
 
     public void insert(UserModel user){
@@ -153,9 +152,6 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 });
     }
-
-    public UserModel getCurrentUser(int id){return currentUser;}
-
 
 
 }

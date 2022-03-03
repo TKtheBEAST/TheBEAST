@@ -46,6 +46,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
         //add new Workout with a generated id
         Map<String, Object> data = new HashMap();
+        data.put("workoutOwnerID", workout.getWorkoutOwnerID());
         data.put("beastName",workout.getBeastName());
         data.put("uebungen",workout.getUebungen());
         data.put("workoutlaenge",workout.getWorkoutlaenge());

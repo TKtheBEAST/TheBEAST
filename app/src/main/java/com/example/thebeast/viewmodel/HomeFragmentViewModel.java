@@ -44,7 +44,6 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public void insertWorkout (WorkoutModel workout){
         try {
-            Log.i(TAG,"lily"+workout.getBeastName());
             workoutRepositoryImpl.insert(workout);
         }catch (NullPointerException e){
             System.err.println(TAG+" Nullpointer Exception");

@@ -191,6 +191,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 
                 String beastName = CurrentUser.getCurrentUser().getBeastName();
+                String workoutOwnerID = CurrentUser.getCurrentUser().getBeastId();
 
                 //int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
                 //String beastName = HomeFragmentViewModel.getCurrentUser().getBeastName();
@@ -208,7 +209,7 @@ public class HomeFragment extends Fragment {
                 //Testlaenge
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
 
-                WorkoutModel workout = new WorkoutModel(beastName,uebungen,workoutlaenge);
+                WorkoutModel workout = new WorkoutModel(workoutOwnerID,beastName,uebungen,workoutlaenge);
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                 homeFragmentViewModel.insertWorkout(workout);
 

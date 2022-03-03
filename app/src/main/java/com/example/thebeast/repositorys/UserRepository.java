@@ -24,6 +24,5 @@ public interface UserRepository {
 
     List<UserModel> getAllUsers();
 
-    UserModel getCurrentUser(int id);
 
 }
