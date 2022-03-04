@@ -1,7 +1,6 @@
 package com.example.thebeast;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
+import com.example.thebeast.recyclerViewAdapter.LiveRecyclerViewAdapter;
 import com.example.thebeast.viewmodel.LiveFragmentViewModel;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 
 public class LiveFragment extends Fragment {

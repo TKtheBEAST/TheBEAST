@@ -42,7 +42,6 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     public void insert(WorkoutModel workout) {
 
-        Log.i(TAG,"lily"+workout.getBeastName());
 
         //add new Workout with a generated id
         Map<String, Object> data = new HashMap();

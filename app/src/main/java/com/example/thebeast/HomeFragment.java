@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
+import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAdapter;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 
 
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView gewaehltesTrainingRecyclerView;
     private RecyclerView startWorkoutRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private gewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
+    private GewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
 
 
     //Button initialisieren
@@ -167,7 +168,7 @@ public class HomeFragment extends Fragment {
         layoutManager = new GridLayoutManager(startWorkoutView.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
         startWorkoutRecyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdapter = new gewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
+        recyclerViewAdapter = new GewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(),homeFragmentViewModel.getGewaehlteTrainingsName());
         startWorkoutRecyclerView.setAdapter(recyclerViewAdapter);
         startWorkoutRecyclerView.setHasFixedSize(true);
 
@@ -248,7 +249,7 @@ public class HomeFragment extends Fragment {
 
             layoutManager = new GridLayoutManager(v.getContext(), homeFragmentViewModel.getGewaehlteTrainingsList().size());
             gewaehltesTrainingRecyclerView.setLayoutManager(layoutManager);
-            recyclerViewAdapter = new gewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(), homeFragmentViewModel.getGewaehlteTrainingsName());
+            recyclerViewAdapter = new GewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(), homeFragmentViewModel.getGewaehlteTrainingsName());
             gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
             gewaehltesTrainingRecyclerView.setHasFixedSize(true);
         } else {
@@ -268,7 +269,7 @@ public class HomeFragment extends Fragment {
         playButton.setAlpha(0f);
         playButton.setEnabled(false);
 
-        recyclerViewAdapter = new gewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList() , homeFragmentViewModel.getGewaehlteTrainingsName());
+        recyclerViewAdapter = new GewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList() , homeFragmentViewModel.getGewaehlteTrainingsName());
         gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);
         gewaehltesTrainingRecyclerView.setHasFixedSize(true);
     }

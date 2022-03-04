@@ -150,7 +150,7 @@ public class RegistrierenFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, 0);
+                        UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, "");
                         Map<String,Object> data = new HashMap<>();
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         data.put("beastID",uid);

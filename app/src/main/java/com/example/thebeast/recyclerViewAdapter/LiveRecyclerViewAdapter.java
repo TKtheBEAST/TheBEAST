@@ -1,4 +1,4 @@
-package com.example.thebeast;
+package com.example.thebeast.recyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.WorkoutModel;
 
 import java.util.ArrayList;

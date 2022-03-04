@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Freunde">
+    android:layout_height="wrap_content"
+    tools:context=".FreundeFragment">
 
     <TextView
-        android:id="@+id/liveTextView"
+        android:id="@+id/deineTrainingspartnerTextView"
         android:layout_width="188dp"
         android:layout_height="65dp"
         android:layout_marginStart="25dp"
@@ -20,6 +20,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="44dp"
+        android:background="#434343"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deineTrainingspartnerTextView" />
+
     <ImageButton
         android:id="@+id/addUserButton"
         android:layout_width="51dp"
@@ -29,17 +39,20 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/liveTextView"
+        app:layout_constraintStart_toEndOf="@+id/deineTrainingspartnerTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/adduser" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/trainingsPartnerRecyclerView"
+        android:id="@+id/freundeRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="603dp"
-        android:layout_marginTop="31dp"
+        android:layout_height="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/freunde" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

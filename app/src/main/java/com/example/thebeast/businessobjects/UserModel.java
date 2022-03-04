@@ -21,11 +21,11 @@ public class UserModel {
 
     private List<UserModel> freundeCurrentUser;
 
-    private int avatar;
+    private String avatar;
 
     public UserModel(){}
 
-    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge, int avatar) {
+    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge, String avatar) {
         this.beastName = beastName;
         this.beastEmail = beastEmail;
         this.workoutlaenge = workoutlaenge;
@@ -81,11 +81,11 @@ public class UserModel {
         this.beastSpruch = beastSpruch;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 }

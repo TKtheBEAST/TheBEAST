@@ -1,4 +1,4 @@
-package com.example.thebeast;
+package com.example.thebeast.recyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thebeast.R;
+
 import java.util.ArrayList;
 
-public class gewaehlteTrainingsRecyclerViewAdapter extends RecyclerView.Adapter<gewaehlteTrainingsRecyclerViewAdapter.MyViewHolder>{
+public class GewaehlteTrainingsRecyclerViewAdapter extends RecyclerView.Adapter<GewaehlteTrainingsRecyclerViewAdapter.MyViewHolder>{
 
     ArrayList<Integer> gewaehlteTrainingsList;
     ArrayList<String> gewaehlteTrainingsName;
 
-    public gewaehlteTrainingsRecyclerViewAdapter(ArrayList<Integer> bilder, ArrayList<String> namen){
+    public GewaehlteTrainingsRecyclerViewAdapter(ArrayList<Integer> bilder, ArrayList<String> namen){
         this.gewaehlteTrainingsList=bilder;
         this.gewaehlteTrainingsName=namen;
     }

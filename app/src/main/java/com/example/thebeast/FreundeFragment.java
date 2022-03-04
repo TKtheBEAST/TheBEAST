@@ -2,21 +2,73 @@ package com.example.thebeast;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.thebeast.R;
+import com.example.thebeast.businessobjects.UserModel;
+import com.example.thebeast.businessobjects.WorkoutModel;
+import com.example.thebeast.recyclerViewAdapter.FreundeRecyclerViewAdapter;
+import com.example.thebeast.recyclerViewAdapter.LiveRecyclerViewAdapter;
+import com.example.thebeast.viewmodel.FreundeFragmentViewModel;
+import com.example.thebeast.viewmodel.LiveFragmentViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FreundeFragment extends Fragment {
 
+
+    private FreundeFragmentViewModel freundeFragmentViewModel;
+    private RecyclerView recyclerView;
+    private FreundeRecyclerViewAdapter adapter;
+
+    private List<UserModel> freunde;
+
+    public FreundeFragment(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(
-                R.layout.fragment_freunde, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_freunde, container, false);
+        freunde = new ArrayList<UserModel>();
+        freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.freundeRecyclerView);
+        adapter = new FreundeRecyclerViewAdapter();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setFreunde(freunde);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
+
+    public void onStart() {
+        super.onStart();
+
     }
 }
