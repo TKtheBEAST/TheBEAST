@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.UserModel;
@@ -35,6 +36,8 @@ public class FreundeFragment extends Fragment {
 
     private List<UserModel> freunde;
 
+    Button addFreundButton;
+
     public FreundeFragment(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +46,16 @@ public class FreundeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_freunde, container, false);
         freunde = new ArrayList<UserModel>();
         freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+
+        addFreundButton = view.findViewById(R.id.addFreundButton);
+
+        addFreundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return view;
     }
 

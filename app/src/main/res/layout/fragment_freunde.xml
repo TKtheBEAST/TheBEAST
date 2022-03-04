@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/deineTrainingspartnerTextView" />
 
     <ImageButton
-        android:id="@+id/addUserButton"
+        android:id="@+id/addFreundButton"
         android:layout_width="51dp"
         android:layout_height="40dp"
         android:layout_marginStart="132dp"
