@@ -1,5 +1,6 @@
 package com.example.thebeast;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.UserModel;
@@ -36,7 +38,7 @@ public class FreundeFragment extends Fragment {
 
     private List<UserModel> freunde;
 
-    Button addFreundButton;
+    ImageButton addFreundButton;
 
     public FreundeFragment(){}
     @Override
@@ -52,6 +54,7 @@ public class FreundeFragment extends Fragment {
         addFreundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(getActivity(),AddFreundActivity.class));
 
             }
         });
