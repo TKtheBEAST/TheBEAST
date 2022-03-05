@@ -10,22 +10,24 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="16dp"
         android:text="Suche nach der Mail vom Beast"
         android:textColor="@color/beast_rot"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/searchView"
+        app:layout_constraintBottom_toTopOf="@+id/addFreundSearchView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/xImageView"
-        app:layout_constraintVertical_bias="0.623" />
+        app:layout_constraintVertical_bias="0.67" />
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/addFreundSearchView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/addFreundRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -34,7 +36,7 @@
         android:id="@+id/xImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,11 +44,12 @@
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/addFreundRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="506dp"
+        android:layout_height="469dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/freunde" />
 </androidx.constraintlayout.widget.ConstraintLayout>
