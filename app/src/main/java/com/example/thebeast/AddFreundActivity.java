@@ -20,7 +20,7 @@ public class AddFreundActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_freund2);
+        setContentView(R.layout.activity_add_freund);
 
         xImageView = findViewById(R.id.xImageView);
 
