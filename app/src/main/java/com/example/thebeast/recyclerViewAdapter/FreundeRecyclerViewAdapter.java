@@ -60,7 +60,6 @@ public class FreundeRecyclerViewAdapter extends RecyclerView.Adapter<FreundeRecy
 
     public void setFreunde(List<UserModel> freunde){
         this.freunde = freunde;
-
     }
 
 
