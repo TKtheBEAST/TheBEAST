@@ -127,7 +127,8 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
             @Override
             public void onClick(View view) {
 
-
+                freundHinzufuegen(user);
+                finish();
                 dialog.dismiss();
             }
         });
@@ -143,6 +144,10 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         dialogBuilder.setView(freundBestaetigenView);
         dialog = dialogBuilder.create();
         dialog.show();
+
+    }
+
+    private void freundHinzufuegen(UserModel user){
 
     }
 }
