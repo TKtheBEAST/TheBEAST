@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thebeast.businessobjects.UserModel;
@@ -106,28 +107,27 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
     @Override
     public void onFreundSelected(UserModel freund) {
-        Toast.makeText(this,freund.getBeastEmail(),Toast.LENGTH_LONG).show();
+        beastNameAnpassenDialog(freund);
     }
 
-    public void beastNameAnpassenDialog(){
+    public void beastNameAnpassenDialog(UserModel user){
 
         dialogBuilder = new AlertDialog.Builder(this);
-        final View beastNameAendernView = getLayoutInflater().inflate(R.layout.beastname_aendern_popup,null);
+        final View freundBestaetigenView = getLayoutInflater().inflate(R.layout.add_freund_popup,null);
 
 
-        Button beastNameuebernehmenButton = beastNameAendernView.findViewById(R.id.uebernehmenBeastNaendernPopup);
-        Button abbrechenButton = beastNameAendernView.findViewById(R.id.abbrechenBeastNaendernPopup);
-        EditText beastNameTextView = beastNameAendernView.findViewById(R.id.beastNameaendernPopupET);
+        Button freundBestaetigenButton = freundBestaetigenView.findViewById(R.id.freundBestaetigenButton);
+        Button abbrechenButton = freundBestaetigenView.findViewById(R.id.freundAbbrechenButton);
+        TextView beastNameFreundBestaetigenTextView = freundBestaetigenView.findViewById(R.id.beastNameFreundBestaetigen);
 
-        beastNameTextView.setHint(CurrentUser.getCurrentUser().getBeastName());
+        beastNameFreundBestaetigenTextView.setText(user.getBeastName());
 
-        beastNameuebernehmenButton.setOnClickListener(new View.OnClickListener(){
+        freundBestaetigenButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                String neuerBeastName = beastNameTextView.getText().toString();
-                einstellungenFragmentViewModel.updateBeastName(neuerBeastName);
-                startActivity(new Intent(getActivity(),MainActivity.class));
+
+
                 dialog.dismiss();
             }
         });
@@ -140,10 +140,9 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
             }
         });
 
-        dialogBuilder.setView(beastNameAendernView);
+        dialogBuilder.setView(freundBestaetigenView);
         dialog = dialogBuilder.create();
         dialog.show();
-
 
     }
 }

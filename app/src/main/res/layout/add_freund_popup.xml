@@ -21,12 +21,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/beastNameFreundBestaetigen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:layout_marginBottom="45dp"
         android:text="TextView"
+        android:textColor="@color/beast_rot"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,25 +38,26 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/freundBestaetigenButton"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:text="Hinzufügen" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/freundAbbrechenButton"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="40dp"
             android:layout_weight="1"
             android:text="Abbrechen" />
