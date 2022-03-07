@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
 
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         xImageView = findViewById(R.id.xImageView);
         searchView = findViewById(R.id.addFreundSearchView);
         addFreundRecyclerView = findViewById(R.id.addFreundRecyclerView);
+        progressBar = findViewById(R.id.addFreundProgressBar);
 
         addFreundAdapter = new AddFreundRecyclerviewAdapter(this);
         addFreundRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +78,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String email) {
+                progressBar.setVisibility(View.VISIBLE);
                 searchForBeastEmail(email);
                 return false;
             }
@@ -88,7 +93,6 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
     private void searchForBeastEmail(String email) {
 
 
-
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference userRef = firebaseFirestore.collection("User");
 
@@ -101,6 +105,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
                         List<UserModel> user = new ArrayList();
                         user = task.getResult().toObjects(UserModel.class);
+                        progressBar.setVisibility(View.INVISIBLE);
                         addFreundAdapter.setFreunde(user);
 
                     }
@@ -142,6 +147,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                 }
 
                 freundHinzufuegen(user);
+                progressBar.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
         });
@@ -181,6 +187,9 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                             freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
                             freundeVonUser.add(user);
                             CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
+                            progressBar.setVisibility(View.VISIBLE);
+                            Toast.makeText(AddFreundActivity.this,user.getBeastName() +
+                                    " ist jetzt dein Freund",Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }
