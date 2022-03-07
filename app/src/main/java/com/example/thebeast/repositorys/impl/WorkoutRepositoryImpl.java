@@ -23,7 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.AsyncEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,9 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     public void insert(WorkoutModel workout) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String currentTime = formatter.format(date);
 
         //add new Workout with a generated id
         Map<String, Object> data = new HashMap();
@@ -58,12 +63,13 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         data.put("workoutlaenge", workout.getWorkoutlaenge());
 
         firebaseFirestore.collection("Workouts")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(currentTime)
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                    public void onSuccess(Void avoid) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + currentTime);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
