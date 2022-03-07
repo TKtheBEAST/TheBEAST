@@ -88,7 +88,7 @@ public class AddFreundRecyclerviewAdapter extends RecyclerView.Adapter<AddFreund
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addFreundSelectionListener.onFreundSelected(user.get(0));
+                    addFreundSelectionListener.onFreundSelected(user.get(getAdapterPosition()));
                 }
             });
         }

@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.recyclerViewAdapter.LiveRecyclerViewAdapter;
@@ -23,8 +25,12 @@ import java.util.List;
 public class LiveFragment extends Fragment {
 
     private LiveFragmentViewModel liveFragmentViewModel;
-    RecyclerView recyclerView;
+    private LiveFragmentViewModel liveFragmentViewModelRefresh;
+    private RecyclerView recyclerView;
     private LiveRecyclerViewAdapter adapter;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     public LiveFragment(){}
     @Override
@@ -44,6 +50,22 @@ public class LiveFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.liveSwipeToRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                liveFragmentViewModelRefresh = new ViewModelProvider(getActivity()).get(LiveFragmentViewModel.class);
+                liveFragmentViewModelRefresh.refreshWorkouts().observe(getViewLifecycleOwner(), new Observer<List<WorkoutModel>>() {
+                    @Override
+                    public void onChanged(List<WorkoutModel> workoutModels) {
+                        adapter.setWorkouts(workoutModels);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -62,6 +84,13 @@ public class LiveFragment extends Fragment {
 
     public void onStart() {
         super.onStart();
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
 
     }
 

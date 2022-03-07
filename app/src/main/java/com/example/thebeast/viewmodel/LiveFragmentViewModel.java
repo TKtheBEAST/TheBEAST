@@ -20,6 +20,10 @@ public class LiveFragmentViewModel extends ViewModel implements WorkoutRepositor
         return workouts;
     }
 
+    public LiveData<List<WorkoutModel>> refreshWorkouts(){
+        return workouts;
+    }
+
     public LiveFragmentViewModel(){
         workoutRepositoryImpl.getAllWorkouts();
     }

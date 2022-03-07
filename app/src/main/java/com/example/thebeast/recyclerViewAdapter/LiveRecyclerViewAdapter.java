@@ -18,7 +18,7 @@ import java.util.List;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
-    private List<WorkoutModel> workouts = new ArrayList<>();
+    private List<WorkoutModel> workoutsList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -31,11 +31,11 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { ;
-        WorkoutModel currentWorkout = workouts.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        WorkoutModel currentWorkout = workoutsList.get(position);
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());
-        String imageUrl = workouts.get(position).getAvatar();
+        String imageUrl = workoutsList.get(position).getAvatar();
 
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
@@ -48,17 +48,16 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     @Override
     public int getItemCount() {
-        if(workouts == null){
+        if(workoutsList == null){
             return 0;
         }else {
-            return workouts.size();
+            return workoutsList.size();
         }
     }
 
 
     public void setWorkouts(List<WorkoutModel> workouts){
-        this.workouts = workouts;
-
+        this.workoutsList = workouts;
     }
 
 
