@@ -24,11 +24,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddFreundActivity extends AppCompatActivity implements AddFreundSelectionListener{
 
@@ -128,7 +131,6 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
             public void onClick(View view) {
 
                 freundHinzufuegen(user);
-                finish();
                 dialog.dismiss();
             }
         });
@@ -148,6 +150,30 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
     }
 
     private void freundHinzufuegen(UserModel user){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("beastID",user.getBeastId());
+        data.put("beastName", user.getBeastName());
+        data.put("beastSpruch", user.getBeastSpruch());
+        data.put("beastEmail", user.getBeastEmail());
+
+
+        db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
+                .collection("Freunde von User").document(user.getBeastId()).set(data)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            List<UserModel> freundeVonUser = new ArrayList<UserModel>();
+                            freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                            freundeVonUser.add(user);
+                            CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
+                            finish();
+                        }
+                    }
+                });
 
     }
 }

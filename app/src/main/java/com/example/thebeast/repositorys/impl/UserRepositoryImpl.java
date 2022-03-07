@@ -59,10 +59,10 @@ public class UserRepositoryImpl implements UserRepository {
 
 
 
-                    userRef.add(data)
-                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>(){
+                    userRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(data)
+                            .addOnCompleteListener(new OnCompleteListener<Void>(){
                                 @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
                                         Log.d(TAG,"User wurde hinzugefügt ");
                                     }else{
