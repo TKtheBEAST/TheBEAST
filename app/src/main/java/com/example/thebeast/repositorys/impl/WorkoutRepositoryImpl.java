@@ -25,9 +25,11 @@ import com.google.firebase.firestore.core.AsyncEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class WorkoutRepositoryImpl implements WorkoutRepository {
@@ -51,25 +53,24 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     public void insert(WorkoutModel workout) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date(System.currentTimeMillis());
-        String currentTime = formatter.format(date);
 
-        //add new Workout with a generated id
+
+
+        //add new Workout with timestamp as id
         Map<String, Object> data = new HashMap();
         data.put("workoutOwnerID", workout.getWorkoutOwnerID());
         data.put("beastName", workout.getBeastName());
         data.put("uebungen", workout.getUebungen());
         data.put("workoutlaenge", workout.getWorkoutlaenge());
+        data.put("startzeit", workout.getStartzeit());
+
 
         firebaseFirestore.collection("Workouts")
-                .document(currentTime)
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void avoid) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + currentTime);
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -114,6 +115,10 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     public void getAllWorkouts() {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+
         for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
             workoutRef.whereEqualTo("workoutOwnerID", freund.getBeastId()).addSnapshotListener(new EventListener<QuerySnapshot>() {
 
@@ -122,7 +127,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
                     assert value != null;
 
-                    for (DocumentSnapshot snapshot : value.getDocuments()){
+                    for (DocumentSnapshot snapshot : value.getDocuments()) {
                         workouts.clear();
                     }
 
@@ -130,8 +135,17 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                     for (DocumentSnapshot ds : value.getDocuments()) {
                         WorkoutModel workoutModel = ds.toObject(WorkoutModel.class);
                         assert workoutModel != null;
-                        workouts.add(workoutModel);
-                        onFirstoreTaskComplete.workoutModelsListAdded(workouts);
+
+                        float workoutlaenge;
+                        long workoutJahr;
+                        int workoutMonat;
+                        int workoutTag;
+                        int workoutHour;
+
+
+                            workouts.add(workoutModel);
+                            onFirstoreTaskComplete.workoutModelsListAdded(workouts);
+
 
                     }
 

@@ -22,7 +22,12 @@ import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAd
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 
@@ -196,10 +201,11 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                //Testlaenge
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
 
-                WorkoutModel workout = new WorkoutModel(workoutOwnerID,beastName,uebungen,workoutlaenge);
+                WorkoutModel workout = new WorkoutModel(workoutOwnerID,beastName,uebungen,workoutlaenge,currentDateandTime);
                 Log.i(TAG,"lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                 homeFragmentViewModel.insertWorkout(workout);
 

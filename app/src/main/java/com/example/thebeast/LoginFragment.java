@@ -165,23 +165,6 @@ public class LoginFragment extends Fragment {
 
     }
 
-    //überprüfen ob User schon eingelogged ist.
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(mAuth.getCurrentUser() != null) {
-            if(mAuth.getCurrentUser().isEmailVerified()){
-                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
-                getUserInformation();
-            }else{
-                mAuth.getCurrentUser().sendEmailVerification();
-                Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
-            }
-        }else{
-            return;
-        }
-    }
-
     public void getUserInformation(){
         loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
 
