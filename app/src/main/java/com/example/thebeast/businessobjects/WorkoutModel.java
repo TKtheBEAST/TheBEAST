@@ -19,7 +19,7 @@ public class WorkoutModel {
     //standort;
 
 
-
+    public WorkoutModel(){}
 
     public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit) {
         this.workoutOwnerID = workoutOwnerID;
