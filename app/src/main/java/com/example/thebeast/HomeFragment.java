@@ -202,7 +202,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
                 String currentDateandTime = sdf.format(new Date());
 
                 WorkoutModel workout = new WorkoutModel(workoutOwnerID,beastName,uebungen,workoutlaenge,currentDateandTime);

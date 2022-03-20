@@ -54,8 +54,6 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     public void insert(WorkoutModel workout) {
 
 
-
-
         //add new Workout with timestamp as id
         Map<String, Object> data = new HashMap();
         data.put("workoutOwnerID", workout.getWorkoutOwnerID());
@@ -115,10 +113,6 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     public void getAllWorkouts() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-
         for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
             workoutRef.whereEqualTo("workoutOwnerID", freund.getBeastId()).addSnapshotListener(new EventListener<QuerySnapshot>() {
 
@@ -136,16 +130,10 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                         WorkoutModel workoutModel = ds.toObject(WorkoutModel.class);
                         assert workoutModel != null;
 
-                        float workoutlaenge;
-                        long workoutJahr;
-                        int workoutMonat;
-                        int workoutTag;
-                        int workoutHour;
-
-
+                        if (workoutIsRunning(workoutModel.getStartzeit(), workoutModel.getWorkoutlaenge()) == true) {
                             workouts.add(workoutModel);
                             onFirstoreTaskComplete.workoutModelsListAdded(workouts);
-
+                        }
 
                     }
 
@@ -154,6 +142,56 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         }
         Log.i(TAG, "Alle workouts geladen");
 
+    }
+
+    private boolean workoutIsRunning(String startzeit, float workoutlaenge) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        String currentJahr = currentDateandTime.substring(0, 3);
+        String currentMonat = currentDateandTime.substring(5, 6);
+        String currentTag = currentDateandTime.substring(8, 9);
+
+        String workoutJahr = startzeit.substring(0, 3);
+        String workoutMonat = startzeit.substring(5, 6);
+        String workoutTag = startzeit.substring(8, 9);
+
+
+        if (!currentJahr.equals(workoutJahr) || !currentMonat.equals(workoutMonat) || !currentTag.equals(workoutTag)) {
+            return false;
+        }
+
+        String workoutStunde = startzeit.substring(11, 12);
+        String workoutMinute = startzeit.substring(14, 15);
+
+        String currentStunde = currentDateandTime.substring(11, 12);
+        String currentMinute = currentDateandTime.substring(14, 15);
+
+
+        //TODO: errechnen von workoutende. Hier fehlt noch die minute
+        float workoutStundeFloat = Integer.parseInt(workoutStunde);
+        float workoutMinuteFloat = Integer.parseInt(workoutMinute);
+
+        float workoutEndeStunde;
+        float workoutEndeMinute;
+        float stundeergaenzen;
+
+
+
+        float currentStundeFloat = Integer.parseInt(currentStunde);
+        float currentMinuteFloat = Integer.parseInt(currentMinute);
+        //überprüfen stunde und minute
+        if (currentStundeFloat - workoutEndeStunde > 0) {
+            return false;
+        }
+        if (currentStundeFloat - workoutEndeStunde == 0) {
+            if (currentMinuteFloat - workoutEndeMinute > 0) {
+                return false;
+            }
+        }
+
+
+        return true;
     }
 
 
