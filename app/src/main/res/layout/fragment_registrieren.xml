@@ -22,6 +22,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Füge ein Avatar hinzu"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/avatarRegIV"
+            app:layout_constraintStart_toStartOf="@+id/avatarRegIV"
+            app:layout_constraintTop_toBottomOf="@+id/avatarRegIV" />
+
         <EditText
             android:id="@+id/password1RegET"
             android:layout_width="300dp"
