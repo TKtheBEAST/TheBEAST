@@ -148,34 +148,47 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        String currentJahr = currentDateandTime.substring(0, 3);
-        String currentMonat = currentDateandTime.substring(5, 6);
-        String currentTag = currentDateandTime.substring(8, 9);
+        String currentJahr = currentDateandTime.substring(0, 4);
+        String currentMonat = currentDateandTime.substring(5, 7);
+        String currentTag = currentDateandTime.substring(8, 10);
 
-        String workoutJahr = startzeit.substring(0, 3);
-        String workoutMonat = startzeit.substring(5, 6);
-        String workoutTag = startzeit.substring(8, 9);
+        String workoutJahr = startzeit.substring(0, 4);
+        String workoutMonat = startzeit.substring(5, 7);
+        String workoutTag = startzeit.substring(8, 10);
 
 
         if (!currentJahr.equals(workoutJahr) || !currentMonat.equals(workoutMonat) || !currentTag.equals(workoutTag)) {
             return false;
         }
 
-        String workoutStunde = startzeit.substring(11, 12);
-        String workoutMinute = startzeit.substring(14, 15);
+        String workoutStunde = startzeit.substring(11, 13);
+        String workoutMinute = startzeit.substring(14, 16);
 
-        String currentStunde = currentDateandTime.substring(11, 12);
-        String currentMinute = currentDateandTime.substring(14, 15);
+        String currentStunde = currentDateandTime.substring(11, 13);
+        String currentMinute = currentDateandTime.substring(14, 16);
 
+        boolean stundeergaenzen = false;
 
-        //TODO: errechnen von workoutende. Hier fehlt noch die minute
         float workoutStundeFloat = Integer.parseInt(workoutStunde);
         float workoutMinuteFloat = Integer.parseInt(workoutMinute);
-
         float workoutEndeStunde;
-        float workoutEndeMinute;
-        float stundeergaenzen;
+        float workoutEndeMinute = 0;
 
+
+        if(workoutlaenge == 0.5 || workoutlaenge == 1.5){
+            if(workoutMinuteFloat + 30 > 59){
+                stundeergaenzen = true;
+                workoutEndeMinute = workoutMinuteFloat - 30;
+            }
+        }else{
+            workoutEndeMinute = workoutMinuteFloat;
+        }
+
+        workoutEndeStunde = workoutStundeFloat + (int) workoutlaenge;
+
+        if(stundeergaenzen == true){
+            workoutEndeStunde++;
+        }
 
 
         float currentStundeFloat = Integer.parseInt(currentStunde);
