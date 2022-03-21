@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ public class LiveFragment extends Fragment {
     private LiveFragmentViewModel liveFragmentViewModelRefresh;
     private RecyclerView recyclerView;
     private LiveRecyclerViewAdapter adapter;
+    private TextView niemandTrainiertTV;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -44,12 +46,20 @@ public class LiveFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        niemandTrainiertTV = view.findViewById(R.id.niemandTrainiertTV);
         recyclerView = view.findViewById(R.id.liveWorkoutsRecyclerView);
         adapter = new LiveRecyclerViewAdapter();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        if(adapter.getItemCount() == 0){
+            niemandTrainiertTV.setVisibility(View.VISIBLE);
+        }else{
+            niemandTrainiertTV.setVisibility(View.GONE);
+        }
 
         swipeRefreshLayout = view.findViewById(R.id.liveSwipeToRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -61,6 +71,11 @@ public class LiveFragment extends Fragment {
                     public void onChanged(List<WorkoutModel> workoutModels) {
                         adapter.setWorkouts(workoutModels);
                         adapter.notifyDataSetChanged();
+                        if(adapter.getItemCount() == 0){
+                            niemandTrainiertTV.setVisibility(View.VISIBLE);
+                        }else{
+                            niemandTrainiertTV.setVisibility(View.GONE);
+                        }
                     }
                 });
                 swipeRefreshLayout.setRefreshing(false);
@@ -77,9 +92,13 @@ public class LiveFragment extends Fragment {
             public void onChanged(List<WorkoutModel> workoutModels) {
                 adapter.setWorkouts(workoutModels);
                 adapter.notifyDataSetChanged();
+                if(adapter.getItemCount() == 0){
+                    niemandTrainiertTV.setVisibility(View.VISIBLE);
+                }else{
+                    niemandTrainiertTV.setVisibility(View.GONE);
+                }
             }
         });
-
     }
 
     public void onStart() {

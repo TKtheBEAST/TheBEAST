@@ -14,18 +14,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.AsyncEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +35,8 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference workoutRef = firebaseFirestore.collection("Workouts");
-    private List<WorkoutModel> workouts = new ArrayList<>();
+    private List<WorkoutModel> liveWorkouts = new ArrayList<>();
+    private List<WorkoutModel> vergangeneWorkouts = new ArrayList<>();
 
     private OnFirstoreTaskComplete onFirstoreTaskComplete;
 
@@ -122,7 +120,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                     assert value != null;
 
                     for (DocumentSnapshot snapshot : value.getDocuments()) {
-                        workouts.clear();
+                        liveWorkouts.clear();
                     }
 
 
@@ -131,8 +129,10 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                         assert workoutModel != null;
 
                         if (workoutIsRunning(workoutModel.getStartzeit(), workoutModel.getWorkoutlaenge()) == true) {
-                            workouts.add(workoutModel);
-                            onFirstoreTaskComplete.workoutModelsListAdded(workouts);
+                            liveWorkouts.add(workoutModel);
+                            onFirstoreTaskComplete.workoutModelsListAdded(liveWorkouts);
+                        }else{
+                            vergangeneWorkouts.add(workoutModel);
                         }
 
                     }

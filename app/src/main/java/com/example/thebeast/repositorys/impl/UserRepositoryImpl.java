@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
             .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, null);
+                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge);
                     Map<String,Object> data = new HashMap<>();
                     data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.put("beastName", user.getBeastName());

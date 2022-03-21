@@ -108,7 +108,9 @@
             android:layout_marginBottom="60dp"
             app:layout_constraintBottom_toTopOf="@+id/beastSpruchRegET"
             app:layout_constraintStart_toStartOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:srcCompat="@drawable/fui_ic_anonymous_white_24dp"
+            tools:src="@drawable/fui_ic_anonymous_white_24dp"
+            tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
 
         <EditText
             android:id="@+id/password2RegET"

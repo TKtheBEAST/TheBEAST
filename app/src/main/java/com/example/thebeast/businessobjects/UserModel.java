@@ -1,6 +1,6 @@
 package com.example.thebeast.businessobjects;
 
-import androidx.room.PrimaryKey;
+import android.net.Uri;
 
 import com.google.firebase.firestore.DocumentId;
 
@@ -25,12 +25,11 @@ public class UserModel {
 
     public UserModel(){}
 
-    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge, String avatar) {
+    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge) {
         this.beastName = beastName;
         this.beastEmail = beastEmail;
         this.workoutlaenge = workoutlaenge;
         this.beastSpruch = beastSpruch;
-        this.avatar = avatar;
     }
 
     public List<UserModel> getFreundeCurrentUser() {

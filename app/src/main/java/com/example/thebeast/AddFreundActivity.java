@@ -138,6 +138,12 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                 List<UserModel> freundeVonUser = new ArrayList<UserModel>();
                 freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
 
+                if(CurrentUser.getCurrentUser().getBeastEmail().equals(user.getBeastEmail())){
+                    Toast.makeText(AddFreundActivity.this,"Das bist du doch selbst...",Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    return;
+                }
+
                 for(UserModel freund : freundeVonUser){
                     if(freund.getBeastEmail().equals(user.getBeastEmail())){
                         Toast.makeText(AddFreundActivity.this,"Ihr seid bereits befreundet",Toast.LENGTH_LONG).show();
