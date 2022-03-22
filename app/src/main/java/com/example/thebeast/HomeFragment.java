@@ -1,8 +1,17 @@
 package com.example.thebeast;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
@@ -44,6 +54,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView startWorkoutRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private GewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
+
+    LocationManager locationManager;
+    LocationListener locationListener;
 
 
     //Button initialisieren
@@ -201,6 +214,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                getUserLocation();
+
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
                 String currentDateandTime = sdf.format(new Date());
@@ -228,6 +243,44 @@ public class HomeFragment extends Fragment {
         dialog.show();
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(grantResults.length > 0 && grantResults [0] == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, locationListener);
+            }
+        }
+    }
+
+    private void getUserLocation() {
+
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+
+            }
+
+            @Override
+            public void onLocationChanged(@NonNull List<Location> locations) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {
+
+            }
+        };
     }
 
     public void trainingHinzufuegen(View v, int training, String name) {
