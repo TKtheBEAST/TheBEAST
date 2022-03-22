@@ -36,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         // Add a marker where the workout is and move the camera
         LatLng workoutStandort = new LatLng(latitude, longitude);
@@ -47,6 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.addMarker(new MarkerOptions().position(workoutStandort).title("Hier findet das Workout statt"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(workoutStandort));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(workoutStandort,15));
     }
 }
