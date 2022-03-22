@@ -1,5 +1,6 @@
 package com.example.thebeast.recyclerViewAdapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.thebeast.LiveFragment;
+import com.example.thebeast.LiveWorkoutSelectionListener;
+import com.example.thebeast.MainActivity;
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.WorkoutModel;
 
@@ -19,6 +23,13 @@ import java.util.List;
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
     private List<WorkoutModel> workoutsList = new ArrayList<>();
+    private Context context;
+    private LiveWorkoutSelectionListener liveWorkoutSelectionListener;
+
+    public LiveRecyclerViewAdapter(Context context) {
+        this.context = context;
+        liveWorkoutSelectionListener = (MainActivity)context;
+    }
 
     @NonNull
     @Override
@@ -74,6 +85,13 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
             beastName = itemView.findViewById(R.id.beastNameTextView);
             workoutsTextView = itemView.findViewById(R.id.workoutTextView);
             standort = itemView.findViewById(R.id.standortTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    liveWorkoutSelectionListener.onWorkoutSelected(workoutsList.get(getAdapterPosition()));
+                }
+            });
 
         }
     }

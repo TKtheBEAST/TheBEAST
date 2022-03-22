@@ -1,5 +1,6 @@
 package com.example.thebeast;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,7 @@ public class LiveFragment extends Fragment {
 
         niemandTrainiertTV = view.findViewById(R.id.niemandTrainiertTV);
         recyclerView = view.findViewById(R.id.liveWorkoutsRecyclerView);
-        adapter = new LiveRecyclerViewAdapter();
+        adapter = new LiveRecyclerViewAdapter(getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);

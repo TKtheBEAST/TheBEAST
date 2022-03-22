@@ -1,8 +1,10 @@
 package com.example.thebeast;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +13,12 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.thebeast.businessobjects.WorkoutModel;
 
-public class MainActivity extends AppCompatActivity {
+import static android.content.ContentValues.TAG;
+
+
+public class MainActivity extends AppCompatActivity implements LiveWorkoutSelectionListener{
 
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
@@ -88,4 +94,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(2,false);
     }
 
+    @Override
+    public void onWorkoutSelected(WorkoutModel workout) {
+        Log.i(TAG, workout.getStartzeit());
+        startActivity(new Intent(this, MapsActivity.class));
+    }
 }
