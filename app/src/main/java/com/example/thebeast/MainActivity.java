@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements LiveWorkoutSelect
     @Override
     public void onWorkoutSelected(WorkoutModel workout) {
         Log.i(TAG, workout.getStartzeit());
-        startActivity(new Intent(this, MapsActivity.class));
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        intent.putExtra("longitude", workout.getLongitude());
+        intent.putExtra("latitude", workout.getLatitude());
+        startActivity(intent);
     }
 }

@@ -15,6 +15,8 @@ public class WorkoutModel {
     private String beastName;
     private String uebungen;
     private String startzeit;
+    private double longitude;
+    private double latitude;
     private float workoutlaenge;
     //standort;
 
@@ -72,5 +74,21 @@ public class WorkoutModel {
 
     public void setStartzeit(String startzeit) {
         this.startzeit = startzeit;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }
