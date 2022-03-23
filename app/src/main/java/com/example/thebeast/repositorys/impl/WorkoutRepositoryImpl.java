@@ -59,6 +59,9 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         data.put("uebungen", workout.getUebungen());
         data.put("workoutlaenge", workout.getWorkoutlaenge());
         data.put("startzeit", workout.getStartzeit());
+        data.put("longitude", workout.getLongitude());
+        data.put("latitude", workout.getLatitude());
+
 
 
         firebaseFirestore.collection("Workouts")
