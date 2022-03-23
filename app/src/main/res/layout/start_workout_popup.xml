@@ -25,13 +25,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,6 +38,7 @@
             android:id="@+id/letsGoButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
             android:text="Let's go!"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/abbrechenBeastNaendernPopup"
@@ -55,6 +49,7 @@
             android:id="@+id/abbrechenWorkoutPopup"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
             android:text="Abbrechen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
