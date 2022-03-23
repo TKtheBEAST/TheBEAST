@@ -181,6 +181,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         data.put("beastName", user.getBeastName());
         data.put("beastSpruch", user.getBeastSpruch());
         data.put("beastEmail", user.getBeastEmail());
+        data.put("workoutlaenge", user.getWorkoutlaenge());
 
 
         db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
