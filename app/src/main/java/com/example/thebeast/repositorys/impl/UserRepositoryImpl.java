@@ -1,6 +1,7 @@
 package com.example.thebeast.repositorys.impl;
 
 import android.app.Application;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
+    private CollectionReference freundVonUserRef = firebaseFirestore.collection("User").document("*").collection("Freunde von User");
     
 
     public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password){
@@ -100,6 +102,21 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 });
 
+        for (UserModel freund: CurrentUser.getCurrentUser().getFreundeCurrentUser()){
+            userRef.document(freund.getBeastId()).collection("Freunde von User")
+                    .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
+                            }
+                        }
+                    });
+
+        }
+
     }
 
     public void updateBeastName(String neuerBeastName){
@@ -117,6 +134,20 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 });
 
+        for (UserModel freund: CurrentUser.getCurrentUser().getFreundeCurrentUser()){
+            userRef.document(freund.getBeastId()).collection("Freunde von User")
+                    .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                CurrentUser.getCurrentUser().setBeastName(neuerBeastName);
+                            }
+                        }
+                    });
+
+        }
     }
 
     public void delete(UserModel user){
@@ -165,6 +196,7 @@ public class UserRepositoryImpl implements UserRepository {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
+
                             CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
                         }else{
                             return;

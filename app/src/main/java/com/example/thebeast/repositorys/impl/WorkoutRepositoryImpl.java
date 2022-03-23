@@ -59,6 +59,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         data.put("uebungen", workout.getUebungen());
         data.put("workoutlaenge", workout.getWorkoutlaenge());
         data.put("startzeit", workout.getStartzeit());
+        data.put("avatar", workout.getAvatar());
         data.put("longitude", workout.getLongitude());
         data.put("latitude", workout.getLatitude());
 
@@ -88,29 +89,6 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     }
 
-
-    public void refreshWorkouts() {
-        List<WorkoutModel> workouts = new ArrayList<>();
-        for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
-            workoutRef.whereEqualTo("workoutOwnerID", freund.getBeastId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        List<WorkoutModel> addWorkout = new ArrayList<>();
-                        addWorkout = task.getResult().toObjects(WorkoutModel.class);
-                        workouts.add(addWorkout.get(0));
-                        onFirstoreTaskComplete.workoutModelsListAdded(workouts);
-                    } else {
-                        onFirstoreTaskComplete.onError(task.getException());
-                        Log.i(TAG, "Workouts konnten nicht geladen werden");
-                    }
-                }
-            });
-        }
-        Log.i(TAG, "Alle workouts geladen");
-
-    }
 
     public void getAllWorkouts() {
 

@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment {
 
                 String beastName = CurrentUser.getCurrentUser().getBeastName();
                 String workoutOwnerID = CurrentUser.getCurrentUser().getBeastId();
-                //int avatar = HomeFragmentViewModel.getCurrentUser().getAvatar();
+                String avatar = CurrentUser.getCurrentUser().getAvatar();
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
                 String currentDateandTime = sdf.format(new Date());
@@ -219,9 +219,9 @@ public class HomeFragment extends Fragment {
 
                             WorkoutModel workout;
                             if (location != null) {
-                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, location.getLongitude(), location.getLatitude());
+                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, avatar, location.getLongitude(), location.getLatitude());
                             } else {
-                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime);
+                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, avatar);
                             }
                             Log.i(TAG, "lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                             homeFragmentViewModel.insertWorkout(workout);

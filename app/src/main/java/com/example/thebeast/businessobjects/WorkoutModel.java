@@ -24,20 +24,22 @@ public class WorkoutModel {
     public WorkoutModel() {
     }
 
-    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit) {
+    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit, String avatar) {
         this.workoutOwnerID = workoutOwnerID;
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
         this.startzeit = startzeit;
+        this.avatar = avatar;
     }
 
-    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit, double longitude, double latitude) {
+    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit, String avatar, double longitude, double latitude) {
         this.workoutOwnerID = workoutOwnerID;
         this.beastName = beastName;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
         this.startzeit = startzeit;
+        this.avatar = avatar;
         this.longitude = longitude;
         this.latitude = latitude;
     }
