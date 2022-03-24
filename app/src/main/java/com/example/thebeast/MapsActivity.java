@@ -4,6 +4,9 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,11 +20,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private double latitude;
     private double longitude;
+    private ProgressBar progressBar;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        progressBar = findViewById(R.id.mapsProgressBar);
+        backButton = findViewById(R.id.mapsBackIB);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -30,6 +38,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         latitude = intent.getDoubleExtra("latitude", 48.89731);
         longitude = intent.getDoubleExtra("longitute", 9.19161);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapsActivity.this, MainActivity.class));
+            }
+        });
     }
 
 
@@ -49,5 +64,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.addMarker(new MarkerOptions().position(workoutStandort).title("Hier findet das Workout statt"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(workoutStandort,15));
+        progressBar.setVisibility(View.GONE);
     }
 }
