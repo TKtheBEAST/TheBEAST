@@ -74,6 +74,7 @@ public class FreundeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         adapter.setFreunde(freunde);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -86,5 +87,17 @@ public class FreundeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        adapter = new FreundeRecyclerViewAdapter(getActivity());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+        adapter.setFreunde(freunde);
     }
 }

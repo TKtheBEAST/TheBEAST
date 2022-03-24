@@ -2,6 +2,7 @@ package com.example.thebeast;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,6 +24,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.businessobjects.WorkoutModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity);
+
+        progressBar = findViewById(R.id.mainProgressBar);
+        progressBar.setVisibility(View.GONE);
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         viewPager.setCurrentItem(2,false);
     }
 
+
     @Override
     public void onWorkoutSelected(WorkoutModel workout) {
         Log.i(TAG, workout.getStartzeit());
@@ -124,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         selectedFreundDialog(freund);
     }
 
-    public void selectedFreundDialog(UserModel user){
+    public void selectedFreundDialog(UserModel freund){
 
         dialogBuilder = new AlertDialog.Builder(this);
         final View selectedFreundView = getLayoutInflater().inflate(R.layout.freund_popup,null);
@@ -134,11 +143,11 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         Button freundEntfernenButton = selectedFreundView.findViewById(R.id.freundEntfernenButton);
         Button freundBackButton = selectedFreundView.findViewById(R.id.freundBackButton);
 
-        TextView beastNameFreundTextView = selectedFreundView.findViewById(R.id.beastNameFreundBestaetigen);
-        beastNameFreundTextView.setText(user.getBeastName());
+        TextView beastNameFreundTextView = selectedFreundView.findViewById(R.id.beastNameSelectedFreund);
+        beastNameFreundTextView.setText(freund.getBeastName());
 
-        ImageView avatar = selectedFreundView.findViewById(R.id.avatarFrundeIV);
-        String imageUrl = user.getAvatar();
+        ImageView avatar = selectedFreundView.findViewById(R.id.avatarSelectedFreundIV);
+        String imageUrl = freund.getAvatar();
 
         Glide.with(selectedFreundView.getContext())
                 .load(imageUrl)
@@ -151,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
             @Override
             public void onClick(View view) {
 
-                freundEntfernen(user);
+                freundEntfernen(freund);
                 progressBar.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
@@ -172,8 +181,30 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
     }
 
     public void freundEntfernen(UserModel freund){
-        List<UserModel> freundeVonUser = new ArrayList<>();
-        freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
+                .collection("Freunde von User").document(freund.getBeastId()).delete()
+                .addOnCompleteListener(new OnCompleteListener(){
+
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()){
+                            List<UserModel> freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                            freunde.remove(freund);
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(MainActivity.this,freund.getBeastName() +
+                                    " ist nicht mehr dein Freund",Toast.LENGTH_LONG).show();
+
+                            viewPager = findViewById(R.id.pager);
+                            pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
+                            viewPager.setAdapter(pagerAdapter);
+                            viewPager.setCurrentItem(4,false);
+                        }
+                    }
+                });
+
 
     }
 }
