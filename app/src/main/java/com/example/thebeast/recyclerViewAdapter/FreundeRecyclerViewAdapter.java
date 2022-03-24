@@ -1,5 +1,6 @@
 package com.example.thebeast.recyclerViewAdapter;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.thebeast.AddFreundActivity;
+import com.example.thebeast.AddFreundSelectionListener;
+import com.example.thebeast.MainActivity;
+import com.example.thebeast.MainActivitySelectionListener;
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.UserModel;
 
@@ -20,6 +25,13 @@ import java.util.List;
 public class FreundeRecyclerViewAdapter extends RecyclerView.Adapter<FreundeRecyclerViewAdapter.MyViewHolder>{
 
     private List<UserModel> freunde = new ArrayList<>();
+    private Context context;
+    private MainActivitySelectionListener mainActivitySelectionListener;
+
+    public FreundeRecyclerViewAdapter(Context context) {
+        this.context = context;
+        mainActivitySelectionListener = (MainActivity)context;
+    }
 
     @NonNull
     @Override
@@ -76,7 +88,13 @@ public class FreundeRecyclerViewAdapter extends RecyclerView.Adapter<FreundeRecy
             avatar = itemView.findViewById(R.id.avatarFrundeIV);
             beastName = itemView.findViewById(R.id.beastNameFreundeTV);
             beastSpruch = itemView.findViewById(R.id.beastSpruchFreundeTV);
+            itemView.setOnClickListener(new View.OnClickListener() {
 
+                @Override
+                public void onClick(View view) {
+                    mainActivitySelectionListener.onFreundSelected(freunde.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

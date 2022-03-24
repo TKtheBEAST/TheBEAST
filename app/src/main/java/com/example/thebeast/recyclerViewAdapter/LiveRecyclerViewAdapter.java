@@ -1,6 +1,5 @@
 package com.example.thebeast.recyclerViewAdapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.thebeast.LiveWorkoutSelectionListener;
+import com.example.thebeast.MainActivitySelectionListener;
 import com.example.thebeast.MainActivity;
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.WorkoutModel;
@@ -27,7 +26,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     private List<WorkoutModel> workoutsList = new ArrayList<>();
     private Context context;
-    private LiveWorkoutSelectionListener liveWorkoutSelectionListener;
+    private MainActivitySelectionListener liveWorkoutSelectionListener;
 
     public LiveRecyclerViewAdapter(Context context) {
         this.context = context;

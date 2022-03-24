@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -20,12 +18,9 @@ import android.widget.Toast;
 
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.recyclerViewAdapter.AddFreundRecyclerviewAdapter;
-import com.example.thebeast.recyclerViewAdapter.FreundeRecyclerViewAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -115,10 +110,10 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
     @Override
     public void onFreundSelected(UserModel freund) {
-        beastNameAnpassenDialog(freund);
+        freundHinzufuegenDialog(freund);
     }
 
-    public void beastNameAnpassenDialog(UserModel user){
+    public void freundHinzufuegenDialog(UserModel user){
 
         dialogBuilder = new AlertDialog.Builder(this);
         final View freundBestaetigenView = getLayoutInflater().inflate(R.layout.add_freund_popup,null);

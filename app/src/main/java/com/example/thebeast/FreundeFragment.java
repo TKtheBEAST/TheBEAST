@@ -67,7 +67,7 @@ public class FreundeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.freundeRecyclerView);
-        adapter = new FreundeRecyclerViewAdapter();
+        adapter = new FreundeRecyclerViewAdapter(getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);

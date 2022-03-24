@@ -1,12 +1,17 @@
 package com.example.thebeast;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -14,15 +19,25 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.businessobjects.WorkoutModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 
-public class MainActivity extends AppCompatActivity implements LiveWorkoutSelectionListener{
+public class MainActivity extends AppCompatActivity implements MainActivitySelectionListener {
 
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+
+    private ProgressBar progressBar;
 
 
     @Override
@@ -102,5 +117,63 @@ public class MainActivity extends AppCompatActivity implements LiveWorkoutSelect
         intent.putExtra("longitude", workout.getLongitude());
         intent.putExtra("latitude", workout.getLatitude());
         startActivity(intent);
+    }
+
+    @Override
+    public void onFreundSelected(UserModel freund) {
+        selectedFreundDialog(freund);
+    }
+
+    public void selectedFreundDialog(UserModel user){
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View selectedFreundView = getLayoutInflater().inflate(R.layout.freund_popup,null);
+
+
+
+        Button freundEntfernenButton = selectedFreundView.findViewById(R.id.freundEntfernenButton);
+        Button freundBackButton = selectedFreundView.findViewById(R.id.freundBackButton);
+
+        TextView beastNameFreundTextView = selectedFreundView.findViewById(R.id.beastNameFreundBestaetigen);
+        beastNameFreundTextView.setText(user.getBeastName());
+
+        ImageView avatar = selectedFreundView.findViewById(R.id.avatarFrundeIV);
+        String imageUrl = user.getAvatar();
+
+        Glide.with(selectedFreundView.getContext())
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(avatar);
+
+        freundEntfernenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                freundEntfernen(user);
+                progressBar.setVisibility(View.VISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        freundBackButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(selectedFreundView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+    }
+
+    public void freundEntfernen(UserModel freund){
+        List<UserModel> freundeVonUser = new ArrayList<>();
+        freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+
     }
 }
