@@ -1,6 +1,9 @@
 package com.example.thebeast.recyclerViewAdapter;
 
+import android.app.Application;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.thebeast.LiveFragment;
 import com.example.thebeast.LiveWorkoutSelectionListener;
 import com.example.thebeast.MainActivity;
 import com.example.thebeast.R;
@@ -19,6 +21,7 @@ import com.example.thebeast.businessobjects.WorkoutModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
@@ -43,7 +46,10 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         WorkoutModel currentWorkout = workoutsList.get(position);
+        String standort = getStandort(context, currentWorkout.getLatitude(), currentWorkout.getLongitude());
+        holder.standort.setText(standort);
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());
         String imageUrl = workoutsList.get(position).getAvatar();
@@ -55,6 +61,23 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
                 .into(holder.avatar);
 
 
+    }
+
+    private String getStandort(Context ctx, double lat, double lng) {
+        String standort = "";
+
+        try{
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if(addresses.size() > 0){
+                Address address = addresses.get(0);
+                standort = address.getAddressLine(0);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return standort;
     }
 
     @Override
