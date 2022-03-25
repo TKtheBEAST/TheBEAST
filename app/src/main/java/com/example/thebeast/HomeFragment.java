@@ -2,8 +2,12 @@ package com.example.thebeast;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -42,6 +48,9 @@ public class HomeFragment extends Fragment {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
+
+    private NotificationManagerCompat notificationManagerCompat;
+    private Notification notification;
 
     private RecyclerView gewaehltesTrainingRecyclerView;
     private RecyclerView startWorkoutRecyclerView;
@@ -226,6 +235,7 @@ public class HomeFragment extends Fragment {
                             Log.i(TAG, "lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                             homeFragmentViewModel.insertWorkout(workout);
 
+                            sendNotification(beastName, uebungen);
                             workoutsEntfernen();
                             dialog.dismiss();
                         }
@@ -245,6 +255,25 @@ public class HomeFragment extends Fragment {
         dialogBuilder.setView(startWorkoutView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private void sendNotification(String title, String standort) {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("myCh", "My Channel", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(),"myCh")
+                .setSmallIcon(android.R.drawable.stat_notify_sync)
+                .setContentTitle(title)
+                .setContentText(standort);
+
+        notification = notificationBuilder.build();
+        notificationManagerCompat = NotificationManagerCompat.from(getContext());
+        notificationManagerCompat.notify(1,notification);
+
     }
 
 
