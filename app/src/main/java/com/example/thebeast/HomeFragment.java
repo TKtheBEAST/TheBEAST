@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -259,7 +261,8 @@ public class HomeFragment extends Fragment {
 
     private void sendNotification(String title, String standort) {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        //alt
+        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("myCh", "My Channel", NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
@@ -272,7 +275,25 @@ public class HomeFragment extends Fragment {
 
         notification = notificationBuilder.build();
         notificationManagerCompat = NotificationManagerCompat.from(getContext());
-        notificationManagerCompat.notify(1,notification);
+        notificationManagerCompat.notify(1,notification); */
+
+        //neu mit Topic
+        // The topic name can be optionally prefixed with "/topics/".
+        String topic = CurrentUser.getCurrentUser().getBeastEmail();
+
+        //TODO: Nachricht zu Topic erstellen. Message.Build geht irgendiwe nicht.
+
+        // See documentation on defining a message payload.
+        Message message = Message.builder()
+                .putData("score", "850")
+                .putData("time", "2:45")
+                .setTopic(topic)
+                .build();
+
+        // Send a message to the devices subscribed to the provided topic.
+        String response = FirebaseMessaging.getInstance().send(message);
+        // Response is a message ID string.
+        System.out.println("Successfully sent message: " + response);
 
     }
 

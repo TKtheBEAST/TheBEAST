@@ -27,6 +27,7 @@ import com.example.thebeast.businessobjects.WorkoutModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,26 +185,47 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
-                .collection("Freunde von User").document(freund.getBeastId()).delete()
-                .addOnCompleteListener(new OnCompleteListener(){
-
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(freund.getBeastEmail())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()){
-                            List<UserModel> freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
-                            freunde.remove(freund);
-                            progressBar.setVisibility(View.GONE);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(!task.isSuccessful()){
                             Toast.makeText(MainActivity.this,freund.getBeastName() +
-                                    " ist nicht mehr dein Freund",Toast.LENGTH_LONG).show();
+                                    "Hier ist was schief gelaufen...",Toast.LENGTH_LONG).show();
+                        }else{
+                            db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
+                                    .collection("Freunde von User").document(freund.getBeastId()).delete()
+                                    .addOnCompleteListener(new OnCompleteListener(){
 
-                            viewPager = findViewById(R.id.pager);
-                            pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
-                            viewPager.setAdapter(pagerAdapter);
-                            viewPager.setCurrentItem(4,false);
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if (task.isSuccessful()){
+                                                List<UserModel> freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                                                freunde.remove(freund);
+                                                progressBar.setVisibility(View.GONE);
+                                                Toast.makeText(MainActivity.this,freund.getBeastName() +
+                                                        " ist nicht mehr dein Freund",Toast.LENGTH_LONG).show();
+
+                                                viewPager = findViewById(R.id.pager);
+                                                pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
+                                                viewPager.setAdapter(pagerAdapter);
+                                                viewPager.setCurrentItem(4,false);
+                                            }else{
+                                                progressBar.setVisibility(View.GONE);
+
+                                                Toast.makeText(MainActivity.this,freund.getBeastName() +
+                                                        " konnte nicht entfernt werden.",Toast.LENGTH_LONG).show();
+                                                viewPager = findViewById(R.id.pager);
+                                                pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
+                                                viewPager.setAdapter(pagerAdapter);
+                                                viewPager.setCurrentItem(4,false);
+                                            }
+                                        }
+                                    });
                         }
                     }
                 });
+
 
 
     }
