@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,9 +147,8 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                         return;
                     }
                 }
-
-                freundHinzufuegen(user);
                 progressBar.setVisibility(View.VISIBLE);
+                freundHinzufuegen(user);
                 dialog.dismiss();
             }
         });
@@ -190,9 +190,20 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                             freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
                             freundeVonUser.add(user);
                             CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
-                            progressBar.setVisibility(View.VISIBLE);
-                            Toast.makeText(AddFreundActivity.this,user.getBeastName() +
-                                    " ist jetzt dein Freund",Toast.LENGTH_LONG).show();
+                            FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastEmail())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                       @Override
+                                       public void onComplete(@NonNull Task<Void> task) {
+                                           if(!task.isSuccessful()){
+                                               Toast.makeText(AddFreundActivity.this,user.getBeastName() +
+                                                       "Hier ist was schief gelaufen... Entferne dieses Beast und füge " +
+                                                       "es noch einmal hinzu.",Toast.LENGTH_LONG).show();
+                                           }else{
+                                               Toast.makeText(AddFreundActivity.this,user.getBeastName() +
+                                                       " ist jetzt dein Freund",Toast.LENGTH_LONG).show();
+                                           }
+                                       }
+                                   });
                             finish();
                         }
                     }
