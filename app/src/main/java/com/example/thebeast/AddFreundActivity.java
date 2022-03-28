@@ -180,34 +180,39 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         data.put("avatar", user.getAvatar());
 
 
-        db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
-                .collection("Freunde von User").document(user.getBeastId()).set(data)
+        FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastEmail())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-                            List<UserModel> freundeVonUser = new ArrayList<UserModel>();
-                            freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
-                            freundeVonUser.add(user);
-                            CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
-                            FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastEmail())
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                       @Override
-                                       public void onComplete(@NonNull Task<Void> task) {
-                                           if(!task.isSuccessful()){
-                                               Toast.makeText(AddFreundActivity.this,user.getBeastName() +
-                                                       "Hier ist was schief gelaufen... Entferne dieses Beast und füge " +
-                                                       "es noch einmal hinzu.",Toast.LENGTH_LONG).show();
-                                           }else{
-                                               Toast.makeText(AddFreundActivity.this,user.getBeastName() +
-                                                       " ist jetzt dein Freund",Toast.LENGTH_LONG).show();
-                                           }
-                                       }
-                                   });
+                        if(!task.isSuccessful()){
+                            Toast.makeText(AddFreundActivity.this,user.getBeastName() +
+                                    "Hier ist was schief gelaufen... Versuche es noch einmal",Toast.LENGTH_LONG).show();
                             finish();
+                        }else{
+                            db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
+                                    .collection("Freunde von User").document(user.getBeastId()).set(data)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()) {
+                                                List<UserModel> freundeVonUser = new ArrayList<UserModel>();
+                                                freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                                                freundeVonUser.add(user);
+                                                CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
+                                                Toast.makeText(AddFreundActivity.this,"Du bist jetzt mit " +user.getBeastName() +
+                                                        " befreundet.",Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }else{
+                                                Toast.makeText(AddFreundActivity.this,user.getBeastName() +
+                                                        "Hier ist was schief gelaufen... Versuche es noch einmal",Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
+                                        }
+                                    });
                         }
                     }
                 });
+
 
     }
 }

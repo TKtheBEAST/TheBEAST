@@ -190,8 +190,13 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(!task.isSuccessful()){
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(MainActivity.this,freund.getBeastName() +
                                     "Hier ist was schief gelaufen...",Toast.LENGTH_LONG).show();
+                            viewPager = findViewById(R.id.pager);
+                            pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
+                            viewPager.setAdapter(pagerAdapter);
+                            viewPager.setCurrentItem(4,false);
                         }else{
                             db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
                                     .collection("Freunde von User").document(freund.getBeastId()).delete()
