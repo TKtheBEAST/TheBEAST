@@ -201,12 +201,11 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                                                 CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeVonUser);
                                                 Toast.makeText(AddFreundActivity.this,"Du bist jetzt mit " +user.getBeastName() +
                                                         " befreundet.",Toast.LENGTH_LONG).show();
-                                                finish();
                                             }else{
                                                 Toast.makeText(AddFreundActivity.this,user.getBeastName() +
                                                         "Hier ist was schief gelaufen... Versuche es noch einmal",Toast.LENGTH_LONG).show();
-                                                finish();
                                             }
+                                            finish();
                                         }
                                     });
                         }

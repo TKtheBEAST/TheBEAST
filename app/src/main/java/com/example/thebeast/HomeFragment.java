@@ -2,14 +2,12 @@ package com.example.thebeast;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,6 +31,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,9 +51,6 @@ public class HomeFragment extends Fragment {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-
-    private NotificationManagerCompat notificationManagerCompat;
-    private Notification notification;
 
     private RecyclerView gewaehltesTrainingRecyclerView;
     private RecyclerView startWorkoutRecyclerView;
@@ -277,23 +275,27 @@ public class HomeFragment extends Fragment {
         notificationManagerCompat = NotificationManagerCompat.from(getContext());
         notificationManagerCompat.notify(1,notification); */
 
+        //TODO: server dazwischen so gehts woooohl net
         //neu mit Topic
+        Notification notification = new Notification(title,standort);
+
         // The topic name can be optionally prefixed with "/topics/".
         String topic = CurrentUser.getCurrentUser().getBeastEmail();
 
-        //TODO: Nachricht zu Topic erstellen. Message.Build geht irgendiwe nicht.
-
         // See documentation on defining a message payload.
         Message message = Message.builder()
-                .putData("score", "850")
-                .putData("time", "2:45")
                 .setTopic(topic)
+                .setNotification(notification)
                 .build();
 
         // Send a message to the devices subscribed to the provided topic.
-        String response = FirebaseMessaging.getInstance().send(message);
-        // Response is a message ID string.
-        System.out.println("Successfully sent message: " + response);
+        String response = null;
+        try {
+            response = FirebaseMessaging.getInstance().send(message);
+            System.out.println("Successfully sent message: " + response);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
 
     }
 

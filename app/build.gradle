@@ -72,6 +72,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-admin:6.9.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
     //Firebase authenticator
