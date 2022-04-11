@@ -2,7 +2,10 @@ package com.example.thebeast;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -197,6 +201,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 
                 String beastName = CurrentUser.getCurrentUser().getBeastName();
+                String beastEmail = CurrentUser.getCurrentUser().getBeastEmail();
                 String workoutOwnerID = CurrentUser.getCurrentUser().getBeastId();
                 String avatar = CurrentUser.getCurrentUser().getAvatar();
                 float workoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
@@ -228,11 +233,13 @@ public class HomeFragment extends Fragment {
 
                             WorkoutModel workout;
                             if (location != null) {
-                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, avatar, location.getLongitude(), location.getLatitude());
+                                String standort = getStandort(getActivity(), location.getLatitude(), location.getLongitude());
+                                workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort);
                             } else {
                                 workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, avatar);
                             }
-                            Log.i(TAG, "lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
+
+                            Log.i(TAG, "standort" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge() + workout.getStandort());
                             homeFragmentViewModel.insertWorkout(workout);
 
                             //sendNotification(beastName, uebungen);
@@ -243,6 +250,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
 
         abbrechenButton.setOnClickListener(new View.OnClickListener() {
 
@@ -255,6 +263,23 @@ public class HomeFragment extends Fragment {
         dialogBuilder.setView(startWorkoutView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private String getStandort(Context ctx, double lat, double lng) {
+        String standort = "";
+
+        try{
+            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if(addresses.size() > 0){
+                Address address = addresses.get(0);
+                standort = address.getAddressLine(0);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return standort;
     }
 
 
