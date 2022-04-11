@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.businessobjects.WorkoutModel;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
     private AlertDialog dialog;
 
     private ProgressBar progressBar;
+    private GoogleApiClient mGoogleApiClient;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity);
+
 
         progressBar = findViewById(R.id.mainProgressBar);
         progressBar.setVisibility(View.GONE);
@@ -58,11 +66,10 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(2,false);
+        viewPager.setCurrentItem(2, false);
 
 
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
@@ -79,44 +86,44 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         }
     }
 
-    public void wechselZuKalenderFragment(View view){
+    public void wechselZuKalenderFragment(View view) {
 
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1,false);
+        viewPager.setCurrentItem(1, false);
     }
 
-    public void wechselZuEinstellungenFragment(View view){
+    public void wechselZuEinstellungenFragment(View view) {
 
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(0,false);
+        viewPager.setCurrentItem(0, false);
     }
 
-    public void wechselZuLiveFragment(View view){
+    public void wechselZuLiveFragment(View view) {
 
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(3,false);
+        viewPager.setCurrentItem(3, false);
     }
 
-    public void wechselZuFreundeFragment(View view){
+    public void wechselZuFreundeFragment(View view) {
 
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(4,false);
+        viewPager.setCurrentItem(4, false);
     }
 
-    public void wechselZuHomeFragment(View view){
+    public void wechselZuHomeFragment(View view) {
 
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new CollectionPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(2,false);
+        viewPager.setCurrentItem(2, false);
     }
 
 
@@ -134,11 +141,10 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         selectedFreundDialog(freund);
     }
 
-    public void selectedFreundDialog(UserModel freund){
+    public void selectedFreundDialog(UserModel freund) {
 
         dialogBuilder = new AlertDialog.Builder(this);
-        final View selectedFreundView = getLayoutInflater().inflate(R.layout.freund_popup,null);
-
+        final View selectedFreundView = getLayoutInflater().inflate(R.layout.freund_popup, null);
 
 
         Button freundEntfernenButton = selectedFreundView.findViewById(R.id.freundEntfernenButton);
@@ -156,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(avatar);
 
-        freundEntfernenButton.setOnClickListener(new View.OnClickListener(){
+        freundEntfernenButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -167,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
             }
         });
 
-        freundBackButton.setOnClickListener(new View.OnClickListener(){
+        freundBackButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -181,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
 
     }
 
-    public void freundEntfernen(UserModel freund){
+    public void freundEntfernen(UserModel freund) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -190,41 +196,41 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(!task.isSuccessful()){
+                        if (!task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(MainActivity.this,freund.getBeastName() +
-                                    "Hier ist was schief gelaufen...",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, freund.getBeastName() +
+                                    "Hier ist was schief gelaufen...", Toast.LENGTH_LONG).show();
                             viewPager = findViewById(R.id.pager);
                             pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
                             viewPager.setAdapter(pagerAdapter);
-                            viewPager.setCurrentItem(4,false);
-                        }else{
+                            viewPager.setCurrentItem(4, false);
+                        } else {
                             db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
                                     .collection("Freunde von User").document(freund.getBeastId()).delete()
-                                    .addOnCompleteListener(new OnCompleteListener(){
+                                    .addOnCompleteListener(new OnCompleteListener() {
 
                                         @Override
                                         public void onComplete(@NonNull Task task) {
-                                            if (task.isSuccessful()){
+                                            if (task.isSuccessful()) {
                                                 List<UserModel> freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
                                                 freunde.remove(freund);
                                                 progressBar.setVisibility(View.GONE);
-                                                Toast.makeText(MainActivity.this,freund.getBeastName() +
-                                                        " ist nicht mehr dein Freund",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MainActivity.this, freund.getBeastName() +
+                                                        " ist nicht mehr dein Freund", Toast.LENGTH_LONG).show();
 
                                                 viewPager = findViewById(R.id.pager);
                                                 pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
                                                 viewPager.setAdapter(pagerAdapter);
-                                                viewPager.setCurrentItem(4,false);
-                                            }else{
+                                                viewPager.setCurrentItem(4, false);
+                                            } else {
                                                 progressBar.setVisibility(View.GONE);
 
-                                                Toast.makeText(MainActivity.this,freund.getBeastName() +
-                                                        " konnte nicht entfernt werden.",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MainActivity.this, freund.getBeastName() +
+                                                        " konnte nicht entfernt werden.", Toast.LENGTH_LONG).show();
                                                 viewPager = findViewById(R.id.pager);
                                                 pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
                                                 viewPager.setAdapter(pagerAdapter);
-                                                viewPager.setCurrentItem(4,false);
+                                                viewPager.setCurrentItem(4, false);
                                             }
                                         }
                                     });
@@ -233,6 +239,36 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                 });
 
 
+    }
 
+    public void onStart() {
+
+        super.onStart();
+
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+
+        LocationRequest mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(60000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationCallback mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        //TODO: UI updates.
+                    }
+                }
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
+            return;
+        }
     }
 }

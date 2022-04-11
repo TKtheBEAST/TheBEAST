@@ -236,7 +236,7 @@ public class HomeFragment extends Fragment {
                                 String standort = getStandort(getActivity(), location.getLatitude(), location.getLongitude());
                                 workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort);
                             } else {
-                                workout = new WorkoutModel(workoutOwnerID, beastName, uebungen, workoutlaenge, currentDateandTime, avatar);
+                                workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar);
                             }
 
                             Log.i(TAG, "standort" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge() + workout.getStandort());

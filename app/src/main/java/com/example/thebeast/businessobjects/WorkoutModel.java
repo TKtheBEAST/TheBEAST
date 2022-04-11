@@ -26,9 +26,10 @@ public class WorkoutModel {
     public WorkoutModel() {
     }
 
-    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit, String avatar) {
+    public WorkoutModel(String workoutOwnerID, String beastName, String beastEmail, String uebungen, float workoutlaenge, String startzeit, String avatar) {
         this.workoutOwnerID = workoutOwnerID;
         this.beastName = beastName;
+        this.beastEmail = beastEmail;
         this.uebungen = uebungen;
         this.workoutlaenge = workoutlaenge;
         this.startzeit = startzeit;
