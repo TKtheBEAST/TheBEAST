@@ -56,12 +56,14 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         Map<String, Object> data = new HashMap();
         data.put("workoutOwnerID", workout.getWorkoutOwnerID());
         data.put("beastName", workout.getBeastName());
+        data.put("beastEmail", workout.getBeastEmail());
         data.put("uebungen", workout.getUebungen());
         data.put("workoutlaenge", workout.getWorkoutlaenge());
         data.put("startzeit", workout.getStartzeit());
         data.put("avatar", workout.getAvatar());
         data.put("longitude", workout.getLongitude());
         data.put("latitude", workout.getLatitude());
+        data.put("standort", workout.getStandort());
 
 
 

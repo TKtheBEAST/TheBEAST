@@ -2,11 +2,8 @@ package com.example.thebeast;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,17 +26,19 @@ import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAd
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
-import com.google.firebase.messaging.RemoteMessage;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,6 +55,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView startWorkoutRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private GewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
+    private FirebaseFunctions mfunctions;
 
 
     //Button initialisieren
@@ -235,7 +235,7 @@ public class HomeFragment extends Fragment {
                             Log.i(TAG, "lily" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge());
                             homeFragmentViewModel.insertWorkout(workout);
 
-                            sendNotification(beastName, uebungen);
+                            //sendNotification(beastName, uebungen);
                             workoutsEntfernen();
                             dialog.dismiss();
                         }
@@ -257,6 +257,8 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
+
+    /* wird wahscheinlich nicht mehr benötigt, da durch Functions automatisch aufgerufen
     private void sendNotification(String title, String standort) {
 
         //alt
@@ -273,31 +275,60 @@ public class HomeFragment extends Fragment {
 
         notification = notificationBuilder.build();
         notificationManagerCompat = NotificationManagerCompat.from(getContext());
-        notificationManagerCompat.notify(1,notification); */
+        notificationManagerCompat.notify(1,notification);
 
-        //TODO: server dazwischen so gehts woooohl net
-        //neu mit Topic
-        Notification notification = new Notification(title,standort);
 
-        // The topic name can be optionally prefixed with "/topics/".
-        String topic = CurrentUser.getCurrentUser().getBeastEmail();
+        TODO: server dazwischen so gehts woooohl net
+        neu mit Topic
 
-        // See documentation on defining a message payload.
-        Message message = Message.builder()
-                .setTopic(topic)
-                .setNotification(notification)
-                .build();
 
-        // Send a message to the devices subscribed to the provided topic.
-        String response = null;
-        try {
-            response = FirebaseMessaging.getInstance().send(message);
-            System.out.println("Successfully sent message: " + response);
-        } catch (FirebaseMessagingException e) {
-            e.printStackTrace();
-        }
+        mfunctions = FirebaseFunctions.getInstance();
+
+
+        mfunctions.getHttpsCallable("helloTim").call().addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                System.out.println(o);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
+
+     */
+
+    /* wird wahscheinlich nicht mehr benötigt, da durch Functions automatisch aufgerufen
+    private Task<String> addMessage(String title, String standort) {
+
+        mfunctions = FirebaseFunctions.getInstance();
+
+        // Create the arguments to the callable function.
+        Map<String, Object> data = new HashMap<>();
+        data.put("title", title);
+        data.put("standort", standort);
+        data.put("push", true);
+
+        return mfunctions
+                .getHttpsCallable("sendMotivation")
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        // This continuation runs on either success or failure, but if the task
+                        // has failed then getResult() will throw an Exception which will be
+                        // propagated down.
+                        String result = (String) task.getResult().getData();
+                        return result;
+                    }
+                });
+    }
+
+     */
 
 
     public void trainingHinzufuegen(View v, int training, String name) {
