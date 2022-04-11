@@ -180,7 +180,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         data.put("avatar", user.getAvatar());
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastEmail())
+        FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastId())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

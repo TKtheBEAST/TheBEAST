@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(freund.getBeastEmail())
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(freund.getBeastId())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
