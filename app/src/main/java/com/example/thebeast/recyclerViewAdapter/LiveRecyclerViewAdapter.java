@@ -57,8 +57,6 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.avatar);
-
-
     }
 
     @Override

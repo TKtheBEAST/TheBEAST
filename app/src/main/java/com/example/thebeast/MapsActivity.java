@@ -37,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent intent = getIntent();
         latitude = intent.getDoubleExtra("latitude", 48.89731);
-        longitude = intent.getDoubleExtra("longitute", 9.19161);
+        longitude = intent.getDoubleExtra("longitude", 9.19161);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
