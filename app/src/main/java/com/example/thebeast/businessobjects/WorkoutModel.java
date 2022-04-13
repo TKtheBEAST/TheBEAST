@@ -36,18 +36,8 @@ public class WorkoutModel {
         this.avatar = avatar;
     }
 
-    public WorkoutModel(String workoutOwnerID, String beastName, String uebungen, float workoutlaenge, String startzeit, String avatar, double longitude, double latitude) {
-        this.workoutOwnerID = workoutOwnerID;
-        this.beastName = beastName;
-        this.uebungen = uebungen;
-        this.workoutlaenge = workoutlaenge;
-        this.startzeit = startzeit;
-        this.avatar = avatar;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
 
-    public WorkoutModel(String workoutOwnerID, String beastName, String beastEmail, String uebungen, float workoutlaenge, String startzeit, String avatar, String standort) {
+    public WorkoutModel(String workoutOwnerID, String beastName, String beastEmail, String uebungen, float workoutlaenge, String startzeit, String avatar, String standort, double longitude, double latitude) {
         this.workoutOwnerID = workoutOwnerID;
         this.beastName = beastName;
         this.uebungen = uebungen;
@@ -56,6 +46,8 @@ public class WorkoutModel {
         this.avatar = avatar;
         this.beastEmail = beastEmail;
         this.standort = standort;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public String getWorkoutOwnerID() {

@@ -62,6 +62,8 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         data.put("startzeit", workout.getStartzeit());
         data.put("avatar", workout.getAvatar());
         data.put("standort", workout.getStandort());
+        data.put("longitude", workout.getLongitude());
+        data.put("latitude", workout.getLatitude());
 
 
 

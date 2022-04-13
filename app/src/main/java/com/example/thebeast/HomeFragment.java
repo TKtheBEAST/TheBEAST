@@ -234,7 +234,7 @@ public class HomeFragment extends Fragment {
                             WorkoutModel workout;
                             if (location != null) {
                                 String standort = getStandort(getActivity(), location.getLatitude(), location.getLongitude());
-                                workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort);
+                                workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort, location.getLongitude(), location.getLatitude());
                             } else {
                                 workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar);
                             }
@@ -242,7 +242,6 @@ public class HomeFragment extends Fragment {
                             Log.i(TAG, "standort" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge() + workout.getStandort());
                             homeFragmentViewModel.insertWorkout(workout);
 
-                            //sendNotification(beastName, uebungen);
                             workoutsEntfernen();
                             dialog.dismiss();
                         }
@@ -281,79 +280,6 @@ public class HomeFragment extends Fragment {
 
         return standort;
     }
-
-
-    /* wird wahscheinlich nicht mehr benötigt, da durch Functions automatisch aufgerufen
-    private void sendNotification(String title, String standort) {
-
-        //alt
-        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("myCh", "My Channel", NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(),"myCh")
-                .setSmallIcon(android.R.drawable.stat_notify_sync)
-                .setContentTitle(title)
-                .setContentText(standort);
-
-        notification = notificationBuilder.build();
-        notificationManagerCompat = NotificationManagerCompat.from(getContext());
-        notificationManagerCompat.notify(1,notification);
-
-
-        TODO: server dazwischen so gehts woooohl net
-        neu mit Topic
-
-
-        mfunctions = FirebaseFunctions.getInstance();
-
-
-        mfunctions.getHttpsCallable("helloTim").call().addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                System.out.println(o);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
-
-     */
-
-    /* wird wahscheinlich nicht mehr benötigt, da durch Functions automatisch aufgerufen
-    private Task<String> addMessage(String title, String standort) {
-
-        mfunctions = FirebaseFunctions.getInstance();
-
-        // Create the arguments to the callable function.
-        Map<String, Object> data = new HashMap<>();
-        data.put("title", title);
-        data.put("standort", standort);
-        data.put("push", true);
-
-        return mfunctions
-                .getHttpsCallable("sendMotivation")
-                .call(data)
-                .continueWith(new Continuation<HttpsCallableResult, String>() {
-                    @Override
-                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-                        // This continuation runs on either success or failure, but if the task
-                        // has failed then getResult() will throw an Exception which will be
-                        // propagated down.
-                        String result = (String) task.getResult().getData();
-                        return result;
-                    }
-                });
-    }
-
-     */
 
 
     public void trainingHinzufuegen(View v, int training, String name) {
