@@ -47,8 +47,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         WorkoutModel currentWorkout = workoutsList.get(position);
-        String standort = getStandort(context, currentWorkout.getLatitude(), currentWorkout.getLongitude());
-        holder.standort.setText(standort);
+        holder.standort.setText(currentWorkout.getStandort());
         holder.beastName.setText(currentWorkout.getBeastName());
         holder.workoutsTextView.setText(currentWorkout.getUebungen());
         String imageUrl = workoutsList.get(position).getAvatar();
@@ -60,23 +59,6 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
                 .into(holder.avatar);
 
 
-    }
-
-    private String getStandort(Context ctx, double lat, double lng) {
-        String standort = "";
-
-        try{
-            Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
-            List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            if(addresses.size() > 0){
-                Address address = addresses.get(0);
-                standort = address.getAddressLine(0);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return standort;
     }
 
     @Override
