@@ -32,19 +32,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(remoteMessage != null){
+
+       /* if(remoteMessage != null){
 
             String title  = remoteMessage.getNotification().getTitle();
             String body = remoteMessage.getNotification().getBody();
             notifyUser(title, body);
-        }
+        }  */
 
-
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
+            String title = remoteMessage.getData().get("title");
+            String body = remoteMessage.getData().get("body");
+            notifyUser(title,body);
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
         }
@@ -71,7 +72,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
-                .setColor(Color.RED)
+                .setColor(Color.CYAN)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
