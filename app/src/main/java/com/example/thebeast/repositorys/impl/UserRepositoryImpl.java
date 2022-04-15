@@ -46,18 +46,19 @@ public class UserRepositoryImpl implements UserRepository {
     private CollectionReference freundVonUserRef = firebaseFirestore.collection("User").document("*").collection("Freunde von User");
     
 
-    public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password){
+    public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password, String token){
         firebaseAuth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge);
+                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge,token);
                     Map<String,Object> data = new HashMap<>();
                     data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
                     data.put("beastName", user.getBeastName());
                     data.put("beastSpruch", user.getBeastSpruch());
                     data.put("beastEmail", user.getBeastEmail());
                     data.put("workoutlaenge", user.getWorkoutlaenge());
+                    data.put("token", user.getToken());
 
 
 

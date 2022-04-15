@@ -37,6 +37,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -70,6 +72,7 @@ public class RegistrierenFragment extends Fragment {
     private TextView loginTV;
     private ProgressBar registrierenProgressBar;
     private ImageView avatar;
+    private String token;
 
 
     public RegistrierenFragment() {
@@ -185,6 +188,18 @@ public class RegistrierenFragment extends Fragment {
         //über Viemodel und Repository??
         //registrierenFragmentViewModel.createUserWithEmailAndPassword(beastName, beastSpruch, email, passwort2);
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(getView().getContext(), "Hier ist etwas schief gelaufen... Versuche es noch einmal", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        token = task.getResult().getToken();
+
+                    }
+                });
 
         mAuth.createUserWithEmailAndPassword(email, passwort2)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -198,7 +213,7 @@ public class RegistrierenFragment extends Fragment {
                                     fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge);
+                                            UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
                                             Uri avatar = uri;
                                             Map<String, Object> data = new HashMap<>();
                                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -208,6 +223,7 @@ public class RegistrierenFragment extends Fragment {
                                             data.put("beastEmail", user.getBeastEmail());
                                             data.put("workoutlaenge", user.getWorkoutlaenge());
                                             data.put("avatar", uri.toString());
+                                            data.put("token", user.getToken());
 
                                             userRef.document(uid).set(data)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {

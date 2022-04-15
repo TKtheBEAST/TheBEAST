@@ -147,7 +147,7 @@ public class LoginFragment extends Fragment {
                         throw task.getException();
                     } catch(FirebaseAuthInvalidUserException e){
                         loginProgressBar.setVisibility(GONE);
-                        emailEditText.setError("User existiert nicht oder ist nicht vweiter valide. " +
+                        emailEditText.setError("User existiert nicht oder ist nicht weiter valide. " +
                                 "Bitte noche einmal registrieren.");
                         emailEditText.requestFocus();
                     } catch (FirebaseAuthInvalidCredentialsException e){

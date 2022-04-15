@@ -10,8 +10,8 @@ public class RegistrierenFragmentViewModel extends ViewModel {
 
     public RegistrierenFragmentViewModel(){}
 
-    public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String passwort){
-        userRepositoryImpl.createUserWithEmailAndPassword(beastName, beastSpruch, email, passwort);
+    public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String passwort, String token){
+        userRepositoryImpl.createUserWithEmailAndPassword(beastName, beastSpruch, email, passwort, token);
 
     }
 }

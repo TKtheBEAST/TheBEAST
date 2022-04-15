@@ -23,13 +23,16 @@ public class UserModel {
 
     private String avatar;
 
+    private String token;
+
     public UserModel(){}
 
-    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge) {
+    public UserModel(String beastName, String beastSpruch, String beastEmail, float workoutlaenge, String token) {
         this.beastName = beastName;
         this.beastEmail = beastEmail;
         this.workoutlaenge = workoutlaenge;
         this.beastSpruch = beastSpruch;
+        this.token = token;
     }
 
     public List<UserModel> getFreundeCurrentUser() {
@@ -86,5 +89,13 @@ public class UserModel {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
