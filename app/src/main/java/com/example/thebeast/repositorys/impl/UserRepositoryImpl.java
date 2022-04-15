@@ -1,6 +1,7 @@
 package com.example.thebeast.repositorys.impl;
 
 import android.app.Application;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.thebeast.CurrentUser;
+import com.example.thebeast.StartActivity;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.daos.UserDao;
 import com.example.thebeast.entitys.User;
@@ -17,6 +19,7 @@ import com.example.thebeast.repositorys.UserRepository;
 import com.example.thebeast.roomdatabase.TheBeastDataBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -151,8 +154,20 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    public void delete(UserModel user){
-
+    public void deleteUser(){
+        userRef.document(CurrentUser.getCurrentUser().getBeastId()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        FirebaseAuth.getInstance().getCurrentUser().delete();
+                        Log.d("User", "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde vollständig gelöscht");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error deleting document", e);
+            }
+        });
     }
 
     public List<UserModel> getAllUsers(){

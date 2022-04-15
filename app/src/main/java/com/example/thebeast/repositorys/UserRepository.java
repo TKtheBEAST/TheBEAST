@@ -20,7 +20,7 @@ public interface UserRepository {
 
     void update(UserModel user);
 
-    void delete(UserModel user);
+    void deleteUser();
 
     List<UserModel> getAllUsers();
 

@@ -124,8 +124,7 @@ public class EinstellungenFragment extends Fragment {
         kontoloeschenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(),StartActivity.class));
+                kontoLoeschenDialog();
             }
         });
 
@@ -191,7 +190,37 @@ public class EinstellungenFragment extends Fragment {
         dialog = dialogBuilder.create();
         dialog.show();
 
+    }
 
+    private void kontoLoeschenDialog() {
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View kontoLoeschenView = getLayoutInflater().inflate(R.layout.konto_loeschen_popup,null);
+
+
+        Button kontoLoeschenButton = kontoLoeschenView.findViewById(R.id.kontoLoeschenButton);
+        Button abbrechenButton = kontoLoeschenView.findViewById(R.id.kontoLoeschenAbbrechenButton);
+
+        kontoLoeschenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                einstellungenFragmentViewModel.deleteUser();
+                startActivity(new Intent(getActivity(),StartActivity.class));
+                dialog.dismiss();
+            }
+        });
+
+        abbrechenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(kontoLoeschenView);
+        dialog = dialogBuilder.create();
+        dialog.show();
     }
     
 

@@ -18,4 +18,8 @@ public class EinstellungenFragmentViewModel extends ViewModel {
         userRepositoryImpl.updateBeastName(neuerBeastName);
     }
 
+    public void deleteUser(){
+        userRepositoryImpl.deleteUser();
+    }
+
 }
