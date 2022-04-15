@@ -178,6 +178,8 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         data.put("beastEmail", user.getBeastEmail());
         data.put("workoutlaenge", user.getWorkoutlaenge());
         data.put("avatar", user.getAvatar());
+        data.put("token", user.getToken());
+        data.put("referenz", CurrentUser.getCurrentUser().getBeastName());
 
 
         FirebaseMessaging.getInstance().subscribeToTopic(user.getBeastId())

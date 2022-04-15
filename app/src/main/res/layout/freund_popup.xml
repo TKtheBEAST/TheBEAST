@@ -35,28 +35,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/freundBackButton"
-            android:layout_width="55dp"
+            android:id="@+id/freundEntfernenButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="zurück" />
+            android:gravity="center"
+            android:text="Freund entfernen" />
 
         <Button
-            android:id="@+id/freundEntfernenButton"
-            android:layout_width="55dp"
+            android:id="@+id/freundBackButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="Freund entfernen" />
+            android:gravity="center"
+            android:text="zurück" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
