@@ -192,7 +192,7 @@ public class RegistrierenFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if(!task.isSuccessful()){
+                        if (!task.isSuccessful()) {
                             Toast.makeText(getView().getContext(), "Hier ist etwas schief gelaufen... Versuche es noch einmal", Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -206,53 +206,86 @@ public class RegistrierenFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            StorageReference fileReference = storageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + "." + uriImage);
-                            fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
-                                            Uri avatar = uri;
-                                            String uriForFS = uri.toString();
-                                            if(uriForFS == null){
-                                                uriForFS = "https://firebasestorage.googleapis.com/v0/b/thebeast-339821.appspot.com/o/avatare%2FAUBN0551.JPG?alt=media&token=ec380a25-7797-4802-9727-80bdffb9bab9";
+                            if (uriImage == null) {
+                                UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
+                                String uriForFS = "https://firebasestorage.googleapis.com/v0/b/thebeast-339821.appspot.com/o/avatare%2FAUBN0551.JPG?alt=media&token=ec380a25-7797-4802-9727-80bdffb9bab9";
+
+                                Map<String, Object> data = new HashMap<>();
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                data.put("beastID", uid);
+                                data.put("beastName", user.getBeastName());
+                                data.put("beastSpruch", user.getBeastSpruch());
+                                data.put("beastEmail", user.getBeastEmail());
+                                data.put("workoutlaenge", user.getWorkoutlaenge());
+                                data.put("avatar", uriForFS);
+                                data.put("token", user.getToken());
+
+                                userRef.document(uid).set(data)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                if (task.isSuccessful()) {
+                                                    user.sendEmailVerification();
+                                                    Toast.makeText(getView().getContext(), beastName + " wurde erfolgreich hinzugefügt!" +
+                                                            " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
+                                                    Log.d(TAG, "User wurde hinzugefügt ");
+                                                    registrierenProgressBar.setVisibility(GONE);
+                                                    Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+
+                                                } else {
+                                                    Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                                                    Log.d(TAG, "User konnte nicht hinzugefuegt werden Firestore");
+                                                    registrierenProgressBar.setVisibility(GONE);
+                                                }
                                             }
-                                            Map<String, Object> data = new HashMap<>();
-                                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                            data.put("beastID", uid);
-                                            data.put("beastName", user.getBeastName());
-                                            data.put("beastSpruch", user.getBeastSpruch());
-                                            data.put("beastEmail", user.getBeastEmail());
-                                            data.put("workoutlaenge", user.getWorkoutlaenge());
-                                            data.put("avatar", uriForFS);
-                                            data.put("token", user.getToken());
+                                        });
+                            } else {
+                                StorageReference fileReference = storageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + "." + uriImage);
+                                fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
 
-                                            userRef.document(uid).set(data)
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                                            if (task.isSuccessful()) {
-                                                                user.sendEmailVerification();
-                                                                Toast.makeText(getView().getContext(), beastName + " wurde erfolgreich hinzugefügt!" +
-                                                                        " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
-                                                                Log.d(TAG, "User wurde hinzugefügt ");
-                                                                registrierenProgressBar.setVisibility(GONE);
-                                                                Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+                                                Map<String, Object> data = new HashMap<>();
+                                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                data.put("beastID", uid);
+                                                data.put("beastName", user.getBeastName());
+                                                data.put("beastSpruch", user.getBeastSpruch());
+                                                data.put("beastEmail", user.getBeastEmail());
+                                                data.put("workoutlaenge", user.getWorkoutlaenge());
+                                                data.put("avatar", uri.toString());
+                                                data.put("token", user.getToken());
 
-                                                            } else {
-                                                                Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
-                                                                Log.d(TAG, "User konnte nicht hinzugefuegt werden Firestore");
-                                                                registrierenProgressBar.setVisibility(GONE);
+                                                userRef.document(uid).set(data)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                                if (task.isSuccessful()) {
+                                                                    user.sendEmailVerification();
+                                                                    Toast.makeText(getView().getContext(), beastName + " wurde erfolgreich hinzugefügt!" +
+                                                                            " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
+                                                                    Log.d(TAG, "User wurde hinzugefügt ");
+                                                                    registrierenProgressBar.setVisibility(GONE);
+                                                                    Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+
+                                                                } else {
+                                                                    Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                                                                    Log.d(TAG, "User konnte nicht hinzugefuegt werden Firestore");
+                                                                    registrierenProgressBar.setVisibility(GONE);
+                                                                }
                                                             }
-                                                        }
-                                                    });
-                                        }
-                                    });
-                                }
-                            });
+                                                        });
+                                            }
+                                        });
+
+                                    }
+                                });
+                            }
                         } else {
                             try {
                                 throw task.getException();

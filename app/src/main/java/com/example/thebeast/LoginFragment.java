@@ -140,7 +140,7 @@ public class LoginFragment extends Fragment {
                         getUserInformation();
                     }else{
                         user.sendEmailVerification();
-                        Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG);
+                        Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG).show();
                     }
                 }else{
                     try {
@@ -167,6 +167,5 @@ public class LoginFragment extends Fragment {
 
     public void getUserInformation(){
         loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
-
     }
 }
