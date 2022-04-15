@@ -205,8 +205,8 @@ public class EinstellungenFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 einstellungenFragmentViewModel.deleteUser();
+                FirebaseAuth.getInstance().getCurrentUser().delete();
                 startActivity(new Intent(getActivity(),StartActivity.class));
-                dialog.dismiss();
             }
         });
 

@@ -159,7 +159,6 @@ public class UserRepositoryImpl implements UserRepository {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        FirebaseAuth.getInstance().getCurrentUser().delete();
                         Log.d("User", "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde vollständig gelöscht");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
