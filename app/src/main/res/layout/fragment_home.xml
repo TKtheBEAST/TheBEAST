@@ -15,7 +15,7 @@
         android:layout_marginBottom="64dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/homButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -208,11 +208,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/aktuellesWorkoutLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="428dp"
         android:layout_marginTop="170dp"
         android:layout_marginBottom="190dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -225,23 +227,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Dein Workout:" />
+            android:text="Dein aktuelles Workout:"
+            android:textSize="30sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="252dp"
+        <TextView
+            android:id="@+id/aktuellesWorkoutUebungenTV"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_height="97dp" />
+            android:layout_marginTop="30dp"
+            android:text="TextView"
+            android:textSize="18sp" />
 
         <ProgressBar
-            android:id="@+id/progressBar2"
+            android:id="@+id/aktuellesWorkoutProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="254dp"
-            android:layout_height="11dp"
-            android:layout_marginStart="68dp"
-            android:layout_marginEnd="70dp"
+            android:layout_width="250dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="72dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp" />
 
         <Button
             android:id="@+id/button2"
@@ -255,6 +260,7 @@
             android:layout_width="wrap_content"
             android:layout_height="58dp"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif"
             android:text="BEAST MODE"
             android:textColor="#FF0000"

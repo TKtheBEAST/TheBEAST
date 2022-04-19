@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,33 +44,38 @@ import static android.content.ContentValues.TAG;
 
 public class HomeFragment extends Fragment {
 
-
+    //Viewmodel
     private HomeFragmentViewModel homeFragmentViewModel;
 
+    //Dialog
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
 
+    //RecyclerView
     private RecyclerView gewaehltesTrainingRecyclerView;
     private RecyclerView startWorkoutRecyclerView;
-    private LinearLayout homeLinearLayout;
     private RecyclerView.LayoutManager layoutManager;
     private GewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
+
+    //LinearLayout
+    private LinearLayout homeLinearLayout;
+    private LinearLayout aktuellesWorkoutLinearLayout;
+
+    //Firebase
     private FirebaseFunctions mfunctions;
 
-
-    //Button initialisieren
+    //Button
     private ImageButton joggenButton, oberkoerperButton, pulldayButton, pushdayButton, beineButton, hiitButton, playButton;
-
     private Button workoutsEntfernenButton;
 
-    //ImageViews anlegen;
+    //ImageViews
     private int joggenImageView, oberkoerperImageView, pulldayImageView, pushdayImageView, beinImageView, hiitImageView;
 
-
     //TextView anlegen
-    private TextView deinGewaehltesTraining;
-    private TextView trennstrichHome;
+    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen;
 
+    //Progressbar
+    private ProgressBar aktuellesWorkoutProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,8 +90,12 @@ public class HomeFragment extends Fragment {
         //initialisieren des RecyclerViews
         gewaehltesTrainingRecyclerView = view.findViewById(R.id.gewaehltesTrainingRecyclerview);
 
-        //initialisieren homeRecyclerView
+        //initialisieren der Layouts
         homeLinearLayout = view.findViewById(R.id.homeLinearLayout);
+        aktuellesWorkoutLinearLayout = view.findViewById(R.id.aktuellesWorkoutLinearLayout);
+
+        //initialisieren ProgressBar
+        aktuellesWorkoutProgressBar = view.findViewById(R.id.aktuellesWorkoutProgressBar);
 
         //Button zuweisen
         joggenButton = view.findViewById(R.id.joggenButton);
@@ -104,6 +114,7 @@ public class HomeFragment extends Fragment {
         //Textview initialisieren
         deinGewaehltesTraining = view.findViewById(R.id.deinGewaehltesTraining);
         trennstrichHome = view.findViewById(R.id.trennstrichHome);
+        aktuellesWorkoutUebungen = view.findViewById(R.id.aktuellesWorkoutUebungenTV);
 
         //ImageView zuweisen
         joggenImageView = R.drawable.joggen;
@@ -244,6 +255,7 @@ public class HomeFragment extends Fragment {
 
                             workoutsEntfernen();
                             homeLinearLayout.setVisibility(View.GONE);
+                            aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
                             dialog.dismiss();
                         }
                     });
