@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,20 +29,14 @@ import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAd
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -57,6 +51,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView gewaehltesTrainingRecyclerView;
     private RecyclerView startWorkoutRecyclerView;
+    private LinearLayout homeLinearLayout;
     private RecyclerView.LayoutManager layoutManager;
     private GewaehlteTrainingsRecyclerViewAdapter recyclerViewAdapter;
     private FirebaseFunctions mfunctions;
@@ -88,6 +83,9 @@ public class HomeFragment extends Fragment {
 
         //initialisieren des RecyclerViews
         gewaehltesTrainingRecyclerView = view.findViewById(R.id.gewaehltesTrainingRecyclerview);
+
+        //initialisieren homeRecyclerView
+        homeLinearLayout = view.findViewById(R.id.homeLinearLayout);
 
         //Button zuweisen
         joggenButton = view.findViewById(R.id.joggenButton);
@@ -245,6 +243,7 @@ public class HomeFragment extends Fragment {
                             homeFragmentViewModel.insertWorkout(workout);
 
                             workoutsEntfernen();
+                            homeLinearLayout.setVisibility(View.GONE);
                             dialog.dismiss();
                         }
                     });

@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="1"
-    tools:context=".Einstellungen">
+    android:alpha="1">
 
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/homeLinearLayout"
         android:layout_width="399dp"
         android:layout_height="586dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="64dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/homButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -201,9 +201,64 @@
         android:text="Motivationssprüche"
         android:textColor="#FFFFFF"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/homeLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="428dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="190dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/motivationTextView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Dein Workout:" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="252dp"
+            android:layout_gravity="center"
+            android:layout_height="97dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="254dp"
+            android:layout_height="11dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginEnd="70dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="72dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Workout beenden" />
+
+        <TextView
+            android:id="@+id/beastModeTextViewWorkoutStarted"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:text="BEAST MODE"
+            android:textColor="#FF0000"
+            android:textSize="30sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
