@@ -386,8 +386,7 @@ public class HomeFragment extends Fragment {
                             homeFragmentViewModel.insertWorkout(workout);
 
                             workoutsEntfernen();
-                            homeLinearLayout.setVisibility(View.GONE);
-                            aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
+                            isWorkoutRunning();
                             dialog.dismiss();
                         }
                     });
