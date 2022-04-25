@@ -13,4 +13,8 @@ public class LoginFragmentViewModel extends ViewModel {
     public void setCurrentUser(String email){
         userRepositoryImpl.setCurrentUser(email);
     }
+
+    public void getFreundeCurrentUser(){
+        userRepositoryImpl.getFreundeCurrentUser();
+    }
 }

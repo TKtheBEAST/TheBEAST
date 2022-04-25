@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData;
 import com.example.thebeast.CurrentUser;
 import com.example.thebeast.StartActivity;
 import com.example.thebeast.businessobjects.UserModel;
+import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.daos.UserDao;
 import com.example.thebeast.entitys.User;
 import com.example.thebeast.repositorys.UserRepository;
@@ -198,8 +199,26 @@ public class UserRepositoryImpl implements UserRepository {
                         currentUser = user.get(0);
                         CurrentUser.setCurrentUser(currentUser);
                         getFreundeCurrentUser();
+                      //  getWorkoutsCurrentUser();
                     }
                 });
+    }
+
+    private void getWorkoutsCurrentUser() {
+        firebaseFirestore.collection("Workouts").whereEqualTo("workoutOwnerID", CurrentUser.getCurrentUser().getBeastId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
+                    CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
+
+                }else{
+                    return;
+                }
+            }
+        });
     }
 
     public void getFreundeCurrentUser(){
@@ -219,6 +238,4 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 });
     }
-
-
 }

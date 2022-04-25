@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,7 +31,12 @@ import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAd
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.functions.FirebaseFunctions;
 
 import java.text.SimpleDateFormat;
@@ -46,6 +52,11 @@ public class HomeFragment extends Fragment {
 
     //Viewmodel
     private HomeFragmentViewModel homeFragmentViewModel;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
 
     //Dialog
     private AlertDialog.Builder dialogBuilder;
@@ -76,6 +87,9 @@ public class HomeFragment extends Fragment {
 
     //Progressbar
     private ProgressBar aktuellesWorkoutProgressBar;
+
+    //workouts CurrentUser
+    private List<WorkoutModel> workoutsCurrentUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -186,8 +200,123 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //checken ob es ein aktuelles Workout vom User gibt
+        isWorkoutRunning();
+
+
         return view;
     }
+
+    private void setAktuellesWorkoutView() {
+        homeLinearLayout.setVisibility(View.GONE);
+        aktuellesWorkoutUebungen.setText(homeFragmentViewModel.getAktuellesWorkout().getUebungen());
+        aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setHomeView(){
+        homeLinearLayout.setVisibility(View.VISIBLE);
+        aktuellesWorkoutLinearLayout.setVisibility(View.GONE);
+    }
+
+    private void isWorkoutRunning() {
+        db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
+                    CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
+                    workoutsCurrentUser = CurrentUser.getCurrentUser().getWorkoutsCurrentUser();
+
+                    for(WorkoutModel checkWorkout : workoutsCurrentUser){
+                        if(workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true){
+                            homeFragmentViewModel.setWorkoutRunning(true);
+                            homeFragmentViewModel.setaktuellesWorkout(checkWorkout);
+                            break;
+                        }
+                    }
+
+                    //falls ja setze das aktuelle Workout im HomeMenu - falls nein dann normales HomeView
+                    if(homeFragmentViewModel.isWorkoutRunning() == true){
+                        setAktuellesWorkoutView();
+                    }else{
+                        setHomeView();
+                    }
+
+                }else{
+                    return;
+                }
+            }
+        });
+
+
+    }
+
+    private boolean workoutIsRunning(String startzeit, float workoutlaenge) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        String currentJahr = currentDateandTime.substring(0, 4);
+        String currentMonat = currentDateandTime.substring(5, 7);
+        String currentTag = currentDateandTime.substring(8, 10);
+
+        String workoutJahr = startzeit.substring(0, 4);
+        String workoutMonat = startzeit.substring(5, 7);
+        String workoutTag = startzeit.substring(8, 10);
+
+
+        if (!currentJahr.equals(workoutJahr) || !currentMonat.equals(workoutMonat) || !currentTag.equals(workoutTag)) {
+            return false;
+        }
+
+        String workoutStunde = startzeit.substring(11, 13);
+        String workoutMinute = startzeit.substring(14, 16);
+
+        String currentStunde = currentDateandTime.substring(11, 13);
+        String currentMinute = currentDateandTime.substring(14, 16);
+
+        boolean stundeergaenzen = false;
+
+        float workoutStundeFloat = Integer.parseInt(workoutStunde);
+        float workoutMinuteFloat = Integer.parseInt(workoutMinute);
+        float workoutEndeStunde;
+        float workoutEndeMinute = 0;
+
+
+        if(workoutlaenge == 0.5 || workoutlaenge == 1.5){
+            if(workoutMinuteFloat + 30 > 59){
+                stundeergaenzen = true;
+                workoutEndeMinute = workoutMinuteFloat - 30;
+            }
+        }else{
+            workoutEndeMinute = workoutMinuteFloat;
+        }
+
+        workoutEndeStunde = workoutStundeFloat + (int) workoutlaenge;
+
+        if(stundeergaenzen == true){
+            workoutEndeStunde++;
+        }
+
+
+        float currentStundeFloat = Integer.parseInt(currentStunde);
+        float currentMinuteFloat = Integer.parseInt(currentMinute);
+        //überprüfen stunde und minute
+        if (currentStundeFloat - workoutEndeStunde > 0) {
+            return false;
+        }
+        if (currentStundeFloat - workoutEndeStunde == 0) {
+            if (currentMinuteFloat - workoutEndeMinute > 0) {
+                return false;
+            }
+        }
+
+
+        return true;
+    }
+
+
 
     public void startWorkoutDialog() {
         dialogBuilder = new AlertDialog.Builder(getActivity());

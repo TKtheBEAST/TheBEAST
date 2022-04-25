@@ -2,24 +2,40 @@ package com.example.thebeast;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.thebeast.businessobjects.UserModel;
+import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.viewmodel.LoginFragmentViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class SplashFragment extends Fragment {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private LoginFragmentViewModel loginFragmentViewModel;
 
     @Override
@@ -56,7 +72,36 @@ public class SplashFragment extends Fragment {
 
 
     public void getUserInformation() {
-        loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
+
+        db.collection("User").document(mAuth.getCurrentUser().getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            UserModel currentUser;
+                            currentUser = task.getResult().toObject(UserModel.class);
+                            CurrentUser.setCurrentUser(currentUser);
+                            loginFragmentViewModel.getFreundeCurrentUser();
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+        /** db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
+                    CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
+
+                }else{
+                    return;
+                }
+            }
+        }); **/
 
     }
 }

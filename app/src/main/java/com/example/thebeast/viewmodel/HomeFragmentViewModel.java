@@ -20,6 +20,8 @@ public class HomeFragmentViewModel extends ViewModel {
     private static final String TAG = "HomeFragmentViewModel";
     private ArrayList<Integer> gewaehlteTrainingsList = new ArrayList();
     private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
+    private boolean isWorkoutRunning;
+    private WorkoutModel aktuellesWorkout;
 
 
     private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl();
@@ -40,7 +42,13 @@ public class HomeFragmentViewModel extends ViewModel {
         this.gewaehlteTrainingsName.add(name);
     }
 
+    public boolean isWorkoutRunning() {
+        return isWorkoutRunning;
+    }
 
+    public void setWorkoutRunning(boolean workoutRunning) {
+        isWorkoutRunning = workoutRunning;
+    }
 
     public void insertWorkout (WorkoutModel workout){
         try {
@@ -51,4 +59,11 @@ public class HomeFragmentViewModel extends ViewModel {
     }
 
 
+    public void setaktuellesWorkout(WorkoutModel checkWorkout) {
+        aktuellesWorkout = checkWorkout;
+    }
+
+    public WorkoutModel getAktuellesWorkout(){
+        return aktuellesWorkout;
+    }
 }

@@ -21,6 +21,8 @@ public class UserModel {
 
     private List<UserModel> freundeCurrentUser;
 
+    private List<WorkoutModel> workoutsCurrentUser;
+
     private String avatar;
 
     private String token;
@@ -41,6 +43,14 @@ public class UserModel {
 
     public void setFreundeCurrentUser(List<UserModel> freundeCurrentUser) {
         this.freundeCurrentUser = freundeCurrentUser;
+    }
+
+    public List<WorkoutModel> getWorkoutsCurrentUser() {
+        return workoutsCurrentUser;
+    }
+
+    public void setWorkoutsCurrentUser(List<WorkoutModel> workoutsCurrentUser) {
+        this.workoutsCurrentUser = workoutsCurrentUser;
     }
 
     public String getBeastId() {
