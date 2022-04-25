@@ -59,7 +59,7 @@ public class HomeFragmentViewModel extends ViewModel {
     }
 
 
-    public void setaktuellesWorkout(WorkoutModel checkWorkout) {
+    public void setAktuellesWorkout(WorkoutModel checkWorkout) {
         aktuellesWorkout = checkWorkout;
     }
 

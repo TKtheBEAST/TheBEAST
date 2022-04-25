@@ -229,10 +229,13 @@ public class HomeFragment extends Fragment {
                     CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
                     workoutsCurrentUser = CurrentUser.getCurrentUser().getWorkoutsCurrentUser();
 
+                    homeFragmentViewModel.setWorkoutRunning(false);
+                    homeFragmentViewModel.setAktuellesWorkout(null);
+
                     for(WorkoutModel checkWorkout : workoutsCurrentUser){
                         if(workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true){
                             homeFragmentViewModel.setWorkoutRunning(true);
-                            homeFragmentViewModel.setaktuellesWorkout(checkWorkout);
+                            homeFragmentViewModel.setAktuellesWorkout(checkWorkout);
                             break;
                         }
                     }
