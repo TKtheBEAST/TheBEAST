@@ -53,10 +53,9 @@ public class HomeFragment extends Fragment {
     //Viewmodel
     private HomeFragmentViewModel homeFragmentViewModel;
 
+    //Firebase Instanzen
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-
 
     //Dialog
     private AlertDialog.Builder dialogBuilder;
@@ -210,6 +209,7 @@ public class HomeFragment extends Fragment {
     private void setAktuellesWorkoutView() {
         homeLinearLayout.setVisibility(View.GONE);
         aktuellesWorkoutUebungen.setText(homeFragmentViewModel.getAktuellesWorkout().getUebungen());
+        aktuellesWorkoutProgressBar.setProgress(homeFragmentViewModel.getWorkoutProgress());
         aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
     }
 
@@ -315,6 +315,8 @@ public class HomeFragment extends Fragment {
             }
         }
 
+        homeFragmentViewModel.setWorkoutProgress(
+                ((int)workoutEndeStunde - (int)currentStundeFloat) * 60 + ((int)currentMinuteFloat - (int)workoutEndeMinute));
 
         return true;
     }

@@ -22,6 +22,7 @@ public class HomeFragmentViewModel extends ViewModel {
     private ArrayList<String> gewaehlteTrainingsName = new ArrayList();
     private boolean isWorkoutRunning;
     private WorkoutModel aktuellesWorkout;
+    private int workoutProgress;
 
 
     private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl();
@@ -58,6 +59,27 @@ public class HomeFragmentViewModel extends ViewModel {
         }
     }
 
+    public int getWorkoutProgress() {
+        float hilfe = aktuellesWorkout.getWorkoutlaenge()*6;
+        int workoutLaengeSwitch = (int) hilfe;
+        switch(workoutLaengeSwitch) {
+
+            case 3:
+                return (workoutProgress / 30) * 100;
+            case 6:
+                return (workoutProgress / 60) * 100;
+            case 9:
+                return (workoutProgress / 90) * 100;
+            case 12:
+                return (workoutProgress / 120) * 100;
+
+        }
+        return 0;
+    }
+
+    public void setWorkoutProgress(int workoutProgress) {
+        this.workoutProgress = workoutProgress;
+    }
 
     public void setAktuellesWorkout(WorkoutModel checkWorkout) {
         aktuellesWorkout = checkWorkout;
