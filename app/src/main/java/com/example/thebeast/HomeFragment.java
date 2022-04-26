@@ -209,7 +209,8 @@ public class HomeFragment extends Fragment {
     private void setAktuellesWorkoutView() {
         homeLinearLayout.setVisibility(View.GONE);
         aktuellesWorkoutUebungen.setText(homeFragmentViewModel.getAktuellesWorkout().getUebungen());
-        aktuellesWorkoutProgressBar.setProgress(homeFragmentViewModel.getWorkoutProgress());
+        int progress = homeFragmentViewModel.getWorkoutProgress();
+        aktuellesWorkoutProgressBar.setProgress(progress);
         aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
     }
 
@@ -226,6 +227,11 @@ public class HomeFragment extends Fragment {
                 if (task.isSuccessful()) {
 
                     List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
+                    if(CurrentUser.getCurrentUser() == null){
+                        setHomeView();
+                        return;
+                    }
+                    CurrentUser.getCurrentUser().setWorkoutsCurrentUser(null);
                     CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
                     workoutsCurrentUser = CurrentUser.getCurrentUser().getWorkoutsCurrentUser();
 
@@ -316,7 +322,7 @@ public class HomeFragment extends Fragment {
         }
 
         homeFragmentViewModel.setWorkoutProgress(
-                ((int)workoutEndeStunde - (int)currentStundeFloat) * 60 + ((int)currentMinuteFloat - (int)workoutEndeMinute));
+                (currentStundeFloat - workoutStundeFloat) * 60 + (currentMinuteFloat - workoutMinuteFloat));
 
         return true;
     }
