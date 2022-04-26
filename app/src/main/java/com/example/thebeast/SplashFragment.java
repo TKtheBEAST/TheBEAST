@@ -53,7 +53,6 @@ public class SplashFragment extends Fragment {
             public void run() {
                 if (mAuth.getCurrentUser() != null) {
                     if (mAuth.getCurrentUser().isEmailVerified()) {
-                        Navigation.findNavController(getView()).navigate(R.id.action_splashFragment_to_mainActivity);
                         getUserInformation();
                     } else {
                         mAuth.getCurrentUser().sendEmailVerification();
@@ -82,6 +81,7 @@ public class SplashFragment extends Fragment {
                             currentUser = task.getResult().toObject(UserModel.class);
                             CurrentUser.setCurrentUser(currentUser);
                             loginFragmentViewModel.getFreundeCurrentUser();
+                            Navigation.findNavController(getView()).navigate(R.id.action_splashFragment_to_mainActivity);
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
