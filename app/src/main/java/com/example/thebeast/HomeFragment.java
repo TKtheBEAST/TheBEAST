@@ -216,9 +216,37 @@ public class HomeFragment extends Fragment {
     }
 
     private void workoutBeenden() {
-        homeFragmentViewModel.workoutFruehzeitigBeenden(homeFragmentViewModel.getAktuellesWorkout());
-        homeFragmentViewModel.setAktuellesWorkout(null);
-        isWorkoutRunning();
+
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View startWorkoutView = getLayoutInflater().inflate(R.layout.workout_beenden_popup, null);
+
+        Button beendenButton = startWorkoutView.findViewById(R.id.workoutBeendenButton);
+        Button abbrechenButton = startWorkoutView.findViewById(R.id.workoutBeendenAbbrechenButton);
+
+        beendenButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                homeFragmentViewModel.workoutFruehzeitigBeenden(homeFragmentViewModel.getAktuellesWorkout());
+                homeFragmentViewModel.setAktuellesWorkout(null);
+                dialog.dismiss();
+                isWorkoutRunning();
+            }
+        });
+
+
+        abbrechenButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(startWorkoutView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
     }
 
     private void setAktuellesWorkoutView() {
