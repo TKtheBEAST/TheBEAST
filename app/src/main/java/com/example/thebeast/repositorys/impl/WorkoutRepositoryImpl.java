@@ -64,7 +64,7 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
         data.put("standort", workout.getStandort());
         data.put("longitude", workout.getLongitude());
         data.put("latitude", workout.getLatitude());
-
+        data.put("workoutFruehzeitigBeendet", false);
 
 
         firebaseFirestore.collection("Workouts")
@@ -92,6 +92,24 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     }
 
 
+    public void workoutFruehzeitigBeenden(WorkoutModel workout){
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("workoutFruehzeitigBeendet", true);
+
+        workoutRef.document(workout.getId()).update(updates)
+                .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.i(TAG, "Workout wurde erfolgreich frühzeitig beendet");
+                        }
+                    }
+                });
+    }
+
+
+
     public void getAllWorkouts() {
 
         for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
@@ -110,11 +128,14 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                     for (DocumentSnapshot ds : value.getDocuments()) {
                         WorkoutModel workoutModel = ds.toObject(WorkoutModel.class);
                         assert workoutModel != null;
-
-                        if (workoutIsRunning(workoutModel.getStartzeit(), workoutModel.getWorkoutlaenge()) == true) {
-                            liveWorkouts.add(workoutModel);
-                            onFirstoreTaskComplete.workoutModelsListAdded(liveWorkouts);
-                        }else{
+                        if(workoutModel.isWorkoutFruehzeitigBeendet() == false) {
+                            if (workoutIsRunning(workoutModel.getStartzeit(), workoutModel.getWorkoutlaenge()) == true) {
+                                liveWorkouts.add(workoutModel);
+                                onFirstoreTaskComplete.workoutModelsListAdded(liveWorkouts);
+                            } else {
+                                vergangeneWorkouts.add(workoutModel);
+                            }
+                        } else {
                             vergangeneWorkouts.add(workoutModel);
                         }
 

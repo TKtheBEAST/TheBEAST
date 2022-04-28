@@ -47,6 +47,10 @@ public class HomeFragmentViewModel extends ViewModel {
         return isWorkoutRunning;
     }
 
+    public void workoutFruehzeitigBeenden(WorkoutModel workout){
+        workoutRepositoryImpl.workoutFruehzeitigBeenden(workout);
+    }
+
     public void setWorkoutRunning(boolean workoutRunning) {
         isWorkoutRunning = workoutRunning;
     }

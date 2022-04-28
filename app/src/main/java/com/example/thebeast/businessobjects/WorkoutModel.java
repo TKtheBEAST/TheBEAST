@@ -20,6 +20,7 @@ public class WorkoutModel {
     private double longitude;
     private double latitude;
     private float workoutlaenge;
+    private boolean workoutFruehzeitigBeendet;
     //standort;
 
 
@@ -69,7 +70,6 @@ public class WorkoutModel {
     public String getAvatar() {
         return avatar;
     }
-
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
@@ -125,5 +125,13 @@ public class WorkoutModel {
 
     public void setStandort(String standort) {
         this.standort = standort;
+    }
+
+    public boolean isWorkoutFruehzeitigBeendet() {
+        return workoutFruehzeitigBeendet;
+    }
+
+    public void setWorkoutFruehzeitigBeendet(boolean workoutFruehzeitigBeendet) {
+        this.workoutFruehzeitigBeendet = workoutFruehzeitigBeendet;
     }
 }

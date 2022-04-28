@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 
     //Button
     private ImageButton joggenButton, oberkoerperButton, pulldayButton, pushdayButton, beineButton, hiitButton, playButton;
-    private Button workoutsEntfernenButton;
+    private Button workoutsEntfernenButton, workoutBeendenButton;
 
     //ImageViews
     private int joggenImageView, oberkoerperImageView, pulldayImageView, pushdayImageView, beinImageView, hiitImageView;
@@ -118,6 +118,7 @@ public class HomeFragment extends Fragment {
         beineButton = view.findViewById(R.id.beinButton);
         hiitButton = view.findViewById(R.id.hiitButton);
         playButton = view.findViewById(R.id.playButton);
+        workoutBeendenButton = view.findViewById(R.id.workoutBeendenButton);
         playButton.setAlpha(0f);
         playButton.setEnabled(false);
 
@@ -199,11 +200,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        workoutBeendenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                workoutBeenden();
+            }
+        });
+
         //checken ob es ein aktuelles Workout vom User gibt
         isWorkoutRunning();
 
 
         return view;
+    }
+
+    private void workoutBeenden() {
+        homeFragmentViewModel.workoutFruehzeitigBeenden(homeFragmentViewModel.getAktuellesWorkout());
+        homeFragmentViewModel.setAktuellesWorkout(null);
+        isWorkoutRunning();
     }
 
     private void setAktuellesWorkoutView() {
@@ -220,6 +235,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void isWorkoutRunning() {
+        homeFragmentViewModel.setWorkoutRunning(false);
+        if(homeFragmentViewModel.getAktuellesWorkout() != null){
+            if(homeFragmentViewModel.getAktuellesWorkout().isWorkoutFruehzeitigBeendet() == false){
+                if(workoutIsRunning(homeFragmentViewModel.getAktuellesWorkout().getStartzeit(), homeFragmentViewModel.getAktuellesWorkout().getWorkoutlaenge()) == true) {
+                    homeFragmentViewModel.setWorkoutRunning(true);
+                    setAktuellesWorkoutView();
+                    return;
+                }else{
+                    homeFragmentViewModel.setAktuellesWorkout(null);
+                    setHomeView();
+                }
+            }else{
+                homeFragmentViewModel.setAktuellesWorkout(null);
+                setHomeView();
+            }
+        }
         db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
 
             @Override
@@ -235,14 +266,13 @@ public class HomeFragment extends Fragment {
                     CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
                     workoutsCurrentUser = CurrentUser.getCurrentUser().getWorkoutsCurrentUser();
 
-                    homeFragmentViewModel.setWorkoutRunning(false);
-                    homeFragmentViewModel.setAktuellesWorkout(null);
-
                     for(WorkoutModel checkWorkout : workoutsCurrentUser){
-                        if(workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true){
-                            homeFragmentViewModel.setWorkoutRunning(true);
-                            homeFragmentViewModel.setAktuellesWorkout(checkWorkout);
-                            break;
+                        if(checkWorkout.isWorkoutFruehzeitigBeendet() == false){
+                            if(workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true){
+                                homeFragmentViewModel.setWorkoutRunning(true);
+                                homeFragmentViewModel.setAktuellesWorkout(checkWorkout);
+                                break;
+                            }
                         }
                     }
 
