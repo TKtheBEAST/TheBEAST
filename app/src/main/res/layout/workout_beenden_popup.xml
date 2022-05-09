@@ -14,6 +14,7 @@
         android:layout_marginEnd="124dp"
         android:gravity="center"
         android:text="Möchtest du dein Workout jetzt beenden?"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +41,8 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="Beenden" />
+            android:text="Beenden"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/workoutBeendenAbbrechenButton"
@@ -48,7 +51,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="40dp"
             android:layout_weight="1"
-            android:text="Abbrechen" />
+            android:text="Abbrechen"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

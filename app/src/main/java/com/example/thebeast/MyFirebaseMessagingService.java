@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -34,6 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     NotificationManager notificationManager;
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
+    private FirebaseAuth mAuth;
     Notification notification;
     String noteTitle, noteMessage, noteType, imageURL;
 
@@ -117,7 +119,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Map<String,Object> updates = new HashMap<>();
         updates.put("token",token);
 
-        userRef.document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+        mAuth = FirebaseAuth.getInstance();
+        userRef.document(mAuth.getCurrentUser().getUid()).update(updates)
                 .addOnCompleteListener(new OnCompleteListener<Void>(){
 
                     @Override
