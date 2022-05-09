@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.thebeast.R;
 import com.example.thebeast.businessobjects.UserModel;
@@ -35,6 +36,7 @@ public class FreundeFragment extends Fragment {
     private FreundeFragmentViewModel freundeFragmentViewModel;
     private RecyclerView recyclerView;
     private FreundeRecyclerViewAdapter adapter;
+    private TextView erstesBeastHinzufuegenTV;
 
     private List<UserModel> freunde;
 
@@ -46,8 +48,10 @@ public class FreundeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_freunde, container, false);
+
         freunde = new ArrayList<UserModel>();
-        freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+
+        erstesBeastHinzufuegenTV = view.findViewById(R.id.erstesBeastHinzufuegenTV);
 
         addFreundButton = view.findViewById(R.id.addFreundButton);
 
@@ -73,8 +77,18 @@ public class FreundeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        adapter.setFreunde(freunde);
-        adapter.notifyDataSetChanged();
+        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
+            freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+            if(freunde.size() == 0){
+                erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
+            }else{
+                erstesBeastHinzufuegenTV.setVisibility(View.GONE);
+                adapter.setFreunde(freunde);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+
     }
 
     @Override
@@ -97,7 +111,16 @@ public class FreundeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
-        adapter.setFreunde(freunde);
+
+        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
+            freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+            if(freunde.size() == 0){
+                erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
+            }else{
+                erstesBeastHinzufuegenTV.setVisibility(View.GONE);
+                adapter.setFreunde(freunde);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }

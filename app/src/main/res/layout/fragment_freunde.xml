@@ -43,6 +43,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/adduser" />
 
+    <TextView
+        android:id="@+id/erstesBeastHinzufuegenTV"
+        android:layout_width="273dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Füge dein erstes Beast hinzu"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/freundeRecyclerView"
         android:layout_width="match_parent"
