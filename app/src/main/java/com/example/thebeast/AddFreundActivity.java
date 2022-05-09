@@ -1,14 +1,18 @@
 package com.example.thebeast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -44,6 +48,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
     private ProgressBar progressBar;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +75,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
         searchView.setSubmitButtonEnabled(true);
         searchView.setQueryHint("thebeast@mail.de");
+        setFocused(searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -85,6 +91,14 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
             }
         });
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setFocused(SearchView view){
+        view.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
 
     private void searchForBeastEmail(String email) {
 
