@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="motivationssprueche">
+        <item
+            >test1</item>
+        <item
+            >test2</item>
+        <item
+            >test3</item>
+        <item
+            >test4</item>
+        <item
+            >test5</item>
+        <item
+            >test6</item>
+        <item
+            >test7</item>
+        <item
+            >test8</item>
+        <item
+            >tes9t</item>
+
+    </string-array>
+</resources>

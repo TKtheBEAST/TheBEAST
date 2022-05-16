@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -36,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.functions.FirebaseFunctions;
 
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
@@ -82,13 +85,17 @@ public class HomeFragment extends Fragment {
     private int joggenImageView, oberkoerperImageView, pulldayImageView, pushdayImageView, beinImageView, hiitImageView;
 
     //TextView anlegen
-    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen;
+    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen, motivationsTextView;
 
     //Progressbar
     private ProgressBar aktuellesWorkoutProgressBar;
 
     //workouts CurrentUser
     private List<WorkoutModel> workoutsCurrentUser;
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,6 +136,8 @@ public class HomeFragment extends Fragment {
         deinGewaehltesTraining = view.findViewById(R.id.deinGewaehltesTraining);
         trennstrichHome = view.findViewById(R.id.trennstrichHome);
         aktuellesWorkoutUebungen = view.findViewById(R.id.aktuellesWorkoutUebungenTV);
+        motivationsTextView = view.findViewById(R.id.motivationTextView);
+
 
         //ImageView zuweisen
         joggenImageView = R.drawable.joggen;
@@ -260,8 +269,22 @@ public class HomeFragment extends Fragment {
     private void setHomeView(){
         homeLinearLayout.setVisibility(View.VISIBLE);
         aktuellesWorkoutLinearLayout.setVisibility(View.GONE);
+        setMotivationsTextView();
     }
 
+    private void setMotivationsTextView(){
+
+        Resources res = getResources();
+        String[] motivationssprueche = res.getStringArray(R.array.motivationssprueche);
+
+        Random zufall = new Random();
+        int zufallsZahl = zufall.nextInt(motivationssprueche.length); //Ganzahlige Zufallszahl zwischen 0 und Anzahl Motivationssprueche
+
+        motivationsTextView.setVisibility(View.VISIBLE);
+        motivationsTextView.setText(motivationssprueche[zufallsZahl]);
+
+
+    }
     private void isWorkoutRunning() {
         homeFragmentViewModel.setWorkoutRunning(false);
         if(homeFragmentViewModel.getAktuellesWorkout() != null){

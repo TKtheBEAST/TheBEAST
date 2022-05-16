@@ -1,19 +1,12 @@
 package com.example.thebeast.viewmodel;
 
-import android.app.Application;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
 import com.example.thebeast.businessobjects.WorkoutModel;
-import com.example.thebeast.entitys.User;
-import com.example.thebeast.entitys.Workout;
-import com.example.thebeast.repositorys.impl.UserRepositoryImpl;
 import com.example.thebeast.repositorys.impl.WorkoutRepositoryImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragmentViewModel extends ViewModel {
 
@@ -23,7 +16,6 @@ public class HomeFragmentViewModel extends ViewModel {
     private boolean isWorkoutRunning;
     private WorkoutModel aktuellesWorkout;
     private float workoutProgress;
-
 
     private WorkoutRepositoryImpl workoutRepositoryImpl = new WorkoutRepositoryImpl();
 
@@ -50,6 +42,8 @@ public class HomeFragmentViewModel extends ViewModel {
     public void workoutFruehzeitigBeenden(WorkoutModel workout){
         workoutRepositoryImpl.workoutFruehzeitigBeenden(workout);
     }
+
+
 
     public void setWorkoutRunning(boolean workoutRunning) {
         isWorkoutRunning = workoutRunning;
