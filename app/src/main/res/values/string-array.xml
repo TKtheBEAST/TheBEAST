@@ -3,23 +3,31 @@
     <string-array
         name="motivationssprueche">
         <item
-            >test1</item>
+            >Wer scheiß Arme hat, sieht scheiße aus. ~ MarKus Rühl</item>
         <item
-            >test2</item>
+            >Wir machen den Sport nicht, weil wir gesund werden wollen, sondern weil wir Muskeln wollen. ~ MaKcus Rühl</item>
         <item
-            >test3</item>
+            >Schweres Gewicht, hohes Volumen - Muskelwachstum! ~ Markus Rühl</item>
         <item
-            >test4</item>
+            >The worst thing I can be is the same as everybody else. ~ Arnold Schwarzenegger</item>
         <item
-            >test5</item>
+            >Stop whining. ~ Arnold Schwarzenegger</item>
         <item
-            >test6</item>
+            >Failure is not an option. Everybody has to succed. ~ Arnold Schwarzenegger</item>
         <item
-            >test7</item>
+            >Denk daran: Mitleid bekommst du geschenkt, Neid musst du dir verdienen. ~ Arnold Schwarzenegger</item>
         <item
-            >test8</item>
+            >Ihr findet mich im Maschinenraum.</item>
         <item
-            >tes9t</item>
+            >IKEA hat mich gefragt ob mein Name für ein Schrank verwendet werde darf.</item>
+        <item
+            >Es ist immer zu früh, um aufzugeben. ~ Norman Vincent Peale</item>
+        <item
+            >I put people in body bafs when I#m right. ~ Mike Tyson</item>
+        <item
+            >Rosen sind rot, die Kuh macht Muh, guck mal diese Brust, Lackschuh.</item>
+        <item
+            >Dein Training ist mein aufwärmen.</item>
 
     </string-array>
 </resources>
