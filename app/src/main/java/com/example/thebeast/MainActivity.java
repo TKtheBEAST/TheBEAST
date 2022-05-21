@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                             viewPager.setCurrentItem(4, false);
                         } else {
                             db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
-                                    .collection("Freunde von User").document(freund.getBeastId()).delete()
+                                    .collection("FreundeVonUser").document(freund.getBeastId()).delete()
                                     .addOnCompleteListener(new OnCompleteListener() {
 
                                         @Override

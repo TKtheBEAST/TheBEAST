@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
-    private CollectionReference freundVonUserRef = firebaseFirestore.collection("User").document("*").collection("Freunde von User");
+    private CollectionReference freundVonUserRef = firebaseFirestore.collection("User").document("*").collection("FreundeVonUser");
     
 
     public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password, String token){
@@ -114,7 +114,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null) {
             for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
-                userRef.document(freund.getBeastId()).collection("Freunde von User")
+                userRef.document(freund.getBeastId()).collection("FreundeVonUser")
                         .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
 
@@ -160,7 +160,7 @@ public class UserRepositoryImpl implements UserRepository {
                 });
 
         for (UserModel freund: CurrentUser.getCurrentUser().getFreundeCurrentUser()){
-            userRef.document(freund.getBeastId()).collection("Freunde von User")
+            userRef.document(freund.getBeastId()).collection("FreundeVonUser")
                     .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
                     .addOnCompleteListener(new OnCompleteListener<Void>(){
 
@@ -263,7 +263,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
         firebaseFirestore.collection("User")
                 .document(CurrentUser.getCurrentUser().getBeastId())
-                .collection("Freunde von User").get()
+                .collection("FreundeVonUser").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -271,7 +271,7 @@ public class UserRepositoryImpl implements UserRepository {
                             freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
                             CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
                         }else{
-                            Log.e(TAG, "Freunde von User " + CurrentUser.getCurrentUser().getBeastName() + " konnten nicht geladen werden.");
+                            Log.e(TAG, "FreundeVonUser " + CurrentUser.getCurrentUser().getBeastName() + " konnten nicht geladen werden.");
                         }
                     }
                 });

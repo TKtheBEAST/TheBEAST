@@ -227,7 +227,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                             finish();
                         }else{
                             db.collection("User").document(CurrentUser.getCurrentUser().getBeastId())
-                                    .collection("Freunde von User").document(user.getBeastId()).set(data)
+                                    .collection("FreundeVonUser").document(user.getBeastId()).set(data)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
