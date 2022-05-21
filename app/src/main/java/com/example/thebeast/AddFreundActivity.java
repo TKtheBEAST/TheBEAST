@@ -77,6 +77,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
             }
         });
 
+
         searchView.setSubmitButtonEnabled(true);
         searchView.setQueryHint("thebeast@mail.de");
         setFocused(searchView);
@@ -127,7 +128,9 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
                                 keinBeastGefundenTV.setVisibility(View.VISIBLE);
                             }
                         }else {
-                            Log.w(TAG, "User konnten nicht gesucht werden" + task.getException().toString());
+                            Log.w(TAG, "User konnten nicht gesucht werden: " + task.getException().toString());
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(AddFreundActivity.this, "User konnten nicht geladen werden. Versuche es noch einmal.", Toast.LENGTH_LONG).show();
                         }
 
 

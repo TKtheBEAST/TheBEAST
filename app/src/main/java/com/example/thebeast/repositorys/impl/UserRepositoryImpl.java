@@ -112,22 +112,26 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 });
 
-        for (UserModel freund: CurrentUser.getCurrentUser().getFreundeCurrentUser()){
-            userRef.document(freund.getBeastId()).collection("Freunde von User")
-                    .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>(){
+        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null) {
+            for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+                userRef.document(freund.getBeastId()).collection("Freunde von User")
+                        .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
 
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
-                                Log.i(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
-                            }else{
-                                Log.e(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
+                                    Log.i(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                } else {
+                                    Log.e(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                }
                             }
-                        }
-                    });
+                        });
 
+            }
+        }else{
+            Log.w(TAG, "Workoutlaenge wurde nicht bei den Freunden geupdated da Freunde of CurrentUser null ist.");
         }
 
     }

@@ -27,6 +27,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="32dp"
         android:background="#434343"
+        android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/addFreundRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
