@@ -579,4 +579,10 @@ public class HomeFragment extends Fragment {
         gewaehltesTrainingRecyclerView.setHasFixedSize(true);
     }
 
+    public void onResume() {
+        super.onResume();
+        homeFragmentViewModel.getGewaehlteTrainingsName().clear();
+        homeFragmentViewModel.getGewaehlteTrainingsList().clear();
+    }
+
 }

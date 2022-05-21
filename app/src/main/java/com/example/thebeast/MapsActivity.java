@@ -61,7 +61,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(latitude == 48.89731 && longitude == 9.19161){
             workoutWurdeNichtGefundenTV.setVisibility(View.VISIBLE);
-            mMap.addMarker(new MarkerOptions().position(workoutStandort).title("Workout wurde nicht gefunden"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(workoutStandort));
             return;
         }
