@@ -10,8 +10,6 @@ public class CurrentUser {
 
     private static UserModel currentUser;
 
-
-
     public static UserModel getCurrentUser() {
         return currentUser;
     }

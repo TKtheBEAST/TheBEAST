@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EinstellungenFragment extends Fragment {
 
+    private static final String TAG = "EinstellungenFragment";
     Button abmeldenButton,kontoloeschenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
     private float aktuelleWorkoutlaenge;
     private TextView beastName, beastEmail;
@@ -45,8 +47,15 @@ public class EinstellungenFragment extends Fragment {
         beastName = view.findViewById(R.id.beastNameEinsTV);
         beastEmail = view.findViewById(R.id.beastEmailEinstTV);
 
-        beastName.setText(CurrentUser.getCurrentUser().getBeastName());
-        beastEmail.setText(CurrentUser.getCurrentUser().getBeastEmail());
+        if(CurrentUser.getCurrentUser() != null){
+            beastName.setText(CurrentUser.getCurrentUser().getBeastName());
+            beastEmail.setText(CurrentUser.getCurrentUser().getBeastEmail());
+        }else{
+            beastName.setText("Fehler beim Laden");
+            beastEmail.setText("Fehler beim Laden");
+            Log.w(TAG, "Kein Current User vorhanden! BeastName und BeastMail kann nicht gesetzt werden.");
+        }
+
 
         beastName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +113,13 @@ public class EinstellungenFragment extends Fragment {
             }
         });
 
+        if(CurrentUser.getCurrentUser() != null){
+            aktuelleWorkoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
+            setFocusAktuelleLaenge(aktuelleWorkoutlaenge);
+        }else{
+            Log.w(TAG, "Kein Current User vorhanden! Workoutlaenge kann nicht gesetzt werden.");
+        }
 
-        aktuelleWorkoutlaenge = CurrentUser.getCurrentUser().getWorkoutlaenge();
-        setFocusAktuelleLaenge(aktuelleWorkoutlaenge);
 
 
         //initialisieren ViewModel
@@ -165,7 +178,12 @@ public class EinstellungenFragment extends Fragment {
         Button abbrechenButton = beastNameAendernView.findViewById(R.id.abbrechenBeastNaendernPopup);
         EditText beastNameTextView = beastNameAendernView.findViewById(R.id.beastNameaendernPopupET);
 
-        beastNameTextView.setHint(CurrentUser.getCurrentUser().getBeastName());
+        if(CurrentUser.getCurrentUser() != null){
+            beastNameTextView.setHint(CurrentUser.getCurrentUser().getBeastName());
+        }else{
+            beastNameTextView.setHint("theBeast");
+            Log.w(TAG, "Kein Current User vorhanden! Workoutlaenge kann nicht gesetzt werden.");
+        }
 
         beastNameuebernehmenButton.setOnClickListener(new View.OnClickListener(){
 
