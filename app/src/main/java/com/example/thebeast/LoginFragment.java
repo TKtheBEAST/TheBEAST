@@ -135,8 +135,14 @@ public class LoginFragment extends Fragment {
 
                 if(task.isSuccessful()){
                     if(user.isEmailVerified()){
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
-                        getUserInformation();
+                        if(mAuth.getCurrentUser() != null){
+                            getUserInformation();
+                            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                            loginProgressBar.setVisibility(GONE);
+                        }else{
+                            Toast.makeText(getActivity(), "Hier ist etwas schief gelaufen. Versuche es noch einmal", Toast.LENGTH_LONG);
+                            return;
+                        }
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG).show();
@@ -166,6 +172,5 @@ public class LoginFragment extends Fragment {
 
     public void getUserInformation(){
         loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
-        loginProgressBar.setVisibility(GONE);
     }
 }
