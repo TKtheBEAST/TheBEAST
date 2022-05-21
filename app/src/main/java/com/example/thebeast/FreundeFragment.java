@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class FreundeFragment extends Fragment {
 
-
+    private static final String TAG = "FreundeFragment";
     private FreundeFragmentViewModel freundeFragmentViewModel;
     private RecyclerView recyclerView;
     private FreundeRecyclerViewAdapter adapter;
@@ -77,16 +78,21 @@ public class FreundeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
-            freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
-            if(freunde.size() == 0){
-                erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
-            }else{
-                erstesBeastHinzufuegenTV.setVisibility(View.GONE);
-                adapter.setFreunde(freunde);
-                adapter.notifyDataSetChanged();
+        if(CurrentUser.getCurrentUser() != null){
+            if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
+                freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                if(freunde.size() == 0){
+                    erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
+                }else{
+                    erstesBeastHinzufuegenTV.setVisibility(View.GONE);
+                    adapter.setFreunde(freunde);
+                    adapter.notifyDataSetChanged();
+                }
             }
+        }else{
+            Log.w(TAG, "Current User ist nicht gesetzt. Freunde daher nicht zu Verfügung");
         }
+
 
 
     }
@@ -112,15 +118,22 @@ public class FreundeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
-            freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
-            if(freunde.size() == 0){
-                erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
-            }else{
-                erstesBeastHinzufuegenTV.setVisibility(View.GONE);
-                adapter.setFreunde(freunde);
-                adapter.notifyDataSetChanged();
+        if(CurrentUser.getCurrentUser() != null){
+            if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null){
+                freunde = CurrentUser.getCurrentUser().getFreundeCurrentUser();
+                if(freunde.size() == 0){
+                    erstesBeastHinzufuegenTV.setVisibility(View.VISIBLE);
+                }else{
+                    erstesBeastHinzufuegenTV.setVisibility(View.GONE);
+                    adapter.setFreunde(freunde);
+                    adapter.notifyDataSetChanged();
+                }
             }
+        }else{
+            Log.w(TAG, "Current User ist nicht gesetzt. Freunde daher nicht zu Verfügung");
         }
     }
+
+
+
 }
