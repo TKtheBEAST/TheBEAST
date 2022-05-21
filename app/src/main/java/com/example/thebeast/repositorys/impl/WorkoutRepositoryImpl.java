@@ -72,13 +72,13 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        Log.i(TAG, "DocumentSnapshot written / Workout wurde hinzugefuegt. ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding workout", e);
+                        Log.e(TAG, "Workout konnte nicht hinzugefügt werden", e);
                     }
                 });
     }
@@ -103,6 +103,8 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Log.i(TAG, "Workout wurde erfolgreich frühzeitig beendet");
+                        }else{
+                            Log.e(TAG, "Workout konnte nicht frühzeitig beendet werden und wird weiter als laufend angezeigt.");
                         }
                     }
                 });
@@ -111,7 +113,10 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
 
     public void getAllWorkouts() {
-
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden! Workouts werden nicht geladen");
+            return;
+        }
         for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
             workoutRef.whereEqualTo("workoutOwnerID", freund.getBeastId()).addSnapshotListener(new EventListener<QuerySnapshot>() {
 
