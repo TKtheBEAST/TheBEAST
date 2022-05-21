@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +23,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double longitude;
     private ProgressBar progressBar;
     private ImageButton backButton;
+    private TextView workoutWurdeNichtGefundenTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         progressBar = findViewById(R.id.mapsProgressBar);
         backButton = findViewById(R.id.mapsBackIB);
+        workoutWurdeNichtGefundenTV = findViewById(R.id.workoutWurdeNichtGefundenTV);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -57,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng workoutStandort = new LatLng(latitude, longitude);
 
         if(latitude == 48.89731 && longitude == 9.19161){
-            // TODO: TextView oder Feld einfügen mit Info das das Workout nicht gefunden wurden. So wie hier ist doof
+            workoutWurdeNichtGefundenTV.setVisibility(View.VISIBLE);
             mMap.addMarker(new MarkerOptions().position(workoutStandort).title("Workout wurde nicht gefunden"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(workoutStandort));
             return;

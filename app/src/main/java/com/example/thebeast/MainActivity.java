@@ -218,20 +218,16 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                                                 Toast.makeText(MainActivity.this, freund.getBeastName() +
                                                         " ist nicht mehr dein Freund", Toast.LENGTH_LONG).show();
 
-                                                viewPager = findViewById(R.id.pager);
-                                                pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
-                                                viewPager.setAdapter(pagerAdapter);
-                                                viewPager.setCurrentItem(4, false);
                                             } else {
                                                 progressBar.setVisibility(View.GONE);
 
                                                 Toast.makeText(MainActivity.this, freund.getBeastName() +
                                                         " konnte nicht entfernt werden.", Toast.LENGTH_LONG).show();
-                                                viewPager = findViewById(R.id.pager);
-                                                pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
-                                                viewPager.setAdapter(pagerAdapter);
-                                                viewPager.setCurrentItem(4, false);
                                             }
+                                            viewPager = findViewById(R.id.pager);
+                                            pagerAdapter = new CollectionPagerAdapter(MainActivity.this);
+                                            viewPager.setAdapter(pagerAdapter);
+                                            viewPager.setCurrentItem(4, false);
                                         }
                                     });
                         }
