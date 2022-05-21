@@ -3,6 +3,7 @@ package com.example.thebeast;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Address;
@@ -302,6 +303,9 @@ public class HomeFragment extends Fragment {
                 setHomeView();
             }
         }
+        if(mAuth.getCurrentUser() == null){
+            return;
+        }
         db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
 
             @Override
@@ -429,6 +433,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                if(CurrentUser.getCurrentUser() == null){
+                    Toast.makeText(getView().getContext(), "Hier ist etwas schief gelaufen. Versuche es noch einmal", Toast.LENGTH_LONG);
+                    Log.w(TAG, "Current User ist null. Workout kann nicht gestartet werden");
+                    startActivity(new Intent(getActivity(),MainActivity.class));
+                }
 
                 String beastName = CurrentUser.getCurrentUser().getBeastName();
                 String beastEmail = CurrentUser.getCurrentUser().getBeastEmail();
@@ -525,6 +534,11 @@ public class HomeFragment extends Fragment {
         playButton.setAlpha(1f);
 
         boolean trainingBereitsGewaehlt = false;
+
+        if(homeFragmentViewModel.getGewaehlteTrainingsName().size() == 2){
+            Toast.makeText(getView().getContext(), "Wie viele Trainings willst du noch machen?", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (homeFragmentViewModel.getGewaehlteTrainingsList().size() > 0) {
             for (int i = 0; i < homeFragmentViewModel.getGewaehlteTrainingsName().size(); i++) {
