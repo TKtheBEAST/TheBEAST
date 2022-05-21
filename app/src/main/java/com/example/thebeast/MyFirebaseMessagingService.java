@@ -108,9 +108,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
         super.onNewToken(token);
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // FCM registration token to your app server.
         sendRegistrationToServer(token);
     }
 
@@ -126,7 +123,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            CurrentUser.getCurrentUser().setToken(token);
+                            if(CurrentUser.getCurrentUser() != null){
+                                CurrentUser.getCurrentUser().setToken(token);
+                            }
+                            Log.w(TAG, "Token konnt nicht dem CurrentUser gesetzt werden, da Current User null ist.");
+                        }else{
+                            Log.w(TAG, "Token konnte nicht geupdatet werden" + task.getException());
                         }
                     }
                 });
