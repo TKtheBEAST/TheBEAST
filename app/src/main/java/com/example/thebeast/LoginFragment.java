@@ -155,7 +155,7 @@ public class LoginFragment extends Fragment {
                         emailEditText.requestFocus();
                     } catch (Exception e){
                         loginProgressBar.setVisibility(GONE);
-                        Toast.makeText(getActivity(),"Faalsche Benutzerdaten",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"Falsche Benutzerdaten",Toast.LENGTH_LONG).show();
                     }
 
                 }

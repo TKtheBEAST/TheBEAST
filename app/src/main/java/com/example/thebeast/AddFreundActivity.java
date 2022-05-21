@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -36,8 +37,10 @@ import java.util.Map;
 
 public class AddFreundActivity extends AppCompatActivity implements AddFreundSelectionListener{
 
+    private static String TAG = "AddFreundActivity";
     private ImageView xImageView;
     private SearchView searchView;
+    private TextView keinBeastGefundenTV;
 
     private RecyclerView addFreundRecyclerView;
     private AddFreundRecyclerviewAdapter addFreundAdapter;
@@ -56,6 +59,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
         xImageView = findViewById(R.id.xImageView);
         searchView = findViewById(R.id.addFreundSearchView);
+        keinBeastGefundenTV = findViewById(R.id.keinBeastGefundenTV);
         addFreundRecyclerView = findViewById(R.id.addFreundRecyclerView);
         progressBar = findViewById(R.id.addFreundProgressBar);
 
@@ -111,12 +115,21 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        addFreundRecyclerView.setAdapter(addFreundAdapter);
+                        if (task.isSuccessful()){
+                            Log.i(TAG, "Zugriff auf User war erfolgreich.");
 
-                        List<UserModel> user = new ArrayList();
-                        user = task.getResult().toObjects(UserModel.class);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        addFreundAdapter.setFreunde(user);
+                            addFreundRecyclerView.setAdapter(addFreundAdapter);
+                            List<UserModel> user = new ArrayList();
+                            user = task.getResult().toObjects(UserModel.class);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            addFreundAdapter.setFreunde(user);
+                            if(user.size() == 0){
+                                keinBeastGefundenTV.setVisibility(View.VISIBLE);
+                            }
+                        }else {
+                            Log.w(TAG, "User konnten nicht gesucht werden" + task.getException().toString());
+                        }
+
 
                     }
                 });
@@ -144,6 +157,11 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
             @Override
             public void onClick(View view) {
+                if(CurrentUser.getCurrentUser() == null){
+                    Log.w(TAG, "Kein Current User vorhanden!");
+                    Toast.makeText(AddFreundActivity.this,"Hier ist etwas schief gelaufen. Versuche es noch einmal.",Toast.LENGTH_LONG).show();
+                    finish();
+                }
 
                 List<UserModel> freundeVonUser = new ArrayList<UserModel>();
                 freundeVonUser = CurrentUser.getCurrentUser().getFreundeCurrentUser();
