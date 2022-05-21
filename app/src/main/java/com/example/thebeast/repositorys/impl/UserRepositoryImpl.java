@@ -55,44 +55,46 @@ public class UserRepositoryImpl implements UserRepository {
             .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge,token);
-                    Map<String,Object> data = new HashMap<>();
-                    data.put("beastID",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    data.put("beastName", user.getBeastName());
-                    data.put("beastSpruch", user.getBeastSpruch());
-                    data.put("beastEmail", user.getBeastEmail());
-                    data.put("workoutlaenge", user.getWorkoutlaenge());
-                    data.put("token", user.getToken());
+                    if(task.isSuccessful()) {
+                        Log.i(TAG, "User konnte mit Auth erstellt werden.");
+                        UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("beastID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        data.put("beastName", user.getBeastName());
+                        data.put("beastSpruch", user.getBeastSpruch());
+                        data.put("beastEmail", user.getBeastEmail());
+                        data.put("workoutlaenge", user.getWorkoutlaenge());
+                        data.put("token", user.getToken());
 
 
+                        userRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(data)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.i(TAG, "User wurde in der Datenbank hinzugefügt.");
+                                        } else {
+                                            Log.e(TAG, "User konnte nicht in der Datenbank hinzugefügt werden" + task.getException().toString());
+                                        }
 
-                    userRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(data)
-                            .addOnCompleteListener(new OnCompleteListener<Void>(){
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Log.d(TAG,"User wurde hinzugefügt ");
-                                    }else{
-                                        Log.d(TAG,"User konnte nicht hinzugefuegt werden");
                                     }
 
-                                }
-
-                    });
+                                });
+                    }else{
+                        Log.e(TAG, "User konnte nicht erstellt werdne");
+                    }
                 }
             });
-    }
-
-    public void insert(UserModel user){
 
     }
 
-    @Override
-    public void update(UserModel user) {
-
-    }
 
     public void updateWorkoutLaenge(float workoutLaenge){
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
+
         Map<String,Object> updates = new HashMap<>();
         updates.put("workoutlaenge",workoutLaenge);
 
@@ -103,6 +105,9 @@ public class UserRepositoryImpl implements UserRepository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
+                            Log.i(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich geupdetet.");
+                        }else{
+                            Log.e(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte nicht upgedated werden.");
                         }
                     }
                 });
@@ -116,6 +121,9 @@ public class UserRepositoryImpl implements UserRepository {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 CurrentUser.getCurrentUser().setWorkoutlaenge(workoutLaenge);
+                                Log.i(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                            }else{
+                                Log.e(TAG, "Workoutlaenge von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
                             }
                         }
                     });
@@ -125,6 +133,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void updateBeastName(String neuerBeastName){
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
+
         Map<String,Object> updates = new HashMap<>();
         updates.put("beastName",neuerBeastName);
 
@@ -135,6 +148,9 @@ public class UserRepositoryImpl implements UserRepository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             CurrentUser.getCurrentUser().setBeastName(neuerBeastName);
+                            Log.i(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich geupdetet.");
+                        }else{
+                            Log.e(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte nicht upgedated werden." + task.getException().toString());
                         }
                     }
                 });
@@ -148,6 +164,9 @@ public class UserRepositoryImpl implements UserRepository {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 CurrentUser.getCurrentUser().setBeastName(neuerBeastName);
+                                Log.i(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                            }else{
+                                Log.e(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden." + task.getException().toString());
                             }
                         }
                     });
@@ -156,17 +175,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void deleteUser(){
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
         userRef.document(CurrentUser.getCurrentUser().getBeastId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("User", "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde vollständig gelöscht");
+                        Log.i(TAG, "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde aus der Datenbanl entfernt");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error deleting document", e);
-            }
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "User konnte nicht aus der Datenbank entfernt werden. ", e);
+                    }
         });
     }
 
@@ -178,8 +201,9 @@ public class UserRepositoryImpl implements UserRepository {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     allUsers = task.getResult().toObjects(UserModel.class);
+                    Log.i(TAG, "Alle User konnten geladen werden");
                 }else{
-                    Log.e(TAG,task.getException().toString());
+                    Log.e(TAG,"User konnten nicht geladen werden. " + task.getException().toString());
                 }
             }
         });
@@ -195,33 +219,44 @@ public class UserRepositoryImpl implements UserRepository {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<UserModel> user = new ArrayList();
                         user = task.getResult().toObjects(UserModel.class);
-                        UserModel currentUser = new UserModel();
-                        currentUser = user.get(0);
-                        CurrentUser.setCurrentUser(currentUser);
-                        getFreundeCurrentUser();
-                      //  getWorkoutsCurrentUser();
+                        if(user.size() > 0){
+                            UserModel currentUser = new UserModel();
+                            currentUser = user.get(0);
+                            CurrentUser.setCurrentUser(currentUser);
+                            getFreundeCurrentUser();
+                            //  getWorkoutsCurrentUser();
+                        }else{
+                            Log.e(TAG, "Current User konnte nicht gesetz wurden, da kein User in der Datenbank gefunden wurde");
+                        }
                     }
                 });
     }
 
     private void getWorkoutsCurrentUser() {
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
         firebaseFirestore.collection("Workouts").whereEqualTo("workoutOwnerID", CurrentUser.getCurrentUser().getBeastId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
                     List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
                     CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
-
+                    Log.i(TAG, "Die Workouts von User " + CurrentUser.getCurrentUser().getBeastName() + " konnten geladen werden.");
                 }else{
-                    return;
+                    Log.w(TAG, "Die Workouts vom User konnten nicht geladen werden.");
                 }
             }
         });
     }
 
     public void getFreundeCurrentUser(){
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
         firebaseFirestore.collection("User")
                 .document(CurrentUser.getCurrentUser().getBeastId())
                 .collection("Freunde von User").get()
@@ -230,10 +265,9 @@ public class UserRepositoryImpl implements UserRepository {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
-
                             CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
                         }else{
-                            return;
+                            Log.e(TAG, "Freunde von User " + CurrentUser.getCurrentUser().getBeastName() + " konnten nicht geladen werden.");
                         }
                     }
                 });

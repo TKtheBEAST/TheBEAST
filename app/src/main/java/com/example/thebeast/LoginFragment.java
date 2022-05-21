@@ -134,7 +134,6 @@ public class LoginFragment extends Fragment {
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 if(task.isSuccessful()){
-                    loginProgressBar.setVisibility(GONE);
                     if(user.isEmailVerified()){
                         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
                         getUserInformation();
@@ -167,5 +166,6 @@ public class LoginFragment extends Fragment {
 
     public void getUserInformation(){
         loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
+        loginProgressBar.setVisibility(GONE);
     }
 }

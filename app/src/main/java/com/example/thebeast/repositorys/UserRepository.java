@@ -16,9 +16,7 @@ import java.util.List;
 public interface UserRepository {
 
 
-    void insert(UserModel user);
 
-    void update(UserModel user);
 
     void deleteUser();
 
