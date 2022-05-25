@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.viewmodel.RegistrierenFragmentViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +38,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
@@ -64,6 +67,7 @@ public class RegistrierenFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
     private FirebaseAuth mAuth;
+    private FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     private StorageReference storageReference;
     private FirebaseUser firebaseUser;
 
@@ -220,7 +224,36 @@ public class RegistrierenFragment extends Fragment {
                                 data.put("avatar", uriForFS);
                                 data.put("token", user.getToken());
 
-                                userRef.document(uid).set(data)
+
+
+                                //über Functions user erstellen
+                                mFunctions.getHttpsCallable("createUserInFirestore")
+                                        .call(data)
+                                        .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                                            FirebaseUser userFs = FirebaseAuth.getInstance().getCurrentUser();
+                                            @Override
+                                            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                                                userFs.sendEmailVerification();
+                                                Toast.makeText(getView().getContext(), beastName + " wurde erfolgreich hinzugefügt!" +
+                                                        " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
+                                                Log.d(TAG, "User wurde hinzugefügt ");
+                                                registrierenProgressBar.setVisibility(GONE);
+                                                Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                                        Log.d(TAG, "User konnte nicht hinzugefuegt werden Firestore");
+                                        registrierenProgressBar.setVisibility(GONE);
+                                    }
+                                });
+
+
+
+
+
+                              /**  userRef.document(uid).set(data)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -239,7 +272,7 @@ public class RegistrierenFragment extends Fragment {
                                                     registrierenProgressBar.setVisibility(GONE);
                                                 }
                                             }
-                                        });
+                                        }); **/
                             } else {
                                 StorageReference fileReference = storageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + "." + uriImage);
                                 fileReference.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -260,7 +293,31 @@ public class RegistrierenFragment extends Fragment {
                                                 data.put("avatar", uri.toString());
                                                 data.put("token", user.getToken());
 
-                                                userRef.document(uid).set(data)
+                                                //über Functions user erstellen
+                                                mFunctions.getHttpsCallable("createUserInFirestore")
+                                                        .call(data)
+                                                        .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                                                            FirebaseUser userFs = FirebaseAuth.getInstance().getCurrentUser();
+                                                            @Override
+                                                            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                                                                userFs.sendEmailVerification();
+                                                                Toast.makeText(getView().getContext(), beastName + " wurde erfolgreich hinzugefügt!" +
+                                                                        " Checke deine Mails um deine Mail zu verifizieren", Toast.LENGTH_LONG).show();
+                                                                Log.d(TAG, "User wurde hinzugefügt ");
+                                                                registrierenProgressBar.setVisibility(GONE);
+                                                                Navigation.findNavController(getView()).navigate(R.id.action_registrierenFragment_to_loginFragment);
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getView().getContext(), "Du konntest nicht Registriert werden :( Versuche es noch einmal!", Toast.LENGTH_LONG).show();
+                                                        Log.d(TAG, "User konnte nicht hinzugefuegt werden Firestore");
+                                                        registrierenProgressBar.setVisibility(GONE);
+                                                    }
+                                                });
+
+
+                                               /** userRef.document(uid).set(data)
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -279,10 +336,20 @@ public class RegistrierenFragment extends Fragment {
                                                                     registrierenProgressBar.setVisibility(GONE);
                                                                 }
                                                             }
-                                                        });
+                                                        }); **/
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // TODO: on Failure abgreifen
                                             }
                                         });
 
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // TODO: on Failure abgreifen
                                     }
                                 });
                             }
