@@ -145,6 +145,7 @@ public class LoginFragment extends Fragment {
                         }
                     }else{
                         user.sendEmailVerification();
+                        loginProgressBar.setVisibility(GONE);
                         Toast.makeText(getActivity(),"Überprüfe deine Mails und verifiziere deine Mail",Toast.LENGTH_LONG).show();
                     }
                 }else{
