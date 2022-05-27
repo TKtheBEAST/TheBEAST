@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import com.example.thebeast.businessobjects.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -123,14 +124,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+                            Log.i(TAG, "Token wurde in Firestore aktualisiert.");
                             if(CurrentUser.getCurrentUser() != null){
                                 CurrentUser.getCurrentUser().setToken(token);
+                                Log.i(TAG, "Token konnte dem CurrentUser gesetzt werden.");
+                            }else{
+                                Log.w(TAG, "Token konnte nicht dem CurrentUser gesetzt werden, da Current User null ist.");
                             }
-                            Log.w(TAG, "Token konnt nicht dem CurrentUser gesetzt werden, da Current User null ist.");
                         }else{
-                            Log.w(TAG, "Token konnte nicht geupdatet werden" + task.getException());
+                            Log.w(TAG, "Token konnte nicht in Firestore aktualisiert werden" + task.getException());
                         }
                     }
                 });
+
+        if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null) {
+            for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+                userRef.document(freund.getBeastId()).collection("FreundeVonUser")
+                        .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                } else {
+                                    Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                }
+                            }
+                        });
+
+            }
+        }else{
+            Log.w(TAG, "Token wurde nicht bei den Freunden geupdated da Freunde of CurrentUser null ist.");
+        }
     }
 }
