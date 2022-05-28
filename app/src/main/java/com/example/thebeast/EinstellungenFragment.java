@@ -193,7 +193,38 @@ public class EinstellungenFragment extends Fragment {
     }
 
     public void avatarAendernDialog(){
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View avatarAendernView = getLayoutInflater().inflate(R.layout.avatar_aendern_popup,null);
 
+
+        Button avatarAendernBestaetigenButton = avatarAendernView.findViewById(R.id.avatarAendernBestaetigenButton);
+        Button avatarAendernAbbrechenButton = avatarAendernView.findViewById(R.id.avatarAendernAbbrechenButton);
+        ImageView neuerAvatarImageView = avatarAendernView.findViewById(R.id.neuerAvatarIV);
+
+        neuerAvatarImageView.setImageURI(uriImage);
+
+        avatarAendernBestaetigenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                avatarImageView.setImageURI(uriImage);
+                CurrentUser.getCurrentUser().setAvatar(uriImage.toString());
+                // TODO: Datenbank updaten. Uri und so hochladen und speichern
+                dialog.dismiss();
+            }
+        });
+
+        avatarAendernAbbrechenButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(avatarAendernView);
+        dialog = dialogBuilder.create();
+        dialog.show();
     }
 
     private void openFileChooser() {

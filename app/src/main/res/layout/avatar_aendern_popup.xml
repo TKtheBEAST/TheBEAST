@@ -22,7 +22,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/neuerAvatarIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -50,7 +50,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="Hinzufügen" />
+            android:text="Ändern!" />
 
         <Button
             android:id="@+id/avatarAendernAbbrechenButton"
