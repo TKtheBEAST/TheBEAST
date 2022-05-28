@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
 
     <TextView
-        android:id="@+id/erstesBeastHinzufuegenTV"
+        android:id="@+id/niemandTrainiertTV"
         android:layout_width="273dp"
         android:layout_height="45dp"
         android:layout_marginTop="40dp"
