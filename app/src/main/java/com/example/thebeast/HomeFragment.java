@@ -50,6 +50,8 @@ import java.util.Locale;
 import java.util.Random;
 
 import static android.content.ContentValues.TAG;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 
 public class HomeFragment extends Fragment {
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment {
     private int joggenImageView, oberkoerperImageView, pulldayImageView, pushdayImageView, beinImageView, hiitImageView;
 
     //TextView anlegen
-    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen, motivationsTextView;
+    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen, motivationsTextView, beastModeTextView;
 
     //Progressbar
     private ProgressBar aktuellesWorkoutProgressBar;
@@ -127,7 +129,6 @@ public class HomeFragment extends Fragment {
         hiitButton = view.findViewById(R.id.hiitButton);
         playButton = view.findViewById(R.id.playButton);
         workoutBeendenButton = view.findViewById(R.id.workoutBeendenButton);
-        playButton.setAlpha(0f);
         playButton.setEnabled(false);
 
 
@@ -138,6 +139,7 @@ public class HomeFragment extends Fragment {
         trennstrichHome = view.findViewById(R.id.trennstrichHome);
         aktuellesWorkoutUebungen = view.findViewById(R.id.aktuellesWorkoutUebungenTV);
         motivationsTextView = view.findViewById(R.id.motivationTextView);
+        beastModeTextView = view.findViewById(R.id.beastModeTextView);
 
 
         //ImageView zuweisen
@@ -264,11 +266,11 @@ public class HomeFragment extends Fragment {
         aktuellesWorkoutUebungen.setText(homeFragmentViewModel.getAktuellesWorkout().getUebungen());
         int progress = homeFragmentViewModel.getWorkoutProgress();
         aktuellesWorkoutProgressBar.setProgress(progress);
-        aktuellesWorkoutLinearLayout.setVisibility(View.VISIBLE);
+        aktuellesWorkoutLinearLayout.setVisibility(VISIBLE);
     }
 
     private void setHomeView(){
-        homeLinearLayout.setVisibility(View.VISIBLE);
+        homeLinearLayout.setVisibility(VISIBLE);
         aktuellesWorkoutLinearLayout.setVisibility(View.GONE);
         setMotivationsTextView();
     }
@@ -281,7 +283,7 @@ public class HomeFragment extends Fragment {
         Random zufall = new Random();
         int zufallsZahl = zufall.nextInt(motivationssprueche.length); //Ganzahlige Zufallszahl zwischen 0 und Anzahl Motivationssprueche
 
-        motivationsTextView.setVisibility(View.VISIBLE);
+        motivationsTextView.setVisibility(VISIBLE);
         motivationsTextView.setText(motivationssprueche[zufallsZahl]);
 
 
@@ -531,7 +533,7 @@ public class HomeFragment extends Fragment {
         workoutsEntfernenButton.setAlpha(0.5f);
         workoutsEntfernenButton.setEnabled(true);
         playButton.setEnabled(true);
-        playButton.setAlpha(1f);
+        playButton.setVisibility(VISIBLE);
 
         boolean trainingBereitsGewaehlt = false;
 
@@ -571,8 +573,8 @@ public class HomeFragment extends Fragment {
         trennstrichHome.setAlpha(0);
         workoutsEntfernenButton.setAlpha(0);
         workoutsEntfernenButton.setEnabled(false);
-        playButton.setAlpha(0f);
         playButton.setEnabled(false);
+        playButton.setVisibility(INVISIBLE);
 
         recyclerViewAdapter = new GewaehlteTrainingsRecyclerViewAdapter(homeFragmentViewModel.getGewaehlteTrainingsList(), homeFragmentViewModel.getGewaehlteTrainingsName());
         gewaehltesTrainingRecyclerView.setAdapter(recyclerViewAdapter);

@@ -149,7 +149,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gewaehltesTrainingRecyclerview"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_marginTop="20sp"
             android:clipToPadding="false"
@@ -174,6 +174,7 @@
             android:layout_marginBottom="0dp"
             android:background="#313131"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             app:srcCompat="@drawable/play4" />
 
         <TextView
@@ -195,7 +196,7 @@
 
     <TextView
         android:id="@+id/motivationTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="77dp"
         android:foregroundGravity="center_vertical|center"
