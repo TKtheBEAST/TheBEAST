@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.thebeast.viewmodel.EinstellungenFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,6 +27,8 @@ public class EinstellungenFragment extends Fragment {
     private static final String TAG = "EinstellungenFragment";
     private Button abmeldenButton,kontoloeschenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
     private ImageView avatarImageView;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private float aktuelleWorkoutlaenge;
     private TextView beastName, beastEmail;
@@ -52,6 +55,18 @@ public class EinstellungenFragment extends Fragment {
 
         avatarImageView = view.findViewById(R.id.avatarEinstellungenIV);
 
+        if(CurrentUser.getCurrentUser() != null){
+            String imageUrl = CurrentUser.getCurrentUser().getAvatar();
+            Glide.with(getContext())
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(avatarImageView);
+        }else{
+            Log.w(TAG, "Kein Current User vorhanden! Avatar kann nicht gesetzt werden.");
+        }
+
+
         beastName = view.findViewById(R.id.beastNameEinsTV);
         beastEmail = view.findViewById(R.id.beastEmailEinstTV);
 
@@ -63,6 +78,15 @@ public class EinstellungenFragment extends Fragment {
             beastEmail.setText("Fehler beim Laden");
             Log.w(TAG, "Kein Current User vorhanden! BeastName und BeastMail kann nicht gesetzt werden.");
         }
+
+
+        avatarImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
 
 
         beastName.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +174,14 @@ public class EinstellungenFragment extends Fragment {
         });
 
         return view;
+    }
+
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
 
