@@ -3,8 +3,10 @@ package com.example.thebeast;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.example.thebeast.viewmodel.EinstellungenFragmentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static android.app.Activity.RESULT_OK;
+
 public class EinstellungenFragment extends Fragment {
 
     private static final String TAG = "EinstellungenFragment";
@@ -32,6 +36,8 @@ public class EinstellungenFragment extends Fragment {
 
     private float aktuelleWorkoutlaenge;
     private TextView beastName, beastEmail;
+
+    private Uri uriImage;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
@@ -176,6 +182,19 @@ public class EinstellungenFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            uriImage = data.getData();
+            avatarAendernDialog();
+        }
+    }
+
+    public void avatarAendernDialog(){
+
+    }
 
     private void openFileChooser() {
         Intent intent = new Intent();
