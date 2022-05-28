@@ -30,17 +30,20 @@
         app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
 
     <TextView
-        android:id="@+id/niemandTrainiertTV"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/erstesBeastHinzufuegenTV"
+        android:layout_width="273dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
         android:text="Niemand trainiert... starte ein Training und motiviere alle BEASTS!"
-        android:textColor="@color/beast_rot"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/liveSwipeToRefreshLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/liveSwipeToRefreshLayout"
