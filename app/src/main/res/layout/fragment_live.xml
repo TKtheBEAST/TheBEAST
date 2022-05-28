@@ -8,15 +8,17 @@
 
     <TextView
         android:id="@+id/liveTextView"
-        android:layout_width="185dp"
-        android:layout_height="37dp"
+        android:layout_width="188dp"
+        android:layout_height="65dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="201dp"
+        android:gravity="center_vertical"
         android:text="Live"
         android:textColor="@color/beast_rot"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +26,7 @@
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:background="#434343"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/liveTextView" />

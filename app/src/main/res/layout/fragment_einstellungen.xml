@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/liveTextView">
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <TextView
             android:id="@+id/TrainingseinheitlaengeTextView"
@@ -88,25 +88,35 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/liveTextView"
+        android:id="@+id/einstellungenTV"
         android:layout_width="183dp"
-        android:layout_height="41dp"
+        android:layout_height="65dp"
         android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="201dp"
-        android:layout_marginRight="201dp"
         android:layout_marginBottom="39dp"
+        android:gravity="center_vertical"
         android:text="Einstellungen"
         android:textColor="#FF0000"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/trennstrich"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/einstellungenTV" />
+
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="320dp"
         android:layout_height="3dp"
         android:layout_marginStart="45dp"
@@ -132,7 +142,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintVertical_bias="0.027">
 
         <TextView
@@ -250,10 +260,12 @@
         android:id="@+id/avatarEinstellungenIV"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/fui_ic_anonymous_white_24dp"
+        tools:src="@drawable/fui_ic_anonymous_white_24dp"
+        tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

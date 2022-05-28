@@ -6,38 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".KalenderFragment">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="389dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="80dp"
-        android:alpha="0.4"
-        app:layout_constraintBottom_toTopOf="@+id/homButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/liveTextView" />
-
     <TextView
-        android:id="@+id/liveTextView"
-        android:layout_width="185dp"
-        android:layout_height="96dp"
+        android:id="@+id/trainingsuebersichtTV"
+        android:layout_width="188dp"
+        android:layout_height="65dp"
         android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="201dp"
-        android:layout_marginRight="201dp"
         android:layout_marginBottom="43dp"
+        android:gravity="center_vertical"
         android:text="Deine Trainingsübsicht"
         android:textColor="#FF0000"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/trennstrich"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainingsuebersichtTV" />
+
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="389dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="80dp"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/homButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView9"
@@ -46,12 +57,11 @@
         android:alpha="1"
         android:gravity="center_horizontal"
         android:text="Coming Soon!"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class EinstellungenFragment extends Fragment {
 
     private static final String TAG = "EinstellungenFragment";
-    Button abmeldenButton,kontoloeschenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
+    private Button abmeldenButton,kontoloeschenButton,dreißigMinButton,eineHbutton,eineHdreißigButton,zweiHbutton;
+    private ImageView avatarImageView;
+
     private float aktuelleWorkoutlaenge;
     private TextView beastName, beastEmail;
 
@@ -31,6 +34,9 @@ public class EinstellungenFragment extends Fragment {
     private AlertDialog dialog;
 
     EinstellungenFragmentViewModel einstellungenFragmentViewModel;
+
+    public EinstellungenFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +49,8 @@ public class EinstellungenFragment extends Fragment {
         eineHbutton = view.findViewById(R.id.trainingslaenge1hButton);
         eineHdreißigButton = view.findViewById(R.id.trainingslaenge1_5hButton);
         zweiHbutton = view.findViewById(R.id.trainingslaenge2hButton);
+
+        avatarImageView = view.findViewById(R.id.avatarEinstellungenIV);
 
         beastName = view.findViewById(R.id.beastNameEinsTV);
         beastEmail = view.findViewById(R.id.beastEmailEinstTV);

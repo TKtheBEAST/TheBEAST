@@ -11,12 +11,14 @@
         android:layout_width="188dp"
         android:layout_height="65dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="201dp"
+        android:gravity="center_vertical"
         android:text="Deine Trainingspartner"
         android:textColor="@color/beast_rot"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +26,7 @@
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:background="@color/trennstrich"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deineTrainingspartnerTextView" />
@@ -34,10 +36,11 @@
         android:layout_width="51dp"
         android:layout_height="40dp"
         android:layout_marginStart="132dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/deineTrainingspartnerTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/adduser" />
