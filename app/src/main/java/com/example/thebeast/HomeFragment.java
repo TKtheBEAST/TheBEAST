@@ -162,7 +162,7 @@ public class HomeFragment extends Fragment {
         oberkoerperButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                trainingHinzufuegen(view.getRootView(), oberkoerperImageView, "Oberkörper Training");
+                trainingHinzufuegen(view.getRootView(), oberkoerperImageView, "Oberkörper");
             }
         });
 
@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment {
         beineButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                trainingHinzufuegen(view.getRootView(), beinImageView, "Beintraining");
+                trainingHinzufuegen(view.getRootView(), beinImageView, "Beine");
             }
         });
 

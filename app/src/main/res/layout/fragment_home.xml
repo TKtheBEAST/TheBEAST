@@ -149,7 +149,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gewaehltesTrainingRecyclerview"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_marginTop="20sp"
             android:clipToPadding="false"
@@ -161,6 +161,7 @@
             android:id="@+id/workoutsEntfernen"
             android:layout_width="122dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="30sp"
             android:alpha="0"
             android:text="Workouts entfernen" />
@@ -198,6 +199,7 @@
         android:id="@+id/motivationTextView"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="77dp"
         android:foregroundGravity="center_vertical|center"
         android:gravity="center|center_vertical"
