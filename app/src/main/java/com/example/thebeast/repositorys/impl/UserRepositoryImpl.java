@@ -3,6 +3,7 @@ package com.example.thebeast.repositorys.impl;
 import android.app.Application;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,6 +30,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
     private CollectionReference freundVonUserRef = firebaseFirestore.collection("User").document("*").collection("FreundeVonUser");
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference("avatare/");
     
 
     public void createUserWithEmailAndPassword(String beastName, String beastSpruch, String email, String password, String token){
@@ -178,6 +183,69 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    public void updateAvatar(Uri avatar){
+        if(CurrentUser.getCurrentUser() == null){
+            Log.w(TAG, "Kein Current User vorhanden!");
+            return;
+        }
+
+        StorageReference fileReference = storageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + "." + avatar);
+        fileReference.putFile(avatar).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("avatar", uri.toString());
+
+                        userRef.document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Log.i(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich geupdetet.");
+                                        }else{
+                                            Log.e(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte nicht upgedated werden." + task.getException().toString());
+                                        }
+                                    }
+                                });
+
+                        for (UserModel freund: CurrentUser.getCurrentUser().getFreundeCurrentUser()){
+                            userRef.document(freund.getBeastId()).collection("FreundeVonUser")
+                                    .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Log.i(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                            }else{
+                                                Log.e(TAG, "BeastName von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden." + task.getException().toString());
+                                            }
+                                        }
+                                    });
+
+                        }
+                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // TODO: on Failure abgreifen
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // TODO: on Failure abgreifen
+            }
+        });
+
+    }
+
     public void deleteUser(){
         if(CurrentUser.getCurrentUser() == null){
             Log.w(TAG, "Kein Current User vorhanden!");
@@ -187,7 +255,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde aus der Datenbanl entfernt");
+                        Log.i(TAG, "User " + CurrentUser.getCurrentUser().getBeastName() + "wurde aus der Datenbank entfernt");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

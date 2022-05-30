@@ -209,6 +209,7 @@ public class EinstellungenFragment extends Fragment {
             public void onClick(View view) {
                 avatarImageView.setImageURI(uriImage);
                 CurrentUser.getCurrentUser().setAvatar(uriImage.toString());
+                einstellungenFragmentViewModel.updateAvatar(uriImage);
                 // TODO: Datenbank updaten. Uri und so hochladen und speichern
                 dialog.dismiss();
             }
