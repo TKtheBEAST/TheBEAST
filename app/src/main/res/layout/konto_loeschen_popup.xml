@@ -24,8 +24,8 @@
         android:id="@+id/bleibEinBeastTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="45dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:text="Bleib ein Beasst!"
         android:textColor="@color/beast_rot"
         android:textSize="24sp"
@@ -53,7 +53,7 @@
 
         <Button
             android:id="@+id/kontoLoeschenButton"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"

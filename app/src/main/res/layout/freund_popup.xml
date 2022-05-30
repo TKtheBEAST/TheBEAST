@@ -6,14 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="287dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="124dp"
+        android:gravity="center"
+        android:text="Möchtest du dieses Beast wirklich entfernen?"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
-        android:id="@+id/avatarSelectedFreundIV"
+        android:id="@+id/avatarSelectedFreundEntfernenIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -28,35 +43,34 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarSelectedFreundIV" />
+        app:layout_constraintTop_toBottomOf="@+id/avatarSelectedFreundEntfernenIV" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/freundEntfernenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Freund entfernen" />
+            android:id="@+id/kontoLoeschenAbbrechenButton"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="Abbrechen" />
 
         <Button
-            android:id="@+id/freundBackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/kontoLoeschenButton"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="zurück" />
+            android:text="Entfernen" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
