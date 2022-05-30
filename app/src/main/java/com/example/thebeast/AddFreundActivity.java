@@ -21,6 +21,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.thebeast.businessobjects.UserModel;
 import com.example.thebeast.recyclerViewAdapter.AddFreundRecyclerviewAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -153,6 +154,14 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         Button freundBestaetigenButton = freundBestaetigenView.findViewById(R.id.freundBestaetigenButton);
         Button abbrechenButton = freundBestaetigenView.findViewById(R.id.freundAbbrechenButton);
         TextView beastNameFreundBestaetigenTextView = freundBestaetigenView.findViewById(R.id.beastNameFreundBestaetigen);
+        ImageView avatarSelectedFreundHinzufuegenIV = freundBestaetigenView.findViewById(R.id.avatarSelectedFreundHinzufuegenIV);
+
+        String imageUrl = user.getAvatar();
+        Glide.with(this)
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(avatarSelectedFreundHinzufuegenIV);
 
         beastNameFreundBestaetigenTextView.setText(user.getBeastName());
 
