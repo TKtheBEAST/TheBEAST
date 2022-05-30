@@ -56,14 +56,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/kontoLoeschenAbbrechenButton"
+            android:id="@+id/freundBackButton"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:text="Abbrechen" />
 
         <Button
-            android:id="@+id/kontoLoeschenButton"
+            android:id="@+id/freundEntfernenButton"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

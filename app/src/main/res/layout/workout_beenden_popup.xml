@@ -11,48 +11,44 @@
         android:layout_height="67dp"
         android:layout_marginStart="125dp"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="124dp"
         android:gravity="center"
         android:text="Möchtest du dein Workout jetzt beenden?"
-        android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-        <Button
-            android:id="@+id/workoutBeendenButton"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:text="Beenden"
-            android:textColor="#FFFFFF" />
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/workoutBeendenAbbrechenButton"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1"
-            android:text="Abbrechen"
-            android:textColor="#FFFFFF" />
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="Abbrechen" />
+
+        <Button
+            android:id="@+id/workoutBeendenButton"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Beenden" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

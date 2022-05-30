@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         TextView beastNameFreundTextView = selectedFreundView.findViewById(R.id.beastNameSelectedFreund);
         beastNameFreundTextView.setText(freund.getBeastName());
 
-        ImageView avatar = selectedFreundView.findViewById(R.id.avatarSelectedFreundIV);
+        ImageView avatar = selectedFreundView.findViewById(R.id.avatarSelectedFreundEntfernenIV);
         String imageUrl = freund.getAvatar();
 
         Glide.with(selectedFreundView.getContext())

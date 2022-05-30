@@ -44,14 +44,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/avatarAenderButton"
+            android:id="@+id/avatarAendernBestaetigenButton"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:text="Ändern" />
 
         <Button
-            android:id="@+id/kontoLoeschenButton"
+            android:id="@+id/avatarAendernAbbrechenButton"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
