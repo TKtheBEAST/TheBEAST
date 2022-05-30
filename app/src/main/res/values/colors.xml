@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="beast_rot">#FF0000</color>
     <color name="trennstrich">#434343</color>
+    <color name="PopUpFrage">#FFFFFF</color>
+
 
 </resources>

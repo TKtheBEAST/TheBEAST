@@ -15,6 +15,7 @@
         android:layout_marginEnd="124dp"
         android:gravity="center"
         android:text="Möchtest du dieses Beast wirklich entfernen?"
+        android:textColor="@color/PopUpFrage"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
