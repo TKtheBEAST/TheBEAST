@@ -33,7 +33,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thebeast.businessobjects.WorkoutModel;
 import com.example.thebeast.recyclerViewAdapter.GewaehlteTrainingsRecyclerViewAdapter;
 import com.example.thebeast.viewmodel.HomeFragmentViewModel;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -101,7 +105,7 @@ public class HomeFragment extends Fragment {
     //Location
     private LocationManager locationManager;
     private String provider;
-    private Context context;
+
 
 
     @Override
@@ -607,6 +611,11 @@ public class HomeFragment extends Fragment {
         super.onResume();
         homeFragmentViewModel.getGewaehlteTrainingsName().clear();
         homeFragmentViewModel.getGewaehlteTrainingsList().clear();
+    }
+
+    public void onStart() {
+
+        super.onStart();
     }
 
 }

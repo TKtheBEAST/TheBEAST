@@ -31,12 +31,20 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.installations.InstallationTokenResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -51,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
 
     private ProgressBar progressBar;
     private GoogleApiClient mGoogleApiClient;
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private CollectionReference userRef = firebaseFirestore.collection("User");
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -72,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+
+        uploadFcmToken();
     }
 
     @Override
@@ -85,6 +99,66 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
+
+    public void uploadFcmToken(){
+
+        FirebaseInstallations.getInstance().getToken(false).addOnCompleteListener(new OnCompleteListener<InstallationTokenResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstallationTokenResult> task) {
+                if (task.isSuccessful()){
+                    String token = task.getResult().getToken();
+                    Map<String,Object> updates = new HashMap<>();
+                    updates.put("token", token);
+
+                    mAuth = FirebaseAuth.getInstance();
+                    userRef.document(mAuth.getCurrentUser().getUid()).update(updates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Log.i(TAG, "Token wurde in Firestore aktualisiert.");
+                                        if(CurrentUser.getCurrentUser() != null){
+                                            CurrentUser.getCurrentUser().setToken(token);
+                                            Log.i(TAG, "Token konnte dem CurrentUser gesetzt werden.");
+                                        }else{
+                                            Log.w(TAG, "Token konnte nicht dem CurrentUser gesetzt werden, da Current User null ist.");
+                                        }
+                                    }else{
+                                        Log.w(TAG, "Token konnte nicht in Firestore aktualisiert werden" + task.getException());
+                                    }
+                                }
+                            });
+
+                    if(CurrentUser.getCurrentUser().getFreundeCurrentUser() != null) {
+                        for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+                            userRef.document(freund.getBeastId()).collection("FreundeVonUser")
+                                    .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.i(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                            } else {
+                                                Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                            }
+                                        }
+                                    });
+
+                        }
+                    }else{
+                        Log.w(TAG, "Token wurde nicht bei den Freunden geupdated da Freunde of CurrentUser null ist.");
+                    }
+                }else{
+                    Log.w(TAG, "Task getToken() konnte nicht war nicht erfolgreich.");
+                }
+            }
+        });
+    }
+
+
+
 
     public void wechselZuKalenderFragment(View view) {
 
