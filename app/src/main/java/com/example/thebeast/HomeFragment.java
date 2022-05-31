@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,8 +98,10 @@ public class HomeFragment extends Fragment {
     //workouts CurrentUser
     private List<WorkoutModel> workoutsCurrentUser;
 
-
-
+    //Location
+    private LocationManager locationManager;
+    private String provider;
+    private Context context;
 
 
     @Override
@@ -212,7 +216,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        workoutBeendenButton.setOnClickListener(new View.OnClickListener(){
+        workoutBeendenButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -269,13 +273,13 @@ public class HomeFragment extends Fragment {
         aktuellesWorkoutLinearLayout.setVisibility(VISIBLE);
     }
 
-    private void setHomeView(){
+    private void setHomeView() {
         homeLinearLayout.setVisibility(VISIBLE);
         aktuellesWorkoutLinearLayout.setVisibility(View.GONE);
         setMotivationsTextView();
     }
 
-    private void setMotivationsTextView(){
+    private void setMotivationsTextView() {
 
         Resources res = getResources();
         String[] motivationssprueche = res.getStringArray(R.array.motivationssprueche);
@@ -288,34 +292,35 @@ public class HomeFragment extends Fragment {
 
 
     }
+
     private void isWorkoutRunning() {
         homeFragmentViewModel.setWorkoutRunning(false);
-        if(homeFragmentViewModel.getAktuellesWorkout() != null){
-            if(homeFragmentViewModel.getAktuellesWorkout().isWorkoutFruehzeitigBeendet() == false){
-                if(workoutIsRunning(homeFragmentViewModel.getAktuellesWorkout().getStartzeit(), homeFragmentViewModel.getAktuellesWorkout().getWorkoutlaenge()) == true) {
+        if (homeFragmentViewModel.getAktuellesWorkout() != null) {
+            if (homeFragmentViewModel.getAktuellesWorkout().isWorkoutFruehzeitigBeendet() == false) {
+                if (workoutIsRunning(homeFragmentViewModel.getAktuellesWorkout().getStartzeit(), homeFragmentViewModel.getAktuellesWorkout().getWorkoutlaenge()) == true) {
                     homeFragmentViewModel.setWorkoutRunning(true);
                     setAktuellesWorkoutView();
                     return;
-                }else{
+                } else {
                     homeFragmentViewModel.setAktuellesWorkout(null);
                     setHomeView();
                 }
-            }else{
+            } else {
                 homeFragmentViewModel.setAktuellesWorkout(null);
                 setHomeView();
             }
         }
-        if(mAuth.getCurrentUser() == null){
+        if (mAuth.getCurrentUser() == null) {
             return;
         }
-        db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+        db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
 
                     List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
-                    if(CurrentUser.getCurrentUser() == null){
+                    if (CurrentUser.getCurrentUser() == null) {
                         setHomeView();
                         return;
                     }
@@ -323,9 +328,9 @@ public class HomeFragment extends Fragment {
                     CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
                     workoutsCurrentUser = CurrentUser.getCurrentUser().getWorkoutsCurrentUser();
 
-                    for(WorkoutModel checkWorkout : workoutsCurrentUser){
-                        if(checkWorkout.isWorkoutFruehzeitigBeendet() == false){
-                            if(workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true){
+                    for (WorkoutModel checkWorkout : workoutsCurrentUser) {
+                        if (checkWorkout.isWorkoutFruehzeitigBeendet() == false) {
+                            if (workoutIsRunning(checkWorkout.getStartzeit(), checkWorkout.getWorkoutlaenge()) == true) {
                                 homeFragmentViewModel.setWorkoutRunning(true);
                                 homeFragmentViewModel.setAktuellesWorkout(checkWorkout);
                                 break;
@@ -334,13 +339,13 @@ public class HomeFragment extends Fragment {
                     }
 
                     //falls ja setze das aktuelle Workout im HomeMenu - falls nein dann normales HomeView
-                    if(homeFragmentViewModel.isWorkoutRunning() == true){
+                    if (homeFragmentViewModel.isWorkoutRunning() == true) {
                         setAktuellesWorkoutView();
-                    }else{
+                    } else {
                         setHomeView();
                     }
 
-                }else{
+                } else {
                     return;
                 }
             }
@@ -380,18 +385,18 @@ public class HomeFragment extends Fragment {
         float workoutEndeMinute = 0;
 
 
-        if(workoutlaenge == 0.5 || workoutlaenge == 1.5){
-            if(workoutMinuteFloat + 30 > 59){
+        if (workoutlaenge == 0.5 || workoutlaenge == 1.5) {
+            if (workoutMinuteFloat + 30 > 59) {
                 stundeergaenzen = true;
                 workoutEndeMinute = workoutMinuteFloat - 30;
             }
-        }else{
+        } else {
             workoutEndeMinute = workoutMinuteFloat;
         }
 
         workoutEndeStunde = workoutStundeFloat + (int) workoutlaenge;
 
-        if(stundeergaenzen == true){
+        if (stundeergaenzen == true) {
             workoutEndeStunde++;
         }
 
@@ -415,7 +420,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     public void startWorkoutDialog() {
         dialogBuilder = new AlertDialog.Builder(getActivity());
         final View startWorkoutView = getLayoutInflater().inflate(R.layout.start_workout_popup, null);
@@ -435,10 +439,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                if(CurrentUser.getCurrentUser() == null){
+                if (CurrentUser.getCurrentUser() == null) {
                     Toast.makeText(getView().getContext(), "Hier ist etwas schief gelaufen. Versuche es noch einmal", Toast.LENGTH_LONG);
                     Log.w(TAG, "Current User ist null. Workout kann nicht gestartet werden");
-                    startActivity(new Intent(getActivity(),MainActivity.class));
+                    startActivity(new Intent(getActivity(), MainActivity.class));
                 }
 
                 String beastName = CurrentUser.getCurrentUser().getBeastName();
@@ -479,7 +483,25 @@ public class HomeFragment extends Fragment {
                                 String standort = getStandort(getActivity(), location.getLatitude(), location.getLongitude());
                                 workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort, location.getLongitude(), location.getLatitude());
                             } else {
-                                workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar);
+                                //nochmal versuchen Location zu setzen ohne google
+                                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                                Criteria criteria = new Criteria();
+                                provider = locationManager.getBestProvider(criteria, false);
+                                //checken ob Location zugelassen ist
+                                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    getActivity().finish();
+                                }
+
+                                Location location2 = locationManager.getLastKnownLocation(provider);
+
+                                if(location2 != null){
+                                    String standort = getStandort(getActivity(), location2.getLatitude(), location2.getLongitude());
+                                    workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar, standort, location2.getLongitude(), location2.getLatitude());
+                                }else{
+                                    workout = new WorkoutModel(workoutOwnerID, beastName, beastEmail, uebungen, workoutlaenge, currentDateandTime, avatar);
+                                }
+
                             }
 
                             Log.i(TAG, "standort" + workout.getBeastName() + workout.getUebungen() + workout.getWorkoutlaenge() + workout.getStandort());
