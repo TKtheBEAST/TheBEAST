@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
     private int joggenImageView, oberkoerperImageView, pulldayImageView, pushdayImageView, beinImageView, hiitImageView;
 
     //TextView anlegen
-    private TextView deinGewaehltesTraining, trennstrichHome, aktuellesWorkoutUebungen, motivationsTextView, beastModeTextView;
+    private TextView deinGewaehltesTraining, trennstrichHome, trennstrichHome2, aktuellesWorkoutUebungen, motivationsTextView, beastModeTextView;
 
     //Progressbar
     private ProgressBar aktuellesWorkoutProgressBar;
@@ -145,6 +145,7 @@ public class HomeFragment extends Fragment {
         //Textview initialisieren
         deinGewaehltesTraining = view.findViewById(R.id.deinGewaehltesTraining);
         trennstrichHome = view.findViewById(R.id.trennstrichHome);
+        trennstrichHome2 = view.findViewById(R.id.trennstrichHome2);
         aktuellesWorkoutUebungen = view.findViewById(R.id.aktuellesWorkoutUebungenTV);
         motivationsTextView = view.findViewById(R.id.motivationTextView);
         beastModeTextView = view.findViewById(R.id.beastModeTextView);
@@ -556,6 +557,7 @@ public class HomeFragment extends Fragment {
 
         deinGewaehltesTraining.setAlpha(1);
         trennstrichHome.setAlpha(1);
+        trennstrichHome2.setAlpha(0);
         workoutsEntfernenButton.setAlpha(0.5f);
         workoutsEntfernenButton.setEnabled(true);
         playButton.setEnabled(true);
@@ -597,6 +599,7 @@ public class HomeFragment extends Fragment {
 
         deinGewaehltesTraining.setAlpha(0);
         trennstrichHome.setAlpha(0);
+        trennstrichHome2.setAlpha(0);
         workoutsEntfernenButton.setAlpha(0);
         workoutsEntfernenButton.setEnabled(false);
         playButton.setEnabled(false);
