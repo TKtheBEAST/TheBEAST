@@ -57,7 +57,7 @@
                     android:background="@android:color/transparent"
                     android:baselineAligned="false"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/oberkoerper" />
+                    app:srcCompat="@drawable/oberkoerperl" />
 
                 <ImageButton
                     android:id="@+id/pushDayButton"
@@ -68,7 +68,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/pushday"
+                    app:srcCompat="@drawable/pushdayl"
                     tools:layout_editor_absoluteX="66dp" />
 
                 <ImageButton
@@ -80,7 +80,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/pullday" />
+                    app:srcCompat="@drawable/pulldayl" />
 
                 <ImageButton
                     android:id="@+id/hiitButton"
@@ -102,7 +102,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/joggen"
+                    app:srcCompat="@drawable/joggenl"
                     tools:layout_editor_absoluteX="258dp" />
 
                 <ImageButton
@@ -114,7 +114,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/bein"
+                    app:srcCompat="@drawable/beinl"
                     tools:layout_editor_absoluteX="4dp"
                     tools:layout_editor_absoluteY="82dp" />
             </LinearLayout>
@@ -192,7 +192,7 @@
             android:background="#313131"
             android:scaleType="fitCenter"
             android:visibility="invisible"
-            app:srcCompat="@drawable/play4" />
+            app:srcCompat="@drawable/play" />
 
         <TextView
             android:id="@+id/beastModeTextView"

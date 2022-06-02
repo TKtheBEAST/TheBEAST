@@ -1,8 +1,6 @@
 package com.example.thebeast.recyclerViewAdapter;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.example.thebeast.businessobjects.WorkoutModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerViewAdapter.MyViewHolder>{
 
@@ -55,7 +52,7 @@ public class LiveRecyclerViewAdapter extends RecyclerView.Adapter<LiveRecyclerVi
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.usericonl)
                 .into(holder.avatar);
     }
 

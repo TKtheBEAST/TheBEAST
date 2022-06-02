@@ -66,7 +66,7 @@ public class EinstellungenFragment extends Fragment {
             Glide.with(getContext())
                     .load(imageUrl)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.usericonl)
                     .into(avatarImageView);
         }else{
             Log.w(TAG, "Kein Current User vorhanden! Avatar kann nicht gesetzt werden.");

@@ -1,7 +1,6 @@
 package com.example.thebeast.recyclerViewAdapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,7 @@ public class AddFreundRecyclerviewAdapter extends RecyclerView.Adapter<AddFreund
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.usericonl)
                 .into(holder.avatar);
 
     }

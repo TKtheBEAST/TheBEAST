@@ -160,7 +160,7 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
         Glide.with(this)
                 .load(imageUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.usericonl)
                 .into(avatarSelectedFreundHinzufuegenIV);
 
         beastNameFreundBestaetigenTextView.setText(user.getBeastName());

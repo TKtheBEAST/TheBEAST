@@ -1,7 +1,6 @@
 package com.example.thebeast.recyclerViewAdapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.thebeast.AddFreundActivity;
-import com.example.thebeast.AddFreundSelectionListener;
 import com.example.thebeast.MainActivity;
 import com.example.thebeast.MainActivitySelectionListener;
 import com.example.thebeast.R;
@@ -55,7 +52,7 @@ public class FreundeRecyclerViewAdapter extends RecyclerView.Adapter<FreundeRecy
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.usericonl)
                 .into(holder.avatar);
 
 

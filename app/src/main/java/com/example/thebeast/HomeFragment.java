@@ -152,11 +152,11 @@ public class HomeFragment extends Fragment {
 
 
         //ImageView zuweisen
-        joggenImageView = R.drawable.joggen;
-        oberkoerperImageView = R.drawable.oberkoerper;
-        pushdayImageView = R.drawable.pushday;
-        pulldayImageView = R.drawable.pullday;
-        beinImageView = R.drawable.bein;
+        joggenImageView = R.drawable.joggenl;
+        oberkoerperImageView = R.drawable.oberkoerperl;
+        pushdayImageView = R.drawable.pushdayl;
+        pulldayImageView = R.drawable.pulldayl;
+        beinImageView = R.drawable.beinl;
         hiitImageView = R.drawable.hiit;
 
         //Button onClickListener setzen

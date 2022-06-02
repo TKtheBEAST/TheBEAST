@@ -79,7 +79,7 @@
         app:layout_constraintStart_toEndOf="@+id/einstellungenButton"
         app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/kalender3" />
+        app:srcCompat="@drawable/kalenderl" />
 
     <ImageButton
         android:id="@+id/einstellungenButton"
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/einstellungen3" />
+        app:srcCompat="@drawable/settingsl" />
 
     <ImageButton
         android:id="@+id/liveButton"
@@ -119,7 +119,7 @@
         app:layout_constraintStart_toEndOf="@+id/homButton"
         app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/live3" />
+        app:srcCompat="@drawable/livel" />
 
     <ImageButton
         android:id="@+id/freundeButton"
@@ -137,6 +137,6 @@
         app:layout_constraintStart_toEndOf="@+id/liveButton"
         app:layout_constraintTop_toBottomOf="@+id/beastModeTextView"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/freunde3" />
+        app:srcCompat="@drawable/freundel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
