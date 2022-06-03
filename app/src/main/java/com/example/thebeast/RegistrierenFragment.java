@@ -212,7 +212,7 @@ public class RegistrierenFragment extends Fragment {
                         if (task.isSuccessful()) {
                             if (uriImage == null) {
                                 UserModel user = new UserModel(beastName, beastSpruch, email, standardWorkoutlaenge, token);
-                                String uriForFS = "https://firebasestorage.googleapis.com/v0/b/thebeast-339821.appspot.com/o/avatare%2FAUBN0551.JPG?alt=media&token=ec380a25-7797-4802-9727-80bdffb9bab9";
+                                String uriForFS = "https://firebasestorage.googleapis.com/v0/b/thebeast-339821.appspot.com/o/avatare%2Ficons8-user-24.png?alt=media&token=a5daa03c-5a51-42dc-a785-020385771f98";
 
                                 Map<String, Object> data = new HashMap<>();
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
