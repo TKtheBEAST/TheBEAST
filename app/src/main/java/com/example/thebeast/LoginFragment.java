@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -41,6 +45,8 @@ public class LoginFragment extends Fragment {
     private TextView pwVergessenTextView, registrierenTextView;
     private ProgressBar loginProgressBar;
     private LoginFragmentViewModel loginFragmentViewModel;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     private FirebaseAuth mAuth;
@@ -137,8 +143,6 @@ public class LoginFragment extends Fragment {
                     if(user.isEmailVerified()){
                         if(mAuth.getCurrentUser() != null){
                             getUserInformation();
-                            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
-                            loginProgressBar.setVisibility(GONE);
                         }else{
                             Toast.makeText(getActivity(), "Hier ist etwas schief gelaufen. Versuche es noch einmal", Toast.LENGTH_LONG);
                             return;
@@ -172,6 +176,38 @@ public class LoginFragment extends Fragment {
     }
 
     public void getUserInformation(){
-        loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
+        db.collection("User").document(mAuth.getCurrentUser().getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            UserModel currentUser;
+                            currentUser = task.getResult().toObject(UserModel.class);
+                            CurrentUser.setCurrentUser(currentUser);
+                            loginFragmentViewModel.getFreundeCurrentUser();
+                            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_mainActivity);
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+        /** db.collection("Workouts").whereEqualTo("workoutOwnerID", mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
+        @Override
+        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        if (task.isSuccessful()) {
+
+        List<WorkoutModel> workoutsOfCurrentUser = task.getResult().toObjects((WorkoutModel.class));
+        CurrentUser.getCurrentUser().setWorkoutsCurrentUser(workoutsOfCurrentUser);
+
+        }else{
+        return;
+        }
+        }
+        }); **/
+
+
+       // loginFragmentViewModel.setCurrentUser(mAuth.getCurrentUser().getEmail());
     }
 }

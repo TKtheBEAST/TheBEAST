@@ -23,12 +23,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -36,6 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     NotificationManager notificationManager;
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
+    private List<UserModel> freundeOfCurrentUser = new ArrayList<>();
     private FirebaseAuth mAuth;
     Notification notification;
     String noteTitle, noteMessage, noteType, imageURL;
@@ -61,6 +67,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notifyUser(title,body);
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
+        }else{
+            Log.e(TAG, "Message has no payload");
         }
 
         // Check if message contains a notification payload.
@@ -118,6 +126,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         updates.put("token",token);
 
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null){
+            return;
+        }
         userRef.document(mAuth.getCurrentUser().getUid()).update(updates)
                 .addOnCompleteListener(new OnCompleteListener<Void>(){
 
@@ -155,7 +166,41 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             }
         }else{
-            Log.w(TAG, "Token wurde nicht bei den Freunden geupdated da Freunde of CurrentUser null ist.");
+            Log.i(TAG, "Freunde CurrentUser müssen neu geladen werden");
+            if(CurrentUser.getCurrentUser() == null){
+                Log.w(TAG, "Kein Current User vorhanden!");
+                return;
+            }
+            firebaseFirestore.collection("User")
+                    .document(CurrentUser.getCurrentUser().getBeastId())
+                    .collection("FreundeVonUser").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
+                                CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
+                                for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+                                    userRef.document(freund.getBeastId()).collection("FreundeVonUser")
+                                            .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.i(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                                    } else {
+                                                        Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                                    }
+                                                }
+                                            });
+
+                                }
+                            }else{
+                                Log.e(TAG, "FreundeVonUser " + CurrentUser.getCurrentUser().getBeastName() + " konnten nicht geladen werden.");
+                            }
+                        }
+                    });
         }
     }
 }

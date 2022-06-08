@@ -34,10 +34,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.installations.InstallationTokenResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference userRef = firebaseFirestore.collection("User");
     private FirebaseAuth mAuth;
+    private List<UserModel> freundeOfCurrentUser = new ArrayList<>();
+
 
 
     @Override
@@ -137,14 +142,48 @@ public class MainActivity extends AppCompatActivity implements MainActivitySelec
                                             if (task.isSuccessful()) {
                                                 Log.i(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
                                             } else {
-                                                Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                                Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden: " + task.getException());
                                             }
                                         }
                                     });
 
                         }
                     }else{
-                        Log.w(TAG, "Token wurde nicht bei den Freunden geupdated da Freunde of CurrentUser null ist.");
+                        Log.i(TAG, "Freunde CurrentUser müssen neu geladen werden");
+                        if(CurrentUser.getCurrentUser() == null){
+                            Log.w(TAG, "Kein Current User vorhanden!");
+                            return;
+                        }
+                        firebaseFirestore.collection("User")
+                                .document(CurrentUser.getCurrentUser().getBeastId())
+                                .collection("FreundeVonUser").get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            freundeOfCurrentUser = task.getResult().toObjects((UserModel.class));
+                                            CurrentUser.getCurrentUser().setFreundeCurrentUser(freundeOfCurrentUser);
+                                            for (UserModel freund : CurrentUser.getCurrentUser().getFreundeCurrentUser()) {
+                                                userRef.document(freund.getBeastId()).collection("FreundeVonUser")
+                                                        .document(CurrentUser.getCurrentUser().getBeastId()).update(updates)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    Log.i(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " wurde erfolgreich bei allen Freunden geupdetet.");
+                                                                } else {
+                                                                    Log.e(TAG, "Token von User " + CurrentUser.getCurrentUser().getBeastName() + " konnte bei den Freunden nicht upgedated werden.");
+                                                                }
+                                                            }
+                                                        });
+
+                                            }
+                                        }else{
+                                            Log.e(TAG, "FreundeVonUser " + CurrentUser.getCurrentUser().getBeastName() + " konnten nicht geladen werden.");
+                                        }
+                                    }
+                                });
                     }
                 }else{
                     Log.w(TAG, "Task getToken() konnte nicht war nicht erfolgreich.");
