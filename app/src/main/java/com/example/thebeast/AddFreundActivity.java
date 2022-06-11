@@ -82,6 +82,8 @@ public class AddFreundActivity extends AppCompatActivity implements AddFreundSel
 
         searchView.setSubmitButtonEnabled(true);
         searchView.setQueryHint("thebeast@mail.de");
+        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(false);
         setFocused(searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
